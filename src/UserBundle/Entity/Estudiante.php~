@@ -1,0 +1,177 @@
+<?php
+
+namespace UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Estudiante
+ *
+ * @ORM\Table(name="estudiante")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\EstudianteRepository")
+ */
+class Estudiante extends Usuario
+{
+    private static $carreras = array(
+                "1"=>"Biología",
+                "2"=>"Computación", 
+                "3"=>"Física",
+                "4"=>"Matemática",
+                "5"=>"Química");
+
+    public static function getCarreras() {
+        return self::$carreras;
+    }
+    private static $nivelesEducativos = array(
+        "1"=>"No hizo estudios/Escuela Primaria Incompleta",
+        "2"=>"Escuela Primaria Completa/ Escuela Secundaria Incompleta",
+        "3"=>"Escuela Secundaria Completa/Estudio Superior No Unive. Inco",
+        "4"=>"Estudio Superior No Univer. Completo/Estudio Unive. Inco",
+        "5"=>"Estudio Universitario Completo/Estudios de Posgrado");
+
+    public static function getNivlesEducativos() {
+        return self::$nivelesEducativos;
+    }
+
+    /**
+     * @var string
+     * 
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Debe ingresar el nombre")
+     */
+    private $nombre;
+
+    /**
+     * @var string
+     * 
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Debe ingresar el apellido")
+     */
+    private $apellido;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $cedula;
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $notaPrimero;
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $notaSegundo;
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $notaTercero;
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $notaCuarto ;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar la cantidad de Materias cursadas en bachillerato")
+     */
+    private $cantMaterias;
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $promedio;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $primeraOpcionOpsu;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $segundaOpcionOpsu;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="intger")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $sexo;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $tieneAccesoInternet;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $esAsignadoOPSU;
+
+    /**
+     * @var 
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $gestionPlantel;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $tipoPlantel;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $nivelSocioeconomico;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Debe ingresar ")
+     */
+    private $nivelEstudioPadres;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

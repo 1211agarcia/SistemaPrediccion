@@ -1,0 +1,12 @@
+#Conjunto de rutas donde se verifican las sesiones del usuario
+user_security_login:
+    path: /login
+    defaults: { _controller: UserBundle:Security\Security:login }
+
+user_security_check:
+    path: /login_check
+    defaults: { _controller: UserBundle:Security\Security:check }
+
+user_security_logout:
+    path: /logout
+    defaults: { _controller: UserBundle:Security\Security:logout }

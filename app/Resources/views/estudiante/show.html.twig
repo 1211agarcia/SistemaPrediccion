@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Estudiante</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ estudiante.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ estudiante.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Cedula</th>
+                <td>{{ estudiante.cedula }}</td>
+            </tr>
+            <tr>
+                <th>Notaprimero</th>
+                <td>{{ estudiante.notaPrimero }}</td>
+            </tr>
+            <tr>
+                <th>Notasegundo</th>
+                <td>{{ estudiante.notaSegundo }}</td>
+            </tr>
+            <tr>
+                <th>Notatercero</th>
+                <td>{{ estudiante.notaTercero }}</td>
+            </tr>
+            <tr>
+                <th>Notacuarto</th>
+                <td>{{ estudiante.notaCuarto }}</td>
+            </tr>
+            <tr>
+                <th>Cantmaterias</th>
+                <td>{{ estudiante.cantMaterias }}</td>
+            </tr>
+            <tr>
+                <th>Promedio</th>
+                <td>{{ estudiante.promedio }}</td>
+            </tr>
+            <tr>
+                <th>Primeraopcionopsu</th>
+                <td>{{ estudiante.primeraOpcionOpsu }}</td>
+            </tr>
+            <tr>
+                <th>Segundaopcionopsu</th>
+                <td>{{ estudiante.segundaOpcionOpsu }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ estudiante.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Tieneaccesointernet</th>
+                <td>{% if estudiante.tieneAccesoInternet %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Esasignadoopsu</th>
+                <td>{% if estudiante.esAsignadoOPSU %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Gestionplantel</th>
+                <td>{{ estudiante.gestionPlantel }}</td>
+            </tr>
+            <tr>
+                <th>Tipoplantel</th>
+                <td>{{ estudiante.tipoPlantel }}</td>
+            </tr>
+            <tr>
+                <th>Nivelsocioeconomico</th>
+                <td>{{ estudiante.nivelSocioeconomico }}</td>
+            </tr>
+            <tr>
+                <th>Nivelestudiopadres</th>
+                <td>{{ estudiante.nivelEstudioPadres }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ estudiante.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('estudiante_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('estudiante_edit', { 'id': estudiante.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

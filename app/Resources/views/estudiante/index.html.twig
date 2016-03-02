@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Estudiante list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cedula</th>
+                <th>Notaprimero</th>
+                <th>Notasegundo</th>
+                <th>Notatercero</th>
+                <th>Notacuarto</th>
+                <th>Cantmaterias</th>
+                <th>Promedio</th>
+                <th>Primeraopcionopsu</th>
+                <th>Segundaopcionopsu</th>
+                <th>Sexo</th>
+                <th>Tieneaccesointernet</th>
+                <th>Esasignadoopsu</th>
+                <th>Gestionplantel</th>
+                <th>Tipoplantel</th>
+                <th>Nivelsocioeconomico</th>
+                <th>Nivelestudiopadres</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estudiante in estudiantes %}
+            <tr>
+                <td><a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}">{{ estudiante.nombre }}</a></td>
+                <td>{{ estudiante.apellido }}</td>
+                <td>{{ estudiante.cedula }}</td>
+                <td>{{ estudiante.notaPrimero }}</td>
+                <td>{{ estudiante.notaSegundo }}</td>
+                <td>{{ estudiante.notaTercero }}</td>
+                <td>{{ estudiante.notaCuarto }}</td>
+                <td>{{ estudiante.cantMaterias }}</td>
+                <td>{{ estudiante.promedio }}</td>
+                <td>{{ estudiante.primeraOpcionOpsu }}</td>
+                <td>{{ estudiante.segundaOpcionOpsu }}</td>
+                <td>{{ estudiante.sexo }}</td>
+                <td>{% if estudiante.tieneAccesoInternet %}Yes{% else %}No{% endif %}</td>
+                <td>{% if estudiante.esAsignadoOPSU %}Yes{% else %}No{% endif %}</td>
+                <td>{{ estudiante.gestionPlantel }}</td>
+                <td>{{ estudiante.tipoPlantel }}</td>
+                <td>{{ estudiante.nivelSocioeconomico }}</td>
+                <td>{{ estudiante.nivelEstudioPadres }}</td>
+                <td>{{ estudiante.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('estudiante_edit', { 'id': estudiante.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('estudiante_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

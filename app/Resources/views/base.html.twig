@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <noscript>
+        <p class="alert alert-danger">
+            Javascript está deshabilitado en su navegador web. Por favor, para ver correctamente este sitio, <b><i>habilite javascript</i></b>. Para ver las instrucciones para habilitar javascript en su navegador, haga click <a href="http://www.enable-javascript.com/es/" target="_blank">aquí</a>.
+        </p>
+    </noscript>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Bienvenido!{% endblock %}</title>
+        {% block stylesheets %}
+            <script type='text/javascript'>
+            window.onload = detectarCarga;
+            function detectarCarga(){
+            document.getElementById("imgLOAD").style.display="none";
+            }
+            </script>
+            <link href="{{ asset('css/font-awesome.min.css') }}" type="text/css" rel="stylesheet"/>
+            <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
+            <link href="{{ asset('plugins/angular-loading-bar/loading-bar.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet"/>
+            <link rel="icon" type="image/x-icon" href="{{ asset('/img/favicon2.ico') }}"/>
+        {% endblock %}
+
+        
+    </head>
+    <body>
+        <div id="body" class="container">
+        <h3 id="imgLOAD">Cargando...</h3>   
+            {% block body %}
+            {% endblock %}
+        </div>
+        {% block javascripts %}
+
+            <script src="{{ asset('js/angular.min.js') }}"></script>
+            <script src="{{ asset('plugins/angular-loading-bar/loading-bar.min.js') }}"></script>
+            <script src="{{ asset('js/jquery/1.11.3/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js')}}"></script>
+            
+        {% endblock %} 
+    </body>
+</html>

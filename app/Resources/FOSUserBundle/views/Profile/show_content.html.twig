@@ -1,0 +1,71 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Perfil</h3>
+    </div>
+    <div class="panel-body">
+
+        <div class="row form-horizontal" role="form">
+            <div class="col-md-6 col-md-12">
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-6 control-label">{{ 'profile.show.username'|trans }}</label>
+                    <div class="col-sm-10 col-md-6">
+                        <p class="form-control-static">{{ user.username }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-6 control-label">{{ 'profile.show.email'|trans }}</label>
+                    <div class="col-sm-10 col-md-6">
+                        <p class="form-control-static">{{ user.email }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-6 control-label">Rol</label>
+                    <div class="col-sm-10 col-md-6">
+                        {% for role in user.roles %}
+                        <p class="form-control-static">{{ role }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-md-6 control-label">Ultimo acceso</label>
+                    <div class="col-sm-10 col-md-6">
+                        <p class="form-control-static">{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i') }}{% else %}nunca{% endif %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if app.user.id == user.id %}
+        <hr>
+        <a class="btn btn-warning" href="{{ path('fos_user_profile_edit') }}"><i class="fa fa-pencil-square-o fa-lg"></i> Editar</a>
+
+        <a class="btn btn-primary" href="{{ path('fos_user_change_password') }}">Cambiar contraseña</a>
+
+        <a style="float: right;" class="btn btn-default" href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out fa-fw"></i>&nbsp;Salir</a>
+        {% else %}
+            {% if not user.enabled %}
+                {{ form_start(operation_form) }}
+                {{ form_errors(operation_form) }}
+                <button type="submit" id="form_submit" name="form[submit]" class="btn btn-sm btn-success">
+                <i class="fa fa-check"></i>&nbsp;Habilitar Cuenta</button>&nbsp;
+                {{ form_widget(operation_form._token) }}
+                {{ form_end(operation_form, {'render_rest': false}) }}
+            {% else %}
+                {{ form_start(operation_form) }}
+                {{ form_errors(operation_form) }}
+                {% if not user.locked %}
+                    <button type="submit" id="form_submit" name="form[submit]" class="btn btn-sm btn-danger"><i class="fa fa-lock fa-lg"></i>&nbsp;Bloquear</button>&nbsp;
+                {% else %}
+                    <button type="submit" id="form_submit" name="form[submit]" class="btn btn-sm btn-success"><i class="fa fa-unlock fa-lg"></i>&nbsp;Desbloquear</button>&nbsp;
+                {% endif %}
+                {{ form_widget(operation_form._token) }}
+                {{ form_end(operation_form, {'render_rest': false}) }}
+            {% endif %}
+                {# Proximamente
+                <a href="{{ path('user_edit', { id: user.id }) }}" class="btn btn-sm btn-warning">
+                    <i class="fa fa-edit"></i>&nbsp;Editar</a>
+                #}
+        {% endif %}
+
+    </div>
+</div>
