@@ -13,26 +13,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Estudiante extends Usuario
 {
-    private static $carreras = array(
-                "1"=>"Biología",
-                "2"=>"Computación", 
-                "3"=>"Física",
-                "4"=>"Matemática",
-                "5"=>"Química");
+    const CARRERAS = array(
+        "0"=>"Biología",
+        "1"=>"Computación", 
+        "2"=>"Física",
+        "3"=>"Matemática",
+        "4"=>"Química");
+    const NIVELES_EDUCATIVOS = array(
+        "0"=>"No hizo estudios/Escuela Primaria Incompleta",
+        "1"=>"Escuela Primaria Completa/ Escuela Secundaria Incompleta",
+        "2"=>"Escuela Secundaria Completa/Estudio Superior No Universitario Incompleto",
+        "3"=>"Estudio Superior No Universistario Completo/Estudio Universitario Incompleto",
+        "4"=>"Estudio Universitario Completo/Estudios de Posgrado");
+    const NIVELES_SOCIOECONOMICOS = array(
+        "0"=>"Bajo",
+        "1"=>"Medio",
+        "2"=>"Alto");
+    const GESTIONES_PLANTEL = array(
+        "0"=>"Público",
+        "1"=>"Privado");
+    const TIPOS_PLANTEL = array(
+        "0" => "Ciencias básicas",
+        "1" => "Escuela Técnica",
+        "2" => "Parasistemas ",
+        "3" => "Bachillerato integral",
+        "4" => "Institución militar");
 
-    public static function getCarreras() {
-        return self::$carreras;
-    }
-    private static $nivelesEducativos = array(
-        "1"=>"No hizo estudios/Escuela Primaria Incompleta",
-        "2"=>"Escuela Primaria Completa/ Escuela Secundaria Incompleta",
-        "3"=>"Escuela Secundaria Completa/Estudio Superior No Unive. Inco",
-        "4"=>"Estudio Superior No Univer. Completo/Estudio Unive. Inco",
-        "5"=>"Estudio Universitario Completo/Estudios de Posgrado");
-
-    public static function getNivlesEducativos() {
-        return self::$nivelesEducativos;
-    }
 
     /**
      * @var string
@@ -431,10 +437,10 @@ class Estudiante extends Usuario
     /**
      * Set sexo
      *
-     * @param \intger $sexo
+     * @param integer $sexo
      * @return Estudiante
      */
-    public function setSexo(\intger $sexo)
+    public function setSexo($sexo)
     {
         $this->sexo = $sexo;
 
@@ -444,7 +450,7 @@ class Estudiante extends Usuario
     /**
      * Get sexo
      *
-     * @return \intger 
+     * @return integer 
      */
     public function getSexo()
     {

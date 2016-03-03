@@ -22,7 +22,6 @@ class usuarioController extends Controller
      *
      * @Route("/", name="users")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
@@ -30,9 +29,9 @@ class usuarioController extends Controller
         
         $users = $userManager->findUsers();
 
-        return (array(
+        return $this->render('usuario/index.html.twig', array(
             'users' => $users
-        ));
+        ))  ;
     }
 
     /**
@@ -40,7 +39,6 @@ class usuarioController extends Controller
      *
      * @Route("/{id}", requirements={"id" = "\d+"}, name="user_show")
      * @Method("GET")
-     * @Template()
      */
     public function showAction($id)
     {
@@ -65,7 +63,6 @@ class usuarioController extends Controller
      *
      * @Route("/{id}/edit", requirements={"id" = "\d+"}, name="user_edit")
      * @Method("GET")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -113,7 +110,6 @@ class usuarioController extends Controller
      *
      * @Route("/{id}", requirements={"id" = "\d+"}, name="user_update")
      * @Method("PUT")
-     * @Template()
      */
     public function updateAction(Request $request, $id)
     {
