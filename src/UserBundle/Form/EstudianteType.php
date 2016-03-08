@@ -9,6 +9,7 @@ use UserBundle\Entity\Estudiante as estudiante;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use UserBundle\Form\Type\RegistrationType as UserType;
 class EstudianteType extends AbstractType
 {
     /**
@@ -18,6 +19,7 @@ class EstudianteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('usuario', 'user_registration')
             ->add('nombre', TextType::class,
                 array(
                     'label_attr' => array('class' => 'control-label col-xs-3'),
@@ -205,11 +207,6 @@ class EstudianteType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'UserBundle\Entity\Estudiante'
         ));
-    }
-
-    public function getParent()
-    {
-        return 'user_registration';
     }
 
     public function getName()

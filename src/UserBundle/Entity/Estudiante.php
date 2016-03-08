@@ -11,34 +11,48 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="estudiante")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\EstudianteRepository")
  */
-class Estudiante extends Usuario
+class Estudiante
 {
     const CARRERAS = array(
-        "0"=>"Biología",
-        "1"=>"Computación", 
-        "2"=>"Física",
-        "3"=>"Matemática",
-        "4"=>"Química");
+        /*0*/"Biología",
+        /*1*/"Computación", 
+        /*2*/"Física",
+        /*3*/"Matemática",
+        /*4*/"Química");
     const NIVELES_EDUCATIVOS = array(
-        "0"=>"No hizo estudios/Escuela Primaria Incompleta",
-        "1"=>"Escuela Primaria Completa/ Escuela Secundaria Incompleta",
-        "2"=>"Escuela Secundaria Completa/Estudio Superior No Universitario Incompleto",
-        "3"=>"Estudio Superior No Universistario Completo/Estudio Universitario Incompleto",
-        "4"=>"Estudio Universitario Completo/Estudios de Posgrado");
+        /*0*/"No hizo estudios/Escuela Primaria Incompleta",
+        /*1*/"Escuela Primaria Completa/ Escuela Secundaria Incompleta",
+        /*2*/"Escuela Secundaria Completa/Estudio Superior No Universitario Incompleto",
+        /*3*/"Estudio Superior No Universistario Completo/Estudio Universitario Incompleto",
+        /*4*/"Estudio Universitario Completo/Estudios de Posgrado");
     const NIVELES_SOCIOECONOMICOS = array(
-        "0"=>"Bajo",
-        "1"=>"Medio",
-        "2"=>"Alto");
+        /*0*/"Bajo",
+        /*1*/"Medio",
+        /*2*/"Alto");
     const GESTIONES_PLANTEL = array(
-        "0"=>"Público",
-        "1"=>"Privado");
+        /*0*/"Público",
+        /*1*/"Privado");
     const TIPOS_PLANTEL = array(
-        "0" => "Ciencias básicas",
-        "1" => "Escuela Técnica",
-        "2" => "Parasistemas ",
-        "3" => "Bachillerato integral",
-        "4" => "Institución militar");
+        /*0*/"Ciencias básicas",
+        /*1*/"Escuela Técnica",
+        /*2*/"Parasistemas ",
+        /*3*/"Bachillerato integral",
+        /*4*/"Institución militar");
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cedula", type="integer", unique=true, nullable=false)
+     */
+    private $cedula;
+    
+    /**
+     * @var \UserBundle\Entity\Usuario
+     *
+     * @ORM\Id
+     * @ORM\OneToOne(targetEntity="Usuario")
+     */
+    protected $usuario;
 
     /**
      * @var string
@@ -56,13 +70,6 @@ class Estudiante extends Usuario
      */
     private $apellido;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Debe ingresar ")
-     */
-    private $cedula;
     /**
      * @var float
      *
@@ -593,5 +600,28 @@ class Estudiante extends Usuario
     public function getNivelEstudioPadres()
     {
         return $this->nivelEstudioPadres;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \UserBundle\Entity\Usuario $usuario
+     * @return Estudiante
+     */
+    public function setUsuario(\UserBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \UserBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

@@ -42,7 +42,23 @@ class EstudianteController extends Controller
     public function newAction(Request $request)
     {
         $estudiante = new Estudiante();
-        $form = $this->createForm('UserBundle\Form\EstudianteType', $estudiante);
+        $form = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
+            array(
+            'action' => $this->generateUrl('estudiante_new'),
+            'method' => 'POST',
+            'attr'   => array('class' => 'form-horizontal'),
+        ));
+
+        $form
+            ->add('submit', 'submit', array('label' => 'Guardar',
+                                             'attr' => array('class' => 'btn btn-primary' )
+                                             )
+            )
+            ->add('reset', 'reset', array('label' => 'Limpiar',
+                                             'attr' => array('class' => 'btn btn-default' )
+                                             )
+            )
+        ;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
