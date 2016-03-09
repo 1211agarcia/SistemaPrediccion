@@ -27,7 +27,7 @@ class EstudianteType extends AbstractType
                     'class' => 'UserBundle:Usuario',
                     'choice_label' => 'username',
                     'query_builder' => function (UserRepository $er) {
-                        return $er->findByRole('ROLE_ESTUDIANTE');
+                        return $er->findStudentsToCreate('ROLE_ESTUDIANTE');
                     },
                     'label_attr' => array('class' => 'control-label col-xs-3'),
                     'attr'=> array('class' => 'form-control'),

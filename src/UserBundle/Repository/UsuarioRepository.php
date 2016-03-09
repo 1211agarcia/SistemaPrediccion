@@ -16,16 +16,19 @@ class UsuarioRepository extends EntityRepository
 	/**
 	 * @param string $role
 	 *
-	 * @return array
 	 */
-	public function findByRole($role)
+	public function findStudentsToCreate($role)
 	{
 	    $qb = $this->_em->createQueryBuilder();
 	    $qb->select('u')
 	        ->from($this->_entityName, 'u')
 	        ->from("UserBundle\Entity\Estudiante", 'e')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%"'.$role.'"%');
+
+	        //->where('u.roles LIKE :roles')
+	        ->where($qb->expr()->andX(
+                    $qb->expr()->like('u.roles', "'%".$role."%'"),
+                    $qb->expr()->neq('u.id', 'e.usuario')
+        ));
 
 	    return $qb;
 	}
