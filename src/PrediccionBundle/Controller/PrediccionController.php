@@ -13,12 +13,12 @@ class PrediccionController extends Controller
      */
     public function indexAction($n = 5)
     {
-        exec("Rscript my_rscript.R $n");
+        exec("Rscript ..\..\AppBundle\R\my_rscript.R $n");
  
 		  // return image tag
 		  $nocache = rand();
 		return new Response(
-            "<html><body><img src='R/temp.png?$nocache' /></body></html>"
+            "<html><body><img src='../../AppBundle/R/temp.png?$nocache' /></body></html>"
         );
 
     }
