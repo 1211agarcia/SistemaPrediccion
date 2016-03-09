@@ -185,7 +185,7 @@ class Estudiante
      */
     public function getId()
     {
-        return $this->id;
+        return $this->usuario->getId();
     }
 
     /**

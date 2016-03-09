@@ -9,7 +9,10 @@ use UserBundle\Entity\Estudiante as estudiante;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use UserBundle\Form\Type\RegistrationType as UserType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use UserBundle\Repository\UsuarioRepository as UserRepository;
+
 class EstudianteType extends AbstractType
 {
     /**
@@ -19,7 +22,18 @@ class EstudianteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('usuario', 'user_registration')
+            ->add('usuario', EntityType::class, 
+                array(
+                    'class' => 'UserBundle:Usuario',
+                    'choice_label' => 'username',
+                    'query_builder' => function (UserRepository $er) {
+                        return $er->findByRole('ROLE_ESTUDIANTE');
+                    },
+                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'attr'=> array('class' => 'form-control'),
+                    'required' => true,
+                )
+            )
             ->add('nombre', TextType::class,
                 array(
                     'label_attr' => array('class' => 'control-label col-xs-3'),

@@ -21,8 +21,8 @@ class RegistrationType extends AbstractType
                     'required'  => true,
                     'attr'      => array('class' => 'form-control'),
                     'choices'  => array(
-                        '2' => 'Estudiante',
-                        '3' => 'Administrador'),
+                        '1' => 'Estudiante',
+                        '2' => 'Administrador'),
                     ),
                 )
             )
