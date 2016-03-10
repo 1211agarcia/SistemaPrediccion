@@ -6,34 +6,28 @@
     <table>
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
                 <th>Cedula</th>
-                <th>Notaprimero</th>
-                <th>Notasegundo</th>
-                <th>Notatercero</th>
-                <th>Notacuarto</th>
+                <th>1er Año</th>
+                <th>2do Año</th>
+                <th>3er Año</th>
+                <th>4to Año</th>
                 <th>Cantmaterias</th>
                 <th>Promedio</th>
-                <th>Primeraopcionopsu</th>
-                <th>Segundaopcionopsu</th>
+                <th>1ra Opcion</th>
+                <th>2da Opcion</th>
                 <th>Sexo</th>
-                <th>Tieneaccesointernet</th>
-                <th>Esasignadoopsu</th>
-                <th>Gestionplantel</th>
-                <th>Tipoplantel</th>
-                <th>Nivelsocioeconomico</th>
-                <th>Nivelestudiopadres</th>
-                <th>Id</th>
-                <th>Actions</th>
+                <th>Internet</th>
+                <th>Opsu</th>
+                <th>Gestion plantel</th>
+                <th>Tipo plantel</th>
+                <th>Nivel socioeconomico</th>
+                <th>Nivel estudio padres</th>
             </tr>
         </thead>
         <tbody>
         {% for estudiante in estudiantes %}
             <tr>
-                <td><a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}">{{ estudiante.nombre }}</a></td>
-                <td>{{ estudiante.apellido }}</td>
-                <td>{{ estudiante.cedula }}</td>
+                <td><a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}">{{ estudiante.cedula }}</a></td>
                 <td>{{ estudiante.notaPrimero }}</td>
                 <td>{{ estudiante.notaSegundo }}</td>
                 <td>{{ estudiante.notaTercero }}</td>
@@ -43,23 +37,12 @@
                 <td>{{ estudiante.primeraOpcionOpsu }}</td>
                 <td>{{ estudiante.segundaOpcionOpsu }}</td>
                 <td>{{ estudiante.sexo }}</td>
-                <td>{% if estudiante.tieneAccesoInternet %}Yes{% else %}No{% endif %}</td>
-                <td>{% if estudiante.esAsignadoOPSU %}Yes{% else %}No{% endif %}</td>
+                <td>{% if estudiante.tieneAccesoInternet %}Sí{% else %}No{% endif %}</td>
+                <td>{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}</td>
                 <td>{{ estudiante.gestionPlantel }}</td>
                 <td>{{ estudiante.tipoPlantel }}</td>
                 <td>{{ estudiante.nivelSocioeconomico }}</td>
                 <td>{{ estudiante.nivelEstudioPadres }}</td>
-                <td>{{ estudiante.id }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('estudiante_edit', { 'id': estudiante.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
             </tr>
         {% endfor %}
         </tbody>
