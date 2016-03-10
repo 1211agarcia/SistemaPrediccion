@@ -48,11 +48,8 @@ class Usuario extends BaseUser
             case 2:
                 array_push($this->roles, 'ROLE_ADMIN');
                 break;
-            case 3:
-                array_push($this->roles, 'ROLE_SUPER_ADMIN');
-                break;
             default:
-                array_push($this->roles, 'ROLE_USER');
+                array_push($this->roles, 'ROLE_ESTUDIANTE');
                 break;
         }
     }      

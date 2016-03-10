@@ -29,28 +29,28 @@ class EstudianteType extends AbstractType
                     'query_builder' => function (UserRepository $er) {
                         return $er->findStudentsToCreate('ROLE_ESTUDIANTE');
                     },
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'required' => true,
                 )
             )
             ->add('nombre', TextType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'required' => true,
                 )
             )
             ->add('apellido', TextType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'required' => true,
                 )
             )
             ->add('cedula', IntegerType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array(
                         'class' => 'form-control',
                         'min' => 1
@@ -60,7 +60,8 @@ class EstudianteType extends AbstractType
             )
             ->add('notaPrimero', IntegerType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label'=>'1er',
+                    'label_attr' => array('class' => 'control-label2'),
                     'attr'=> array(
                         'class' => 'form-control',
                         'step' => '0.01',
@@ -72,7 +73,8 @@ class EstudianteType extends AbstractType
             )
             ->add('notaSegundo', IntegerType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label'=>'2do',
+                    'label_attr' => array('class' => 'control-label2'),
                     'attr'=> array(
                         'class' => 'form-control',
                         'step' => '0.01',
@@ -84,7 +86,8 @@ class EstudianteType extends AbstractType
             )
             ->add('notaTercero', IntegerType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label'=>'3er',
+                    'label_attr' => array('class' => 'control-label2'),
                     'attr'=> array(
                         'class' => 'form-control',
                         'step' => '0.01',
@@ -96,7 +99,8 @@ class EstudianteType extends AbstractType
             )
             ->add('notaCuarto', IntegerType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label'=>'4to',
+                    'label_attr' => array('class' => 'control-label2'),
                     'attr'=> array(
                         'class' => 'form-control',
                         'step' => '0.01',
@@ -108,7 +112,7 @@ class EstudianteType extends AbstractType
             )
             ->add('cantMaterias', IntegerType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array(
                         'class' => 'form-control',
                         'min' => 1
@@ -118,7 +122,7 @@ class EstudianteType extends AbstractType
             )
             ->add('promedio', IntegerType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array(
                         'class' => 'form-control',
                         'step' => '0.01',
@@ -130,7 +134,8 @@ class EstudianteType extends AbstractType
             )
             ->add('primeraOpcionOpsu', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label'=>'1ra Opción',
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'empty_value' => 'Seleccionar',
                     'choices'  => estudiante::CARRERAS,
@@ -139,7 +144,8 @@ class EstudianteType extends AbstractType
             )
             ->add('segundaOpcionOpsu', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label'=>'2da Opción',
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
                     'choices'  => estudiante::CARRERAS,
@@ -148,7 +154,7 @@ class EstudianteType extends AbstractType
             )
             ->add('sexo', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'choices' => array('0' => 'Masculino', '1' => 'Femenino'),
                     'required' => true,
@@ -156,7 +162,7 @@ class EstudianteType extends AbstractType
             )
             ->add('tieneAccesoInternet', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'placeholder',
                     'choices' => array('Sí' => true, 'No' => false),
@@ -165,7 +171,8 @@ class EstudianteType extends AbstractType
             )
             ->add('esAsignadoOPSU', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label'=>'¿es Asignado?',
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
                     'choices' => array('Sí' => true, 'No' => false),
@@ -176,7 +183,7 @@ class EstudianteType extends AbstractType
             )
             ->add('gestionPlantel', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
                     'choices'  => estudiante::GESTIONES_PLANTEL,
@@ -185,7 +192,7 @@ class EstudianteType extends AbstractType
             )
             ->add('tipoPlantel', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
                     'choices'  => estudiante::TIPOS_PLANTEL,
@@ -194,7 +201,7 @@ class EstudianteType extends AbstractType
             )
             ->add('nivelSocioeconomico', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
                     'choices'  => estudiante::NIVELES_SOCIOECONOMICOS,
@@ -203,7 +210,7 @@ class EstudianteType extends AbstractType
             )
             ->add('nivelEstudioPadres', ChoiceType::class,
                 array(
-                    'label_attr' => array('class' => 'control-label col-xs-3'),
+                    'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
                     'choices'  => estudiante::NIVELES_EDUCATIVOS,
