@@ -41,11 +41,19 @@ class EstudianteController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $estudiantes = $em->getRepository('UserBundle:Usuario')->findStudentsToCreate("ROLE_ESTUDIANTE");
+        dump($estudiantes);
+        if (!(count($estudiantes) > 0 )) {
+            //throw $this->createNotFoundException('Quiero trabajar.');
+            //return $this->redirectToRoute('fos_user_registration_register');
+
+        }
         $estudiante = new Estudiante();
         $form = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
             array(
             'action' => $this->generateUrl('estudiante_new'),
-            'method' => 'POST',
             'attr'   => array('class' => 'form-horizontal'),
         ));
 

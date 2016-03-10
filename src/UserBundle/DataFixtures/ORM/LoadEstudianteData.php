@@ -13,6 +13,8 @@ class LoadEstudianteData extends AbstractFixture implements OrderedFixtureInterf
      */
     public function load(ObjectManager $manager)
     {
+        //$users = $manager->getRepository('UserBundle:Usuario')->findStudentsToCreate("ROLE_ESTUDIANTE");
+        
         $users = $manager->getRepository('UserBundle:Usuario')->findAll();
         foreach ($users as $i=> $user) {
            

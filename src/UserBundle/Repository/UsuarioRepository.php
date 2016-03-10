@@ -17,19 +17,55 @@ class UsuarioRepository extends EntityRepository
 	 * @param string $role
 	 *
 	 */
+	public function findStudentsToCreateQb($role)
+	{
+	    $qb = $this->_em->createQueryBuilder();
+	    $qb->select('u')
+	        ->from($this->_entityName, 'u')
+	        ->from("UserBundle\Entity\Estudiante", 'e')
+
+	        //->where('u.roles LIKE :roles')
+	        ->where($qb->expr()->andX(
+                    $qb->expr()->like('u.roles', "'%".$role."%'"),
+                    $qb->expr()->neq('u.id', 'e.usuario')
+        ));
+
+	    return $qb;
+	}
+	/**
+	 * @param string $role
+	 *
+	 */
 	public function findStudentsToCreate($role)
 	{
 	    $qb = $this->_em->createQueryBuilder();
 	    $qb->select('u')
 	        ->from($this->_entityName, 'u')
-	        //->from("UserBundle\Entity\Estudiante", 'e')
+	        ->from("UserBundle\Entity\Estudiante", 'e')
 
 	        //->where('u.roles LIKE :roles')
 	        ->where($qb->expr()->andX(
-                    $qb->expr()->like('u.roles', "'%".$role."%'")//,
-                    //$qb->expr()->neq('u.id', 'e.usuario')
+                    $qb->expr()->like('u.roles', "'%".$role."%'"),
+                    $qb->expr()->neq('u.id', 'e.usuario')
         ));
 
-	    return $qb;
+	    $query = $qb->getQuery();
+	    $result = $query->getResult();
+		return $result; 
+	}
+	/**
+	 * @param string $role
+	 *
+	 */
+	public function findbyRole($role)
+	{
+	    $qb = $this->_em->createQueryBuilder();
+	    $qb->select('u')
+	        ->from($this->_entityName, 'u')
+	    	->where($qb->expr()->like('u.roles', "'%".$role."%'"));
+
+		$query = $qb->getQuery();
+
+		return $query->getResult(); 
 	}
 }
