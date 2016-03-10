@@ -13,7 +13,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        for ($i=1; $i <= 3 ; $i++) { 
+        for ($i=1; $i <= 50 ; $i++) { 
            
             $user = new User();
             //$user->setIndentityCard($entityCard);
@@ -25,7 +25,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             //$user->setPhone('0412-000000'.$i);
             //$school = $manager->getRepository('DSFacytDomain:School')->findOneById(1);
             //$user->setSchool($school);
-            $user->addRole($i+1);
+            $user->addRole($i);
             
             $user->setEnabled(true);
 

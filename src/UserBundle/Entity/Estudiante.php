@@ -73,28 +73,28 @@ class Estudiante
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $notaPrimero;
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $notaSegundo;
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $notaTercero;
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $notaCuarto ;
@@ -108,7 +108,7 @@ class Estudiante
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $promedio;
@@ -260,7 +260,7 @@ class Estudiante
     /**
      * Set notaPrimero
      *
-     * @param string $notaPrimero
+     * @param float $notaPrimero
      * @return Estudiante
      */
     public function setNotaPrimero($notaPrimero)
@@ -273,7 +273,7 @@ class Estudiante
     /**
      * Get notaPrimero
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaPrimero()
     {
@@ -283,7 +283,7 @@ class Estudiante
     /**
      * Set notaSegundo
      *
-     * @param string $notaSegundo
+     * @param float $notaSegundo
      * @return Estudiante
      */
     public function setNotaSegundo($notaSegundo)
@@ -296,7 +296,7 @@ class Estudiante
     /**
      * Get notaSegundo
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaSegundo()
     {
@@ -306,7 +306,7 @@ class Estudiante
     /**
      * Set notaTercero
      *
-     * @param string $notaTercero
+     * @param float $notaTercero
      * @return Estudiante
      */
     public function setNotaTercero($notaTercero)
@@ -319,7 +319,7 @@ class Estudiante
     /**
      * Get notaTercero
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaTercero()
     {
@@ -329,7 +329,7 @@ class Estudiante
     /**
      * Set notaCuarto
      *
-     * @param string $notaCuarto
+     * @param float $notaCuarto
      * @return Estudiante
      */
     public function setNotaCuarto($notaCuarto)
@@ -342,7 +342,7 @@ class Estudiante
     /**
      * Get notaCuarto
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaCuarto()
     {

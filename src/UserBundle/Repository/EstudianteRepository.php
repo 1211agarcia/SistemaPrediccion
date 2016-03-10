@@ -15,26 +15,20 @@ class EstudianteRepository extends EntityRepository
 	/**
 	 * @param string $role
 	 *
-	 * @return array
 	 */
 	public function findStudentsToCreate($role = "ROLE_ESTUDIANTE")
 	{
 	    $qb = $this->_em->createQueryBuilder();
 	    $qb->select('e')
 	        ->from($this->_entityName, 'e')
-	        //->from("UserBundle\Entity\Usuario", 'u')
-	        ->innerJoin('e.usuario', 'u')
-	        //->join('u.usuario', 'u', 'WITH', 'u.id = ?1', 'e.usuario_id')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%"'.$role.'"%');
+	        ->from("UserBundle\Entity\Usuario", 'u')
+
+	        //->where('u.roles LIKE :roles')
+	        ->where($qb->expr()->andX(
+                    $qb->expr()->like('u.roles', "'%".$role."%'"),
+                    $qb->expr()->neq('u.id', 'e.usuario')
+        ));
 
 	    return $qb;
-	    /*$qb = $this->_em->createQueryBuilder();
-	    $qb->select('u')
-	        ->from($this->_entityName, 'u')
-	        ->where('u.roles LIKE :roles')
-	        ->setParameter('roles', '%"'.$role.'"%');
-
-	    return $qb;*/
 	}
 }
