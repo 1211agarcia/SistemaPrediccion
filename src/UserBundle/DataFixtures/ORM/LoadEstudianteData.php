@@ -23,12 +23,12 @@ class LoadEstudianteData extends AbstractFixture implements OrderedFixtureInterf
             $est->setApellido("apellido ".$i);
             $est->setCedula(20000 + $i);
             
-            $est->setNotaPrimero(rand(100,200)/10);
-            $est->setNotaSegundo(rand(100,200)/10);
-            $est->setNotaTercero(rand(100,200)/10);
-            $est->setNotaCuarto(rand(100,200)/10);
+            $est->setNotaPrimero(rand(1000,2000)/100);
+            $est->setNotaSegundo(rand(1000,2000)/100);
+            $est->setNotaTercero(rand(1000,2000)/100);
+            $est->setNotaCuarto(rand(1000,2000)/100);
             $est->setCantMaterias(rand(40,60));
-            $est->setPromedio(rand(100,200)/10);
+            $est->setPromedio(rand(1000,2000)/100);
             
             $est->setPrimeraOpcionOpsu(rand(0,4));
             $est->setSegundaOpcionOpsu(rand(0,4));
