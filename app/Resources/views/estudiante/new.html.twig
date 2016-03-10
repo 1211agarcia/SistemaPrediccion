@@ -1,11 +1,208 @@
-{% extends 'base.html.twig' %}
+{% extends '::base.html.twig' %}
+{% form_theme form _self %}
+{% block widget_attributes %}
+    id="{{ id }}" name="{{ full_name }}"
+    {% if disabled %} disabled="disabled"{% endif %}
+    {% if required %} required="required"{% endif %}
+    {% for attrname, attrvalue in attr %}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+    {{- " " -}}
+    {% if value is not empty %}
+        value="{{ value }}"
+        ng-init="formData.{{ id }}='{{ value }}';"
+    {% endif %}
+    ng-model="formData.{{ id }}"
+    ng-class="{ error: formInputEstudiante['{{ full_name }}'].$invalid && formInputEstudiante['{{ full_name }}'].$touched, valid: formInputEstudiante['{{ full_name }}'].$valid}"
+{%- endblock widget_attributes -%}
+ 
+{% block form_widget_simple %}
+{% spaceless %}
+    {% set type = type|default('text') %}
+    
+        <input type="{{ type }}" {{ block('widget_attributes') }} />
+        {% if type == "text" %}
+        <p class="text-warning" ng-if="formInputEstudiante['{{ full_name }}'].$error.minlength"><i class="fa fa-exclamation-triangle"></i> Texto muy corto.</p>
+        <p class="text-warning" ng-if="formInputEstudiante['{{ full_name }}'].$error.maxlength"><i class="fa fa-exclamation-triangle"></i> Texto muy largo.</p>
+        {% endif %}
+        {% if type == "date" %}
+        <p class="text-danger" ng-if="formInputEstudiante['{{ full_name }}'].$error.date"><i class="fa fa-exclamation-triangle"></i> Fecha invalida.</p>
+        <p class="text-warning" ng-if="formInputEstudiante['{{full_name}}'].$error.min"><i class="fa fa-exclamation-triangle"></i> Inferior al permitido.</p>
+        <p class="text-warning" ng-if="formInputEstudiante['{{ full_name }}'].$error.max"><i class="fa fa-exclamation-triangle"></i> Superior al permitido.</p>
+        {% endif %}
 
+    <p class="text-danger" ng-if="formInputEstudiante['{{ full_name }}'].$touched && formInputEstudiante['{{ full_name }}'].$error.required"> <i class="fa fa-exclamation-triangle"></i> Este Campo es requerido.</p>
+    {#
+    <!--p>formInputEstudiante['{{ full_name }}'] = "[[ formInputEstudiante['{{ full_name }}'] ]]"</p>
+    <p>formInputEstudiante['{{ full_name }}'].$pristine = [[ formInputEstudiante['{{ full_name }}'].$pristine ]]</p>
+    <p>formInputEstudiante['{{ full_name }}'].$error.required = [[ formInputEstudiante['{{ full_name }}'].$error.required ]]</p>
+    <p>formInputEstudiante['{{ full_name }}'].$error = [[ formInputEstudiante['{{ full_name }}'].$error ]]</p>
+    <p>formInputEstudiante['{{ full_name }}'].$valid = [[ formInputEstudiante['{{ full_name }}'].$valid ]]</p-->#}
+{% endspaceless %}
+{% endblock form_widget_simple %}
+
+{%- block choice_widget_collapsed -%}
+{% spaceless %}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {{- block('choice_widget_options') -}}
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+    <p class="text-danger" ng-show="formInputEstudiante['{{ full_name }}'].$touched && formInputEstudiante['{{ full_name }}'].$error.required"> <i class="fa fa-exclamation-triangle"></i> Este Campo es requerido.</p>
+    {#
+    <!--p>formInputEstudiante['{{ full_name }}'].$error.required = [[ formInputEstudiante['{{ full_name }}'].$error.required ]]</p>
+    <p>formInputEstudiante['{{ full_name }}'].$error = [[ formInputEstudiante['{{ full_name }}'].$error ]]</p>
+    <p>formInputEstudiante['{{ full_name }}'].$valid = [[ formInputEstudiante['{{ full_name }}'].$valid ]]</p -->
+    #}
+{% endspaceless %}
+{%- endblock choice_widget_collapsed -%}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+    <ul class="alert alert-danger">
+        {%- for error in errors -%}
+            <li>{{ error.message }}</li>
+        {%- endfor -%}
+    </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
+{% use 'form_div_layout.html.twig' with form_label %}
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) -%}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty %}
+            {% if label_format is not empty -%}
+                {% set label = label_format|replace({'%name%': name,'%id%': id,}) %}
+            {% else %}
+                {% set label = name|humanize %}
+            {% endif %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}><i class="fa fa-check-circle text-success" ng-show="isValid('{{ full_name }}')"></i>{{ label|trans({}, translation_domain) }}{% if required %}<span style="color:red" title="Este campo es requerido"> (*)</span>
+        {% endif %}
+        {% if 'history' in label_attr.class %}
+            <a data-toggle="modal" href="#{{historyUrl}}"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a>
+        {% endif %}
+        {% if 'help' in label_attr.class %}
+            <a data-toggle="modal" href="#{{helpUrl}}"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+        {% endif %} 
+        </label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+{############################################################################}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/ngTagsInput/ng-tags-input.min.css') }}" type="text/css" rel="stylesheet" />
+    
+    <link href="{{ asset('css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock %} 
 {% block body %}
     <h1>Estudiante creation</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+<fieldset>
+    <legend>Datos Personales:</legend>
+    <div class="form-group col-lg-2">
+        {{ form_row(form.usuario) }}
+    </div>
+    <div class="form-group col-lg-3">
+        {{ form_row(form.cedula) }}
+    </div>
+    <div class="form-group col-lg-3">
+        {{ form_row(form.nombre) }}
+    </div>
+    <div class="form-group col-lg-3">
+        {{ form_row(form.apellido) }}
+    </div>
+    <div class="form-group col-lg-2">
+        {{ form_row(form.sexo) }}
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Datos Academicos:</legend>
+<fieldset class="form-group col-lg-6">
+    <legend>OPSU</legend>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.primeraOpcionOpsu) }}
+    </div>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.segundaOpcionOpsu) }}
+    </div>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.esAsignadoOPSU) }}
+    </div>
+</fieldset>
+<fieldset class="form-group col-lg-4">
+    <legend>Promedio</legend>
+    <div class="form-group col-lg-6">
+        {{ form_row(form.promedio) }}
+    </div>
+    <div class="form-group col-lg-6">
+        {{ form_row(form.cantMaterias) }}
+    </div>
+</fieldset>
+<fieldset class="form-group col-lg-4">
+    <legend>Notas Matematica</legend>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.notaPrimero) }}
+    </div>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.notaSegundo) }}
+    </div>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.notaTercero) }}
+    </div>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.notaCuarto) }}
+    </div>
+</fieldset>
+</fieldset>
+<fieldset>
+    <legend>Datos Socio:</legend>   
+    <div class="form-group col-lg-2">
+        {{ form_row(form.gestionPlantel) }}
+    </div>
+    <div class="form-group col-lg-3">
+        {{ form_row(form.tipoPlantel) }}
+    </div>
+    <div class="form-group col-lg-3">
+        {{ form_row(form.nivelSocioeconomico) }}
+    </div>
+    <div class="form-group col-lg-4">
+        {{ form_row(form.nivelEstudioPadres) }}
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Otro dato de interes:</legend>
+    <div class="form-group col-lg-2">
+        {{ form_row(form.tieneAccesoInternet) }}
+    </div>
+</fieldset>
     {{ form_end(form) }}
 
     <ul>
