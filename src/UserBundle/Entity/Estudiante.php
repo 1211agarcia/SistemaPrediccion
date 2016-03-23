@@ -51,6 +51,7 @@ class Estudiante
      *
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario;
 
@@ -97,7 +98,7 @@ class Estudiante
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
-    private $notaCuarto ;
+    private $notaCuarto;
     /**
      * @var integer
      *
@@ -177,7 +178,12 @@ class Estudiante
      */
     private $nivelEstudioPadres;
 
-
+    /**
+     * @var \AppBundle\Entity\Progreso
+     *
+     * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
+     */
+    private $progreso;
     /**
      * Get id
      *
@@ -623,5 +629,28 @@ class Estudiante
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set progreso
+     *
+     * @param \AppBundle\Entity\Progreso $progreso
+     * @return Estudiante
+     */
+    public function setProgreso(\AppBundle\Entity\Progreso $progreso = null)
+    {
+        $this->progreso = $progreso;
+
+        return $this;
+    }
+
+    /**
+     * Get progreso
+     *
+     * @return \AppBundle\Entity\Progreso 
+     */
+    public function getProgreso()
+    {
+        return $this->progreso;
     }
 }

@@ -13,48 +13,43 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Estudiante
 {
-    public static $CARRERAS = array(
+    const CARRERAS = array(
         /*0*/"Biología",
         /*1*/"Computación", 
         /*2*/"Física",
         /*3*/"Matemática",
         /*4*/"Química");
-    public static $NIVELES_EDUCATIVOS = array(
+    const NIVELES_EDUCATIVOS = array(
         /*0*/"No hizo estudios/Escuela Primaria Incompleta",
         /*1*/"Escuela Primaria Completa/ Escuela Secundaria Incompleta",
         /*2*/"Escuela Secundaria Completa/Estudio Superior No Universitario Incompleto",
         /*3*/"Estudio Superior No Universistario Completo/Estudio Universitario Incompleto",
         /*4*/"Estudio Universitario Completo/Estudios de Posgrado");
-    public static $NIVELES_SOCIOECONOMICOS = array(
+    const NIVELES_SOCIOECONOMICOS = array(
         /*0*/"Bajo",
         /*1*/"Medio",
         /*2*/"Alto");
-    public static $GESTIONES_PLANTEL = array(
+    const GESTIONES_PLANTEL = array(
         /*0*/"Público",
         /*1*/"Privado");
-    public static $TIPOS_PLANTEL = array(
+    const TIPOS_PLANTEL = array(
         /*0*/"Ciencias básicas",
         /*1*/"Escuela Técnica",
         /*2*/"Parasistemas ",
         /*3*/"Bachillerato integral",
         /*4*/"Institución militar");
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-    
+
     /**
      * @var integer
      *
-     * @ORM\Column(name="cedula", type="integer", nullable=false)
+     * @ORM\Column(name="cedula", type="integer", unique=true, nullable=false)
      */
     private $cedula;
     
     /**
      * @var \UserBundle\Entity\Usuario
      *
+     * @ORM\Id
      * @ORM\OneToOne(targetEntity="Usuario")
      */
     protected $usuario;
@@ -78,31 +73,31 @@ class Estudiante
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $notaPrimero;
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $notaSegundo;
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $notaTercero;
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
-    private $notaCuarto ;
+    private $notaCuarto;
     /**
      * @var integer
      *
@@ -113,7 +108,7 @@ class Estudiante
     /**
      * @var float
      *
-     * @ORM\Column(type="decimal")
+     * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $promedio;
@@ -182,7 +177,12 @@ class Estudiante
      */
     private $nivelEstudioPadres;
 
-
+    /**
+     * @var \AppBundle\Entity\Progreso
+     *
+     * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
+     */
+    private $progreso;
     /**
      * Get id
      *
@@ -190,7 +190,7 @@ class Estudiante
      */
     public function getId()
     {
-        return $this->id;
+        return $this->usuario->getId();
     }
 
     /**
@@ -265,7 +265,7 @@ class Estudiante
     /**
      * Set notaPrimero
      *
-     * @param string $notaPrimero
+     * @param float $notaPrimero
      * @return Estudiante
      */
     public function setNotaPrimero($notaPrimero)
@@ -278,7 +278,7 @@ class Estudiante
     /**
      * Get notaPrimero
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaPrimero()
     {
@@ -288,7 +288,7 @@ class Estudiante
     /**
      * Set notaSegundo
      *
-     * @param string $notaSegundo
+     * @param float $notaSegundo
      * @return Estudiante
      */
     public function setNotaSegundo($notaSegundo)
@@ -301,7 +301,7 @@ class Estudiante
     /**
      * Get notaSegundo
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaSegundo()
     {
@@ -311,7 +311,7 @@ class Estudiante
     /**
      * Set notaTercero
      *
-     * @param string $notaTercero
+     * @param float $notaTercero
      * @return Estudiante
      */
     public function setNotaTercero($notaTercero)
@@ -324,7 +324,7 @@ class Estudiante
     /**
      * Get notaTercero
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaTercero()
     {
@@ -334,7 +334,7 @@ class Estudiante
     /**
      * Set notaCuarto
      *
-     * @param string $notaCuarto
+     * @param float $notaCuarto
      * @return Estudiante
      */
     public function setNotaCuarto($notaCuarto)
@@ -347,7 +347,7 @@ class Estudiante
     /**
      * Get notaCuarto
      *
-     * @return string 
+     * @return float 
      */
     public function getNotaCuarto()
     {
@@ -628,5 +628,28 @@ class Estudiante
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set progreso
+     *
+     * @param \AppBundle\Entity\Progreso $progreso
+     * @return Estudiante
+     */
+    public function setProgreso(\AppBundle\Entity\Progreso $progreso = null)
+    {
+        $this->progreso = $progreso;
+
+        return $this;
+    }
+
+    /**
+     * Get progreso
+     *
+     * @return \AppBundle\Entity\Progreso 
+     */
+    public function getProgreso()
+    {
+        return $this->progreso;
     }
 }

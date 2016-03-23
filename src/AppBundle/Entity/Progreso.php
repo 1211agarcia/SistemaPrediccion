@@ -14,13 +14,22 @@ use UserBundle\Entity\Estudiante;
 class Progreso
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var \UserBundle\Entity\Estudiante
      *
-     * @ORM\Id
-     * @ORM\OneToOne(targetEntity="Estudiante")
+     * @ORM\OneToOne(targetEntity="\UserBundle\Entity\Estudiante", inversedBy="progreso")
+     * @ORM\JoinColumn(name="estudiante_id", referencedColumnName="usuario_id")
      */
     private $estudiante;
-
+    
     /**
      * @var \DateTime
      *

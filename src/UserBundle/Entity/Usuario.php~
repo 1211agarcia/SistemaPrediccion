@@ -14,10 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Currently Working: Armando Garcia <1211agarcia@gmail.com>
  * @version 1/02/2016
  *
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="UserBundle\Entity\UsuarioRepository")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\UsuarioRepository")
  * 
- * @author Armando Garcia <1211agarcia@gmail.com>
  */
 class Usuario extends BaseUser
 {
@@ -45,16 +43,13 @@ class Usuario extends BaseUser
     {
         switch($rol){
             case 1:
-                array_push($this->roles, 'ROLE_USER');
+                array_push($this->roles, 'ROLE_ESTUDIANTE');
                 break;
             case 2:
                 array_push($this->roles, 'ROLE_ADMIN');
                 break;
-            case 3:
-                array_push($this->roles, 'ROLE_SUPER_ADMIN');
-                break;
             default:
-                array_push($this->roles, 'ROLE_USER');
+                array_push($this->roles, 'ROLE_ESTUDIANTE');
                 break;
         }
     }      
