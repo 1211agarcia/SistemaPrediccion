@@ -72,7 +72,7 @@ class Ejercicio
 
     public function __construct()
     {
-        $this->soluciones = new ArrayCollection();
+        $this->soluciones = new ArrayCollection(array(new Solucion()));
     }
 
     /**

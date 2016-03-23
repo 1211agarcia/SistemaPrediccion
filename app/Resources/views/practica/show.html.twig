@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Practica</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ practica.id }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{% if practica.data %}{{ practica.data|join(', ') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Inicio</th>
+                <td>{% if practica.inicio %}{{ practica.inicio|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{% if practica.fin %}{{ practica.fin|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{% if practica.estado %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('practica_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('practica_edit', { 'id': practica.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

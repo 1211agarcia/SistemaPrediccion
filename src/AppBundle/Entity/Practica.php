@@ -29,7 +29,7 @@ class Practica
     /**
      * @var array
      *
-     * @ORM\Column(name="data", type="array")
+     * @ORM\Column(name="data", type="json_array")
      */
     private $data;
 
@@ -54,7 +54,7 @@ class Practica
 
     public function __construct()
     {
-        $this->estado = PRACTICA_ESTADO_INICIADA;
+        $this->estado = self::PRACTICA_ESTADO_INICIADA;
         $this->data = new ArrayCollection(array(
                             '0' => array(
                                     'ejercicio' => new Solucion(),
@@ -62,7 +62,7 @@ class Practica
                                     'opcion_2' => new Solucion(),
                                     'opcion_3' => new Solucion(),
                                     'opcion_4' => new Solucion(),
-                                    'respuesta' => new integer()
+                                    'respuesta' => 0
                                 ),
                             '1' => array(
                                     'ejercicio' => new Solucion(),
@@ -70,7 +70,7 @@ class Practica
                                     'opcion_2' => new Solucion(),
                                     'opcion_3' => new Solucion(),
                                     'opcion_4' => new Solucion(),
-                                    'respuesta' => new integer()
+                                    'respuesta' => 0
                                 ),
                             '2' => array(
                                     'ejercicio' => new Solucion(),
@@ -78,7 +78,7 @@ class Practica
                                     'opcion_2' => new Solucion(),
                                     'opcion_3' => new Solucion(),
                                     'opcion_4' => new Solucion(),
-                                    'respuesta' => new integer()
+                                    'respuesta' => 0
                                 ),
                             '3' => array(
                                     'ejercicio' => new Solucion(),
@@ -86,7 +86,7 @@ class Practica
                                     'opcion_2' => new Solucion(),
                                     'opcion_3' => new Solucion(),
                                     'opcion_4' => new Solucion(),
-                                    'respuesta' => new integer()
+                                    'respuesta' => 0
                                 )
                         ));
     }

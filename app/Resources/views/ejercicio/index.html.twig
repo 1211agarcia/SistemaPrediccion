@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ejercicio list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nivel</th>
+                <th>Categoria</th>
+                <th>Tema</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ejercicio in ejercicios %}
+            <tr>
+                <td><a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">{{ ejercicio.id }}</a></td>
+                <td>{{ ejercicio.nivel }}</td>
+                <td>{{ ejercicio.categoria }}</td>
+                <td>{{ ejercicio.tema }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('ejercicio_edit', { 'id': ejercicio.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ejercicio_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

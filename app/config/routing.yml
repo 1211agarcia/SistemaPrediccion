@@ -1,3 +1,15 @@
+app_practica:
+    resource: "@AppBundle/Controller/PracticaController.php"
+    type:     annotation
+
+app_solucion:
+    resource: "@AppBundle/Controller/SolucionController.php"
+    type:     annotation
+
+app_ejercicio:
+    resource: "@AppBundle/Controller/EjercicioController.php"
+    type:     annotation
+
 prediccion:
     resource: "@PrediccionBundle/Controller/"
     type:     annotation

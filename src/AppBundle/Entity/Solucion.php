@@ -56,7 +56,10 @@ class Solucion
      */
     private $tipo;
 
-
+    public function __toString()
+    {
+        return $this->expresion;
+    }
     /**
      * Get id
      *
@@ -204,4 +207,5 @@ class Solucion
     {
         return $this->nivel;
     }
+
 }

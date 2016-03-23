@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Solucion</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ solucion.id }}</td>
+            </tr>
+            <tr>
+                <th>Expresion</th>
+                <td>{{ solucion.expresion }}</td>
+            </tr>
+            <tr>
+                <th>Tema</th>
+                <td>{{ solucion.tema }}</td>
+            </tr>
+            <tr>
+                <th>Categoria</th>
+                <td>{{ solucion.categoria }}</td>
+            </tr>
+            <tr>
+                <th>Nivel</th>
+                <td>{{ solucion.nivel }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ solucion.tipo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('solucion_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('solucion_edit', { 'id': solucion.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

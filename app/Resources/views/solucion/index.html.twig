@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Solucion list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Expresion</th>
+                <th>Tema</th>
+                <th>Categoria</th>
+                <th>Nivel</th>
+                <th>Tipo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for solucion in solucions %}
+            <tr>
+                <td><a href="{{ path('solucion_show', { 'id': solucion.id }) }}">{{ solucion.id }}</a></td>
+                <td>{{ solucion.expresion }}</td>
+                <td>{{ solucion.tema }}</td>
+                <td>{{ solucion.categoria }}</td>
+                <td>{{ solucion.nivel }}</td>
+                <td>{{ solucion.tipo }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('solucion_show', { 'id': solucion.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('solucion_edit', { 'id': solucion.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('solucion_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
