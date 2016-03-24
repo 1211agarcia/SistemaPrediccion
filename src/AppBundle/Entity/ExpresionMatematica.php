@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * expresionMatematicaSolucion
  *
  * @ORM\Table(name="expresion_matematica")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\expresionMatematicaSolucionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ExpresionMatematicaSolucionRepository")
  */
 class ExpresionMatematica
 {
