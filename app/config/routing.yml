@@ -1,9 +1,13 @@
+app_tema:
+    resource: "@AppBundle/Controller/TemaController.php"
+    type:     annotation
+
 app_practica:
     resource: "@AppBundle/Controller/PracticaController.php"
     type:     annotation
 
-app_solucion:
-    resource: "@AppBundle/Controller/SolucionController.php"
+app_expresion_matematica:
+    resource: "@AppBundle/Controller/ExpresionMatematicaController.php"
     type:     annotation
 
 app_ejercicio:

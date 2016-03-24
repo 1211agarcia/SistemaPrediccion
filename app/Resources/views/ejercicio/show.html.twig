@@ -10,16 +10,27 @@
                 <td>{{ ejercicio.id }}</td>
             </tr>
             <tr>
-                <th>Nivel</th>
-                <td>{{ ejercicio.nivel }}</td>
+                <th>Dificultad</th>
+                <td>{{ ejercicio.dificultad }}</td>
             </tr>
             <tr>
-                <th>Categoria</th>
-                <td>{{ ejercicio.categoria }}</td>
+                <th>Enunciado</th>
+                <td>{{ ejercicio.enunciado|raw }}</td>
             </tr>
             <tr>
-                <th>Tema</th>
-                <td>{{ ejercicio.tema }}</td>
+                <th>Solucion Detallada</th>
+                <td>{{ ejercicio.solucionDetallada|raw }}</td>
+            </tr>
+            <tr>
+                <th>Soluciones</th>
+                <td>
+                    <ul>
+                    {% for sol in ejercicio.soluciones %}
+                        <li>{{ sol|raw }}</li>
+                    {% endfor %}
+                    </ul>        
+                </td>
+                    
             </tr>
         </tbody>
     </table>

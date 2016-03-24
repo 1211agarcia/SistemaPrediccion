@@ -95,10 +95,9 @@ class EjercicioController extends Controller
             return $this->redirectToRoute('ejercicio_edit', array('id' => $ejercicio->getId()));
         }
 
-        return $this->render('ejercicio/edit.html.twig', array(
+        return $this->render('ejercicio/new.html.twig', array(
             'ejercicio' => $ejercicio,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
         ));
     }
 

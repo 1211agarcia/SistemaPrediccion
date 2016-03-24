@@ -7,18 +7,15 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nivel</th>
-                <th>Categoria</th>
+                <th>Dificultad</th>
                 <th>Tema</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for ejercicio in ejercicios %}
             <tr>
                 <td><a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">{{ ejercicio.id }}</a></td>
-                <td>{{ ejercicio.nivel }}</td>
-                <td>{{ ejercicio.categoria }}</td>
+                <td>{{ ejercicio.dificultad }}</td>
                 <td>{{ ejercicio.tema }}</td>
                 <td>
                     <ul>

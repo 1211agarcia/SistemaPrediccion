@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ExpresionMatematica</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ expresionMatematica.id }}</td>
+            </tr>
+            <tr>
+                <th>Expresion</th>
+                <td>{{ expresionMatematica.expresion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('expresionmatematica_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('expresionmatematica_edit', { 'id': expresionMatematica.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

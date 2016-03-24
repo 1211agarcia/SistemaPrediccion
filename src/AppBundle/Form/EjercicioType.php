@@ -6,7 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class EjercicioType extends AbstractType
 {
@@ -17,16 +19,29 @@ class EjercicioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nivel')
-            ->add('categoria')
-            ->add('tema')
+            ->add('dificultad', ChoiceType::class,
+                array(
+                    'choices' => array(
+                        1=>'1 - Facil',2=>'2',3=>'3',4=>'4',5=>'5',6=>'6',7=>'7',8=>'8',9=>'9',10=>'10 Dificil')
+                )
+            )
+            ->add('tema', EntityType::class, 
+                array(
+                    'class' => 'AppBundle:Tema',
+                    'choice_label' => 'nombre',
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control'),
+                    'required' => true,
+                )
+            )
             ->add('soluciones', CollectionType::class,
                 array(
-                    'entry_type' => new SolucionType(),
+                    'entry_type' => new ExpresionMatematicaType(),
                     'allow_add'    => true,
                     )
             )
-            ->add('solucionDetallada', new SolucionType())
+            ->add('solucionDetallada')
+            ->add('enunciado')
         ;
     }
     

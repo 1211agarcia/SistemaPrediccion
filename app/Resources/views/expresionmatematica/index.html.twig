@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ExpresionMatematica list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Expresion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for expresionMatematica in expresionMatematicas %}
+            <tr>
+                <td><a href="{{ path('expresionmatematica_show', { 'id': expresionMatematica.id }) }}">{{ expresionMatematica.id }}</a></td>
+                <td>{{ expresionMatematica.expresion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('expresionmatematica_show', { 'id': expresionMatematica.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('expresionmatematica_edit', { 'id': expresionMatematica.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('expresionmatematica_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

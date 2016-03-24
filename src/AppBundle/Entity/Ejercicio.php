@@ -26,31 +26,25 @@ class Ejercicio
     /**
      * @var int
      *
-     * @ORM\Column(name="nivel", type="integer")
+     * @ORM\Column(name="dificultad", type="integer")
      */
-    private $nivel;
+    private $dificultad;
 
     /**
-     * @var string
+     * @var \Tema
      *
-     * @ORM\Column(name="categoria", type="string", length=255)
-     */
-    private $categoria;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tema", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Tema")
+     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id")
      */
     private $tema;
 
     /**
-     * @var array
+     * @var \ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Solucion")
-     * @ORM\JoinTable(name="soluciones",
+     * @ORM\ManyToMany(targetEntity="ExpresionMatematica", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\JoinTable(name="ejercicios_soluciones",
      *      joinColumns={@ORM\JoinColumn(name="ejercicio_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="solucion_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="expresion_id", referencedColumnName="id", unique=true)}
      *      )
      * @Assert\Valid
      * @Assert\Count(
@@ -63,16 +57,22 @@ class Ejercicio
     private $soluciones;
 
     /**
-     * @var \Solucion
+     * @var string
      *
-     * @ORM\OneToOne(targetEntity="Solucion")
-     * @ORM\JoinColumn(name="solucionDetallada_id", referencedColumnName="id")
+     * @ORM\Column(name="solucionDetallada", type="text")
      */
     private $solucionDetallada;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="enunciado", type="text")
+     */
+    private $enunciado;
+
     public function __construct()
     {
-        $this->soluciones = new ArrayCollection(array(new Solucion()));
+        $this->soluciones = new ArrayCollection(array(new ExpresionMatematica()));
     }
 
     /**
@@ -85,96 +85,28 @@ class Ejercicio
         return $this->id;
     }
 
+
     /**
-     * Set nivel
+     * Set dificultad
      *
-     * @param integer $nivel
+     * @param integer $dificultad
      * @return Ejercicio
      */
-    public function setNivel($nivel)
+    public function setDificultad($dificultad)
     {
-        $this->nivel = $nivel;
+        $this->dificultad = $dificultad;
 
         return $this;
     }
 
     /**
-     * Get nivel
+     * Get dificultad
      *
      * @return integer 
      */
-    public function getNivel()
+    public function getDificultad()
     {
-        return $this->nivel;
-    }
-
-    /**
-     * Set categoria
-     *
-     * @param string $categoria
-     * @return Ejercicio
-     */
-    public function setCategoria($categoria)
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return string 
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
-    }
-
-    /**
-     * Set tema
-     *
-     * @param string $tema
-     * @return Ejercicio
-     */
-    public function setTema($tema)
-    {
-        $this->tema = $tema;
-
-        return $this;
-    }
-
-    /**
-     * Get tema
-     *
-     * @return string 
-     */
-    public function getTema()
-    {
-        return $this->tema;
-    }
-
-    /**
-     * Set soluciones
-     *
-     * @param array $soluciones
-     * @return Ejercicio
-     */
-    public function setSoluciones($soluciones)
-    {
-        $this->soluciones = $soluciones;
-
-        return $this;
-    }
-
-    /**
-     * Get soluciones
-     *
-     * @return array 
-     */
-    public function getSoluciones()
-    {
-        return $this->soluciones;
+        return $this->dificultad;
     }
 
     /**
@@ -201,25 +133,90 @@ class Ejercicio
     }
 
     /**
-     * Add soluciones
+     * Set tema
      *
-     * @param \AppBundle\Entity\Solucion $soluciones
+     * @param \AppBundle\Entity\Tema $tema
      * @return Ejercicio
      */
-    public function addSolucione(\AppBundle\Entity\Solucion $soluciones)
+    public function setTema(\AppBundle\Entity\Tema $tema = null)
     {
-        $this->soluciones[] = $soluciones;
+        $this->tema = $tema;
 
         return $this;
     }
 
     /**
-     * Remove soluciones
+     * Get tema
      *
-     * @param \AppBundle\Entity\Solucion $soluciones
+     * @return \AppBundle\Entity\Tema 
      */
-    public function removeSolucione(\AppBundle\Entity\Solucion $soluciones)
+    public function getTema()
     {
-        $this->soluciones->removeElement($soluciones);
+        return $this->tema;
+    }
+
+    /**
+     * Add solucion
+     *
+     * @param \AppBundle\Entity\ExpresionMatematica $solucion
+     * @return Ejercicio
+     */
+    public function addSolucion(\AppBundle\Entity\ExpresionMatematica $solucion)
+    {
+        $this->soluciones[] = $solucion;
+
+        return $this;
+    }
+
+    /**
+     * Remove solucion
+     *
+     * @param \AppBundle\Entity\ExpresionMatematica $solucion
+     */
+    public function removeSolucione(\AppBundle\Entity\ExpresionMatematica $solucion)
+    {
+        $this->soluciones->removeElement($solucion);
+    }
+
+    /**
+     * Remove Soluciones
+     *
+     */
+    public function removeAllSoluciones()
+    {
+        $this->soluciones->clear();
+    }
+
+    /**
+     * Get soluciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSoluciones()
+    {
+        return $this->soluciones;
+    }
+
+    /**
+     * Set enunciado
+     *
+     * @param string $enunciado
+     * @return Ejercicio
+     */
+    public function setEnunciado($enunciado)
+    {
+        $this->enunciado = $enunciado;
+
+        return $this;
+    }
+
+    /**
+     * Get enunciado
+     *
+     * @return string 
+     */
+    public function getEnunciado()
+    {
+        return $this->enunciado;
     }
 }
