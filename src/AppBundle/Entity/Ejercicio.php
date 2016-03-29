@@ -219,4 +219,17 @@ class Ejercicio
     {
         return $this->enunciado;
     }
+
+    /**
+     * Add soluciones
+     *
+     * @param \AppBundle\Entity\ExpresionMatematica $soluciones
+     * @return Ejercicio
+     */
+    public function addSolucione(\AppBundle\Entity\ExpresionMatematica $soluciones)
+    {
+        $this->soluciones[] = $soluciones;
+
+        return $this;
+    }
 }

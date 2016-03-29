@@ -72,7 +72,7 @@ class Ejercicio
 
     public function __construct()
     {
-        $this->soluciones = new ArrayCollection(array(new Solucion()));
+        $this->soluciones = new ArrayCollection(array(new ExpresionMatematica()));
     }
 
     /**
@@ -161,7 +161,7 @@ class Ejercicio
      * @param \AppBundle\Entity\ExpresionMatematica $solucion
      * @return Ejercicio
      */
-    public function addSolucione(\AppBundle\Entity\ExpresionMatematica $solucion)
+    public function addSolucion(\AppBundle\Entity\ExpresionMatematica $solucion)
     {
         $this->soluciones[] = $solucion;
 
@@ -176,6 +176,15 @@ class Ejercicio
     public function removeSolucione(\AppBundle\Entity\ExpresionMatematica $solucion)
     {
         $this->soluciones->removeElement($solucion);
+    }
+
+    /**
+     * Remove Soluciones
+     *
+     */
+    public function removeAllSoluciones()
+    {
+        $this->soluciones->clear();
     }
 
     /**
@@ -209,5 +218,18 @@ class Ejercicio
     public function getEnunciado()
     {
         return $this->enunciado;
+    }
+
+    /**
+     * Add soluciones
+     *
+     * @param \AppBundle\Entity\ExpresionMatematica $soluciones
+     * @return Ejercicio
+     */
+    public function addSolucione(\AppBundle\Entity\ExpresionMatematica $soluciones)
+    {
+        $this->soluciones[] = $soluciones;
+
+        return $this;
     }
 }

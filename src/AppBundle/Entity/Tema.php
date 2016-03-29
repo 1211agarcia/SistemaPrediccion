@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Tema
@@ -38,13 +40,27 @@ class Tema
      *      )
      */
     private $categorias;
+    /**
+     * @ORM\ManyToMany(targetEntity="Tema", mappedBy="hijos")
+     */
+    private $padres;
+    /**
+     * @ORM\ManyToMany(targetEntity="Tema", inversedBy="padres")
+     * @ORM\JoinTable(name="temas_hijos",
+     *      joinColumns={@ORM\JoinColumn(name="tema_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tema_hijo_id", referencedColumnName="id")}
+     *      )
+     */
+    private $hijos;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->categorias = new \Doctrine\Common\Collections\ArrayCollection(array(new Categoria()));
+        $this->categorias = new ArrayCollection(array(new Categoria()));
+        $this->padres = new ArrayCollection();
+        $this->hijos = new ArrayCollection();
     }
 
     public function __toString()
@@ -118,10 +134,77 @@ class Tema
     /**
      * Get categorias
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \ArrayCollection 
      */
     public function getCategorias()
     {
         return $this->categorias;
+    }
+
+    /**
+     * Add padre
+     *
+     * @param \AppBundle\Entity\Tema $padre
+     * @return Tema
+     */
+    public function addPadre(\AppBundle\Entity\Tema $padre)
+    {
+        $this->padres[] = $padre;
+        $padre->addHijo($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove padre
+     *
+     * @param \AppBundle\Entity\Tema $padre
+     */
+    public function removePadre(\AppBundle\Entity\Tema $padre)
+    {
+        $this->padres->removeElement($padre);
+    }
+
+    /**
+     * Get padre
+     *
+     * @return \ArrayCollection
+     */
+    public function getPadres()
+    {
+        return $this->padres;
+    }
+
+    /**
+     * Add hijos
+     *
+     * @param \AppBundle\Entity\Tema $hijo
+     * @return Tema
+     */
+    public function addHijo(\AppBundle\Entity\Tema $hijo)
+    {
+        $this->hijos[] = $hijo;
+
+        return $this;
+    }
+
+    /**
+     * Remove hijos
+     *
+     * @param \AppBundle\Entity\Tema $hijo
+     */
+    public function removeHijo(\AppBundle\Entity\Tema $hijo)
+    {
+        $this->hijos->removeElement($hijo);
+    }
+
+    /**
+     * Get hijos
+     *
+     * @return \ArrayCollection
+     */
+    public function getHijos()
+    {
+        return $this->hijos;
     }
 }
