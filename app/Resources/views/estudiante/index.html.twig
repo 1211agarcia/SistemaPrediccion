@@ -1,27 +1,30 @@
-{% extends 'base.html.twig' %}
-
+{% extends '::base.html.twig' %}
 {% block body %}
-    <h1>Estudiante list</h1>
-
-    <table>
-        <thead>
+<section class="content-header">
+<h1>Estudiantes</h1>
+<ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Incio</a></li>
+    <li><a href="#">Estudiantes</a></li>
+    <li class="active">Listar</li>
+</ol>
+</section>
+<div class="box">
+    <div class="box-body">
+        <table id="tabla-users" class="dataTables_wrapper form-inline dt-bootstrap">
+            <thead>
             <tr>
                 <th>Cedula</th>
                 <th>1er Año</th>
                 <th>2do Año</th>
                 <th>3er Año</th>
                 <th>4to Año</th>
-                <th>Cantmaterias</th>
                 <th>Promedio</th>
-                <th>1ra Opcion</th>
-                <th>2da Opcion</th>
                 <th>Sexo</th>
-                <th>Internet</th>
+                <th>Proviene</th>
                 <th>Opsu</th>
                 <th>Gestion plantel</th>
                 <th>Tipo plantel</th>
                 <th>Nivel socioeconomico</th>
-                <th>Nivel estudio padres</th>
             </tr>
         </thead>
         <tbody>
@@ -34,23 +37,61 @@
                 <td>{{ estudiante.notaCuarto }}</td>
                 <td>{{ estudiante.cantMaterias }}</td>
                 <td>{{ estudiante.promedio }}</td>
-                <td>{{ estudiante.primeraOpcionOpsu }}</td>
-                <td>{{ estudiante.segundaOpcionOpsu }}</td>
                 <td>{{ estudiante.sexo }}</td>
-                <td>{% if estudiante.tieneAccesoInternet %}Sí{% else %}No{% endif %}</td>
                 <td>{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}</td>
                 <td>{{ estudiante.gestionPlantel }}</td>
                 <td>{{ estudiante.tipoPlantel }}</td>
                 <td>{{ estudiante.nivelSocioeconomico }}</td>
-                <td>{{ estudiante.nivelEstudioPadres }}</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
+       </tbody>
+        </table>
+    </div>
+</div>
 
-    <ul>
-        <li>
-            <a href="{{ path('estudiante_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">
+    
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}  
+    <script src="{{ asset('bundles/app/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
+<script> $(document).ready(function() {
+    $('#tabla-users').DataTable({
+        "responsive": true,
+        "scrollX": true,
+        "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ usuarios",
+            "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 usuarios",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ usuarios)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+    });
+} );
+</script>    
 {% endblock %}

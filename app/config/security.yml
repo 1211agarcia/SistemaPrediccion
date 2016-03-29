@@ -6,9 +6,9 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ESTUDIANTE: ROLE_USER
-        ROLE_ADMIN: ROLE_ESTUDIANTE
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ESTUDIANTE: ROLE_ESTUDIANTE
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_SUPER_ADMIN: ROLE_SUPER_ADMIN
 
     providers:
         in_memory:

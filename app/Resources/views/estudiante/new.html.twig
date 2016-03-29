@@ -122,92 +122,104 @@
     <link href="{{ asset('css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
 {% endblock %} 
 {% block body %}
-    <h1>Estudiante creation</h1>
+    <section class="content-header">
+        <h1>Estudiante</h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+              <div class="box box-success">
+                <div class="box-header">
+                  <h3 class="box-title"><i class="fa fa-user-plus"></i> Registro</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+        {{ form_start(form) }}
+        <fieldset>
+            <legend>Datos Personales:</legend>
+            <div class="form-group col-lg-2">
+                {{ form_row(form.usuario) }}
+            </div>
+            <div class="form-group col-lg-3">
+                {{ form_row(form.cedula) }}
+            </div>
+            <div class="form-group col-lg-3">
+                {{ form_row(form.nombre) }}
+            </div>
+            <div class="form-group col-lg-3">
+                {{ form_row(form.apellido) }}
+            </div>
+            <div class="form-group col-lg-2">
+                {{ form_row(form.sexo) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Datos Academicos:</legend>
+        <fieldset class="form-group col-lg-6">
+            <legend>OPSU</legend>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.primeraOpcionOpsu) }}
+            </div>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.segundaOpcionOpsu) }}
+            </div>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.esAsignadoOPSU) }}
+            </div>
+        </fieldset>
+        <fieldset class="form-group col-lg-4">
+            <legend>Promedio</legend>
+            <div class="form-group col-lg-6">
+                {{ form_row(form.promedio) }}
+            </div>
+            <div class="form-group col-lg-6">
+                {{ form_row(form.cantMaterias) }}
+            </div>
+        </fieldset>
+        <fieldset class="form-group col-lg-4">
+            <legend>Notas Matematica</legend>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.notaPrimero) }}
+            </div>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.notaSegundo) }}
+            </div>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.notaTercero) }}
+            </div>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.notaCuarto) }}
+            </div>
+        </fieldset>
+        </fieldset>
+        <fieldset>
+            <legend>Datos Socio:</legend>   
+            <div class="form-group col-lg-2">
+                {{ form_row(form.gestionPlantel) }}
+            </div>
+            <div class="form-group col-lg-3">
+                {{ form_row(form.tipoPlantel) }}
+            </div>
+            <div class="form-group col-lg-3">
+                {{ form_row(form.nivelSocioeconomico) }}
+            </div>
+            <div class="form-group col-lg-4">
+                {{ form_row(form.nivelEstudioPadres) }}
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Otro dato de interes:</legend>
+            <div class="form-group col-lg-2">
+                {{ form_row(form.tieneAccesoInternet) }}
+            </div>
+        </fieldset>
+            {{ form_end(form) }}
 
-    {{ form_start(form) }}
-<fieldset>
-    <legend>Datos Personales:</legend>
-    <div class="form-group col-lg-2">
-        {{ form_row(form.usuario) }}
-    </div>
-    <div class="form-group col-lg-3">
-        {{ form_row(form.cedula) }}
-    </div>
-    <div class="form-group col-lg-3">
-        {{ form_row(form.nombre) }}
-    </div>
-    <div class="form-group col-lg-3">
-        {{ form_row(form.apellido) }}
-    </div>
-    <div class="form-group col-lg-2">
-        {{ form_row(form.sexo) }}
-    </div>
-</fieldset>
-<fieldset>
-    <legend>Datos Academicos:</legend>
-<fieldset class="form-group col-lg-6">
-    <legend>OPSU</legend>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.primeraOpcionOpsu) }}
-    </div>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.segundaOpcionOpsu) }}
-    </div>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.esAsignadoOPSU) }}
-    </div>
-</fieldset>
-<fieldset class="form-group col-lg-4">
-    <legend>Promedio</legend>
-    <div class="form-group col-lg-6">
-        {{ form_row(form.promedio) }}
-    </div>
-    <div class="form-group col-lg-6">
-        {{ form_row(form.cantMaterias) }}
-    </div>
-</fieldset>
-<fieldset class="form-group col-lg-4">
-    <legend>Notas Matematica</legend>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.notaPrimero) }}
-    </div>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.notaSegundo) }}
-    </div>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.notaTercero) }}
-    </div>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.notaCuarto) }}
-    </div>
-</fieldset>
-</fieldset>
-<fieldset>
-    <legend>Datos Socio:</legend>   
-    <div class="form-group col-lg-2">
-        {{ form_row(form.gestionPlantel) }}
-    </div>
-    <div class="form-group col-lg-3">
-        {{ form_row(form.tipoPlantel) }}
-    </div>
-    <div class="form-group col-lg-3">
-        {{ form_row(form.nivelSocioeconomico) }}
-    </div>
-    <div class="form-group col-lg-4">
-        {{ form_row(form.nivelEstudioPadres) }}
-    </div>
-</fieldset>
-<fieldset>
-    <legend>Otro dato de interes:</legend>
-    <div class="form-group col-lg-2">
-        {{ form_row(form.tieneAccesoInternet) }}
-    </div>
-</fieldset>
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('estudiante_index') }}">Back to the list</a>
-        </li>
-    </ul>
+            <ul>
+                <li>
+                    <a href="{{ path('estudiante_index') }}">Back to the list</a>
+                </li>
+            </ul>
+        </div>
+    </section>
 {% endblock %}

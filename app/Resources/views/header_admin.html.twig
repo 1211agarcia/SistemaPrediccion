@@ -1,0 +1,107 @@
+<header class="main-header">
+<!-- Logo -->
+<a href="../../index2.html" class="logo">
+  <!-- mini logo for sidebar mini 50x50 pixels -->
+  <span class="logo-mini"><b>S</b>M</span>
+  <!-- logo for regular state and mobile devices -->
+  <span class="logo-lg"><b>SEPU</b>M</span>
+</a>
+<nav class="navbar navbar-static-top" role="navigation">
+  <!-- Sidebar toggle button-->
+  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+    <span class="sr-only">Toggle navigation</span>
+  </a>
+  <div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+      <!-- User Account Menu -->
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <!-- The user image in the navbar-->
+              <img src="{{asset('bundles/app/dist/img/avatar.png')}}" class="user-image" alt="User Image">
+              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <span class="hidden-xs">{{app.user.username}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- The user image in the menu -->
+              <li class="user-header">
+                <img src="{{asset('bundles/app/dist/img/avatar.png')}}" class="img-circle" alt="User Image">
+                <p>
+                  {{app.user.username}}&nbsp;{{app.user.username}}
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="{{ path('fos_user_profile_show') }}" class="btn btn-default btn-flat">Perfil</a>
+                </div>
+                <div class="pull-right">
+                  <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default btn-flat">Salir</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+    </ul>
+  </div>
+</nav>
+</header>
+{# Columna Derecha de Menu #}
+<aside class="main-sidebar">
+<!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa fa-users"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ path('users')}}"><i class="fa fa-table"></i>&nbsp;Listar</a></li>
+            <li><a href="{{ path('fos_user_registration_register')}}"><i class="fa fa-user-plus"></i>&nbsp;Registrar&nbsp;<small class="label pull-right bg-green">nuevo</small></a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-graduation-cap"></i> <span>Estudiantes</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ path('estudiante_index')}}"><i class="fa fa-table"></i>&nbsp;Listar</a></li>
+            <li><a href="{{ path('estudiante_new')}}"><i class="fa fa-user-plus"></i>&nbsp;Registrar&nbsp;<small class="label pull-right bg-green">nuevo</small></a></li>
+          </ul>
+        </li>
+
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Contenido</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i>Temas<i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="{{ path('tema_index')}}"><i class="fa fa-table"></i>&nbsp;Listar</a></li>
+                <li><a href="{{ path('tema_new')}}"><i class="fa fa-plus"></i>&nbsp;Agregar&nbsp;<small class="label pull-right bg-green">nuevo</small></a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i>Ejercicios<i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="{{ path('ejercicio_index')}}"><i class="fa fa-table"></i>&nbsp;Listar</a></li>
+                <li><a href="{{ path('ejercicio_new')}}"><i class="fa fa-plus"></i>&nbsp;Agregar&nbsp;<small class="label pull-right bg-green">nuevo</small></a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i>Expresiones Matematicas<i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="{{ path('expresionmatematica_index')}}"><i class="fa fa-table"></i>&nbsp;Listar</a></li>
+                <li><a href="{{ path('expresionmatematica_new')}}"><i class="fa fa-plus"></i>&nbsp;Agregar&nbsp;<small class="label pull-right bg-green">nuevo</small></a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#"><i class="fa fa-question-circle text-aqua"></i> <span>Ayuda</span></a></li>
+      </ul>
+    </section>
+<!-- /.sidebar -->
+</aside>

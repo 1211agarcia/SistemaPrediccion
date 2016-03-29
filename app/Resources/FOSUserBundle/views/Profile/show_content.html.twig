@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        {% if true or app.user.id == user.id %}
+        {% if app.user.id == user.id %}
         <hr>
         <a class="btn btn-warning" href="{{ path('fos_user_profile_edit') }}"><i class="fa fa-pencil-square-o fa-lg"></i> Editar</a>
 
