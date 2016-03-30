@@ -13,6 +13,20 @@
                 <th>Nombre</th>
                 <td>{{ tema.nombre }}</td>
             </tr>
+            <tr>
+                <ul>X {{ tema.padres|length }}x
+                {% for padre in tema.padres %}
+                    <li>{{ padre}}</li>
+                {% endfor %}
+                </ul>
+            </tr>
+            <tr>
+                <ul>X
+                {% for hijo in tema.hijos %}
+                    <li>{{ hijo}}</li>
+                {% endfor %}
+                </ul>
+            </tr>
         </tbody>
     </table>
 

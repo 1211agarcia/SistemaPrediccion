@@ -23,7 +23,7 @@ class TemaType extends AbstractType
                     'choice_label' => 'nombre',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control select2',  'multiple'=>'multiple', 'data-placeholder'=>'Select a Padre' ),
-                    'required' => true,
+                    'required' => false,
                 )
             )
             ->add('nombre')

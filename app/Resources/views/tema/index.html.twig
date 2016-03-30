@@ -2,7 +2,6 @@
 
 {% block body %}
     <h1>Tema list</h1>
-
     <table>
         <thead>
             <tr>
@@ -36,4 +35,8 @@
             <a href="{{ path('tema_new') }}">Create a new entry</a>
         </li>
     </ul>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
 {% endblock %}

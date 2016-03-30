@@ -19,3 +19,30 @@
         </li>
     </ul>
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="http://cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('bundles/app/plugins/select2/select2.min.css')}}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+        <!-- Select2 -->
+    <script src="{{ asset('bundles/app/plugins/select2/select2.full.min.js') }}"></script>
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+        });
+        CKEDITOR.replace( 'tema_categorias_0_procedimiento', {
+            extraPlugins: 'mathjax',
+            mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+            height: 200
+        } );
+        
+
+        if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) {
+            document.getElementById( 'ie8-warning' ).className = 'tip alert';
+        }
+    </script>
+{% endblock %}
