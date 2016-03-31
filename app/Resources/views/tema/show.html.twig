@@ -6,6 +6,7 @@
     <table>
         <tbody>
             <tr>
+
                 <th>Id</th>
                 <td>{{ tema.id }}</td>
             </tr>
@@ -14,16 +15,16 @@
                 <td>{{ tema.nombre }}</td>
             </tr>
             <tr>
-                <ul>X {{ tema.padres|length }}x
+                <ul>Padres
                 {% for padre in tema.padres %}
-                    <li>{{ padre}}</li>
+                    <li><a href="{{ path('tema_show', { 'id': padre.id }) }}">{{ padre }}</a></li>
                 {% endfor %}
                 </ul>
             </tr>
             <tr>
-                <ul>X
+                <ul>Hijos
                 {% for hijo in tema.hijos %}
-                    <li>{{ hijo}}</li>
+                    <li><a href="{{ path('tema_show', { 'id': hijo.id }) }}">{{ hijo }}</a></li>
                 {% endfor %}
                 </ul>
             </tr>

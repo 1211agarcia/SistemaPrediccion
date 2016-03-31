@@ -40,16 +40,17 @@ class Tema
      *      )
      */
     private $categorias;
+
     /**
      * @ORM\ManyToMany(targetEntity="Tema", mappedBy="hijos")
-     */
-    private $padres;
-    /**
-     * @ORM\ManyToMany(targetEntity="Tema", inversedBy="padres")
      * @ORM\JoinTable(name="temas_hijos",
      *      joinColumns={@ORM\JoinColumn(name="tema_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="tema_hijo_id", referencedColumnName="id")}
      *      )
+     */
+    private $padres;
+    /**
+     * @ORM\ManyToMany(targetEntity="Tema", inversedBy="padres")
      */
     private $hijos;
 
@@ -59,6 +60,7 @@ class Tema
     public function __construct()
     {
         $this->categorias = new ArrayCollection(array(new Categoria()));
+        
         $this->padres = new ArrayCollection();
         $this->hijos = new ArrayCollection();
     }
@@ -150,7 +152,6 @@ class Tema
     public function addPadre(\AppBundle\Entity\Tema $padre)
     {
         $this->padres[] = $padre;
-        $padre->addHijo($this);
 
         return $this;
     }
@@ -166,9 +167,9 @@ class Tema
     }
 
     /**
-     * Get padre
+     * Get padres
      *
-     * @return \ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getPadres()
     {
@@ -176,7 +177,7 @@ class Tema
     }
 
     /**
-     * Add hijos
+     * Add hijo
      *
      * @param \AppBundle\Entity\Tema $hijo
      * @return Tema
@@ -191,7 +192,7 @@ class Tema
     /**
      * Remove hijos
      *
-     * @param \AppBundle\Entity\Tema $hijo
+     * @param \AppBundle\Entity\Tema $hijos
      */
     public function removeHijo(\AppBundle\Entity\Tema $hijo)
     {
@@ -201,10 +202,11 @@ class Tema
     /**
      * Get hijos
      *
-     * @return \ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getHijos()
     {
         return $this->hijos;
     }
+
 }

@@ -89,10 +89,16 @@ class TemaController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            dump(get_class($tema));
+            dump($tema);
+            /*Brujeria esto DA!*/
+            foreach ($tema->getPadres() as $actual) {
+                $actual->addHijo($tema);
+            }
             $em->persist($tema);
             $em->flush();
 
-            return $this->redirectToRoute('tema_edit', array('id' => $tema->getId()));
+            return $this->redirectToRoute('tema_show', array('id' => $tema->getId()));
         }
 
         return $this->render('tema/edit.html.twig', array(
