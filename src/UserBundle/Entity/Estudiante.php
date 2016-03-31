@@ -38,6 +38,14 @@ class Estudiante
         /*2*/"Parasistemas ",
         /*3*/"Bachillerato integral",
         /*4*/"Institución militar");
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * @var integer
@@ -49,7 +57,6 @@ class Estudiante
     /**
      * @var \UserBundle\Entity\Usuario
      *
-     * @ORM\Id
      * @ORM\OneToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
@@ -184,6 +191,7 @@ class Estudiante
      * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
      */
     private $progreso;
+
     /**
      * Get id
      *
@@ -191,7 +199,7 @@ class Estudiante
      */
     public function getId()
     {
-        return $this->usuario->getId();
+        return $this->$id;
     }
 
     /**

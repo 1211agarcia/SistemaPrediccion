@@ -26,21 +26,21 @@ class Progreso
      * @var \UserBundle\Entity\Estudiante
      *
      * @ORM\OneToOne(targetEntity="\UserBundle\Entity\Estudiante", inversedBy="progreso")
-     * @ORM\JoinColumn(name="estudiante_id", referencedColumnName="usuario_id")
+     * @ORM\JoinColumn(name="estudiante_id", referencedColumnName="id")
      */
     private $estudiante;
     
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="primerEntrenamiento", type="datetimetz")
+     * @ORM\Column(name="primerEntrenamiento", type="datetime")
      */
     private $primerEntrenamiento;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ultimoEntrenamiento", type="datetimetz")
+     * @ORM\Column(name="ultimoEntrenamiento", type="datetime")
      */
     private $ultimoEntrenamiento;
 
