@@ -6,10 +6,43 @@
     <link rel="stylesheet" href="{{asset('bundles/app/plugins/select2/select2.min.css')}}">
 {% endblock %} 
 {% block body %}
+<div class="" ng-controller="newTemaController">
     <h1>Tema creation</h1>
-
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Launch demo modal</button>
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+    <div id="categoriaModal"class="modal modal-primary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Categoria</h4>
+                </div>
+                <div class="modal-body">
+                    <div><label class="label-control">Nombre</label><input type="text" class="form-control" ng-model="categoria.nombre"></div>
+                    <div><label class="label-control">Procedimiento</label> 
+                    <textarea ck-editor ng-model="categoria.procedimiento"></textarea></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-outline" ng-click="addNewCategoria()"  data-dismiss="modal">Aceptar</button>
+                </div>
+                [[ categoria ]]
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <h1>{{ form.categorias|length }}</h1>
+    <fieldset  data-ng-repeat="categoria in categorias">
+        <span>[[ categoria.nombre ]]</span>
+        <div ng-hide="true">
+        <input type="text" value="[[ categoria.nombre]]" ng-model="categoria.nombre" id="[[ 'tema_categorias_'+$index+'_nombre' ]]" name="[['tema[categorias]['+$index+'][nombre]' ]]">
+        <textarea value="[[ categoria.procedimiento]]" ng-model="categoria.procedimiento" id="[[ 'tema_categorias_'+$index+'_procedimiento' ]]" name="[['tema[categorias]['+$index+'][procedimiento]' ]]"></textarea>
+        </div>
+        <button class="remove" ng-show="$last" ng-click="removeCategoria()">-</button>
+   </fieldset>
+    [[ categorias ]]
+        {{ form_row(form.padres) }}
+        {{ form_row(form.nombre) }}
+        <button class="btn btn-primary btn-lx" data-toggle="modal" data-target="#categoriaModal" ng-click="addNewCategoria()">Agregar categoria</button>
         <input type="submit" value="Create" />
     {{ form_end(form) }}
 
@@ -18,26 +51,20 @@
             <a href="{{ path('tema_index') }}">Back to the list</a>
         </li>
     </ul>
+</div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
         <!-- Select2 -->
     <script src="{{ asset('bundles/app/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/angularjs/newTema/newTemaModule.js') }}"></script>
+    <script src="{{ asset('bundles/app/angularjs/newTema/newTemaController.js') }}"></script>
     <script>
         $(function () {
             //Initialize Select2 Elements
             $(".select2").select2();
         });
-        CKEDITOR.replace( 'tema_categorias_0_procedimiento', {
-            extraPlugins: 'mathjax',
-            mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
-            height: 200
-        } );
         
-
-        if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) {
-            document.getElementById( 'ie8-warning' ).className = 'tip alert';
-        }
     </script>
 {% endblock %}
