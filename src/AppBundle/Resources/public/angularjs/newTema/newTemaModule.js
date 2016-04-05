@@ -5,13 +5,15 @@ angular.isUndefinedOrNull = function(val) {
 var newTema = angular.module('newTemaModule', ['chieffancypants.loadingBar']);
 
 newTema.directive('ckEditor', function() {
+  console.log(urlMath);
   return {
     require: '?ngModel',
     link: function(scope, elm, attr, ngModel) {
-      var ck = CKEDITOR.replace(elm[0], extraPlugins: 'mathjax',mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',height: 200);
-      if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) {
-            document.getElementById( 'ie8-warning' ).className = 'tip alert';
-      }
+      var ck = CKEDITOR.replace(elm[0], {
+            extraPlugins: 'mathjax',
+            mathJaxLib: urlMath,
+            height: 200
+        } );
 
       if (!ngModel) return;
 

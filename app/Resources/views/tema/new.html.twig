@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-    <script src="http://cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
     <!-- Select2 -->
     <link rel="stylesheet" href="{{asset('bundles/app/plugins/select2/select2.min.css')}}">
 {% endblock %} 
 {% block body %}
 <div class="" ng-controller="newTemaController">
-    <h1>Tema creation</h1>
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Launch demo modal</button>
+    <h1>Tema</h1>
     {{ form_start(form) }}
     <div id="categoriaModal"class="modal modal-primary">
         <div class="modal-dialog">
@@ -20,31 +18,33 @@
                 <div class="modal-body">
                     <div><label class="label-control">Nombre</label><input type="text" class="form-control" ng-model="categoria.nombre"></div>
                     <div><label class="label-control">Procedimiento</label> 
-                    <textarea ck-editor ng-model="categoria.procedimiento"></textarea></div>
+                    <textarea ck-editor id="editor1" name="editor1" ng-model="categoria.procedimiento"></textarea></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-outline" ng-click="addNewCategoria()"  data-dismiss="modal">Aceptar</button>
+                    <button type="button" class="btn btn-outline" ng-click="saveCategoria()"  data-dismiss="modal">Aceptar</button>
                 </div>
                 [[ categoria ]]
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <h1>{{ form.categorias|length }}</h1>
+    {{ form_row(form.nombre) }}
+    {{ form_row(form.padres) }}
     <fieldset  data-ng-repeat="categoria in categorias">
-        <span>[[ categoria.nombre ]]</span>
+        <span>[[ categoria.nombre ]]<button class="btn btn-warning" data-toggle="modal" data-target="#categoriaModal" ng-click="editAction([[$index]])">Editar</button></span>
         <div ng-hide="true">
         <input type="text" value="[[ categoria.nombre]]" ng-model="categoria.nombre" id="[[ 'tema_categorias_'+$index+'_nombre' ]]" name="[['tema[categorias]['+$index+'][nombre]' ]]">
         <textarea value="[[ categoria.procedimiento]]" ng-model="categoria.procedimiento" id="[[ 'tema_categorias_'+$index+'_procedimiento' ]]" name="[['tema[categorias]['+$index+'][procedimiento]' ]]"></textarea>
         </div>
         <button class="remove" ng-show="$last" ng-click="removeCategoria()">-</button>
-   </fieldset>
+    </fieldset>
     [[ categorias ]]
-        {{ form_row(form.padres) }}
-        {{ form_row(form.nombre) }}
-        <button class="btn btn-primary btn-lx" data-toggle="modal" data-target="#categoriaModal" ng-click="addNewCategoria()">Agregar categoria</button>
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+    <button class="btn btn-primary btn-lx" data-toggle="modal" data-target="#categoriaModal" ng-click="addNewCategoria()">Agregar categoria</button>
+    
+    <input type="submit" value="Create" />
+
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false} ) }}
 
     <ul>
         <li>
@@ -56,15 +56,25 @@
 
 {% block javascripts %}
     {{ parent() }}
-        <!-- Select2 -->
+    <script src="{{asset('bundles/app/plugins/ckeditor/ckeditor.js')}}"></script>
+    <!-- Select2 -->
     <script src="{{ asset('bundles/app/plugins/select2/select2.full.min.js') }}"></script>
-    <script src="{{ asset('bundles/app/angularjs/newTema/newTemaModule.js') }}"></script>
-    <script src="{{ asset('bundles/app/angularjs/newTema/newTemaController.js') }}"></script>
     <script>
         $(function () {
             //Initialize Select2 Elements
             $(".select2").select2();
         });
-        
+        var urlMath = "{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}";
+        console.log(urlMath);
+        /*CKEDITOR.replace( 'editor1', {
+            extraPlugins: 'mathjax',
+            mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+            height: 200
+        } );
+        if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) {
+            document.getElementById( 'ie8-warning' ).className = 'tip alert';
+        }*/
     </script>
+    <script src="{{ asset('bundles/app/angularjs/newTema/newTemaModule.js') }}"></script>
+    <script src="{{ asset('bundles/app/angularjs/newTema/newTemaController.js') }}"></script>
 {% endblock %}
