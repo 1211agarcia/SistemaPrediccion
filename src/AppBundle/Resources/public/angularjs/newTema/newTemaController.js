@@ -7,26 +7,21 @@ newTema.controller('newTemaController', function ($scope) {
     $scope.categoria = {};
     //$scope.formData.tema_categorias = [];
     $scope.categorias = [];
-    $scope.aceptarCategoria = function () {
 
-        // body...
-    }
     $scope.saveCategoria = function() {
-        if(isNew){
+        if($scope.isNew){
             var newItemNo = $scope.categorias.length+1;
             $scope.categorias.push({'id':newItemNo, 'nombre':$scope.categoria.nombre, 'procedimiento':$scope.categoria.procedimiento});
-            $scope.categoria.nombre = "";
-            $scope.categoria.procedimiento = "";
         }
         else
         {
             $scope.categorias[$scope.indexPointer].nombre = $scope.categoria.nombre;
             $scope.categorias[$scope.indexPointer].procedimiento = $scope.categoria.procedimiento;
-            $scope.categoria.nombre = "";
-            $scope.categoria.procedimiento = "";
             $scope.isNew = true
             $scope.indexPointer = 0;
         }
+        $scope.categoria.nombre = "";
+        $scope.categoria.procedimiento = "";
 
     };
     $scope.editAction = function (item) {
