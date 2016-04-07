@@ -13,7 +13,39 @@
         <div class="box box-primary">
             <!-- form start -->
             {{ form_start(form) }}
-            {{ form_end(form) }}
+                <div class="box-body">
+                    {{ form_row(form.nombre) }}
+                    {{ form_row(form.padres) }}
+                    {{ form_label(form.categorias) }}
+                    <fieldset  data-ng-repeat="categoria in categorias">
+                        <div class="input-group input-group-sm">
+                            <span class="form-control">[[ categoria.nombre ]]</span>
+                            [[ categoria.procedimiento ]]
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning btn-flat" data-toggle="modal" data-target="#categoriaModal" ng-click="editAction([[$index]])"><i class="fa fa-edit"></i></button>
+                            </span>
+                        </div>
+
+                        <div ng-hide="false">
+                        <input type="text" value="[[ categoria.nombre ]]" id="[[ 'tema_categorias_'+$index+'_nombre' ]]" name="[['tema[categorias]['+$index+'][nombre]' ]]">
+                        <textarea value="[[ categoria.procedimiento ]]" id="[[ 'tema_categorias_'+$index+'_procedimiento' ]]" name="[['tema[categorias]['+$index+'][procedimiento]' ]]"></textarea>
+                        </div>
+                        <button class="remove" ng-show="$last" ng-click="removeCategoria()">-</button>
+                    </fieldset>
+                    [[ categorias ]]
+                    <button class="btn btn-success btn-sm btn-flat" data-toggle="modal" data-target="#categoriaModal" ng-click="addNewCategoria()"><i class="fa fa-plus"></i>&nbsp;Agregar</button>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-danger btn-flat" href="{{ path('tema_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="tema_submit" name="tema[submit]"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                </div>
+            {{ form_row(form._token) }}
+            
+                    {#
+                    {{ form_widget(form) }}
+                    <input type="submit" value="Create" />
+                    #}
+            {{ form_end(form, {'render_rest': false}) }}
             {#, 'render_rest': false} #}
         </div>
     </section>

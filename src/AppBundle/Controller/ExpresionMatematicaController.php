@@ -44,7 +44,7 @@ class ExpresionMatematicaController extends Controller
         $expresionMatematica = new ExpresionMatematica();
         $form = $this->createForm('AppBundle\Form\ExpresionMatematicaType', $expresionMatematica);
         $form->handleRequest($request);
-        dump($form);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($expresionMatematica);

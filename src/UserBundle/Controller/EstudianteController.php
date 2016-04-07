@@ -53,8 +53,7 @@ class EstudianteController extends Controller
         $estudiante = new Estudiante();
         $form = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
             array(
-            'action' => $this->generateUrl('estudiante_new'),
-            'attr'   => array('class' => 'form-horizontal'),
+            'action' => $this->generateUrl('estudiante_new')
         ));
 
         $form
