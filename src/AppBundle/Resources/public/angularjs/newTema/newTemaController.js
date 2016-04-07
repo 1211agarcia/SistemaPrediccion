@@ -8,6 +8,10 @@ newTema.controller('newTemaController', function ($scope) {
     //$scope.formData.tema_categorias = [];
     $scope.categorias = [];
 
+    $scope.addNewCategoria = function(){
+        $scope.categoria.nombre = "";
+        $scope.categoria.procedimiento = "";
+    }
     $scope.saveCategoria = function() {
         if($scope.isNew){
             var newItemNo = $scope.categorias.length+1;
@@ -22,6 +26,7 @@ newTema.controller('newTemaController', function ($scope) {
         }
         $scope.categoria.nombre = "";
         $scope.categoria.procedimiento = "";
+        console.log($scope.categorias);
 
     };
     $scope.editAction = function (item) {

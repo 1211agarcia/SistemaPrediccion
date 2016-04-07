@@ -76,6 +76,6 @@ newTema.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadingBar)
 
   });
 
-angular.element(document).ready(function() {
+/*angular.element(document).ready(function() {
       angular.bootstrap(document, ['newTemaModule']);
-});
+});*/

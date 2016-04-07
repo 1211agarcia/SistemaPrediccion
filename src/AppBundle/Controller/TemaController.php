@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Tema;
 use AppBundle\Form\TemaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Tema controller.
@@ -43,6 +44,8 @@ class TemaController extends Controller
     {
         $tema = new Tema();
         $form = $this->createForm('AppBundle\Form\TemaType', $tema);
+        dump($form);
+        //$form->add('submit', submitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

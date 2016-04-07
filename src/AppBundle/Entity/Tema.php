@@ -59,7 +59,7 @@ class Tema
      */
     public function __construct()
     {
-        $this->categorias = new ArrayCollection(array(new Categoria()));
+        $this->categorias = new ArrayCollection();
         
         $this->padres = new ArrayCollection();
         $this->hijos = new ArrayCollection();
