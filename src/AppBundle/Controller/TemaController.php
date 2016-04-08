@@ -86,7 +86,7 @@ class TemaController extends Controller
      */
     public function editAction(Request $request, Tema $tema)
     {
-        $deleteForm = $this->createDeleteForm($tema);
+        //$deleteForm = $this->createDeleteForm($tema);
         $editForm = $this->createForm('AppBundle\Form\TemaType', $tema);
         $editForm->handleRequest($request);
 
@@ -104,10 +104,10 @@ class TemaController extends Controller
             return $this->redirectToRoute('tema_show', array('id' => $tema->getId()));
         }
 
-        return $this->render('tema/edit.html.twig', array(
+        return $this->render('tema/new.html.twig', array(
             'tema' => $tema,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
+            'edition' => true,
         ));
     }
 
