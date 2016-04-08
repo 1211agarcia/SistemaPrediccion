@@ -43,7 +43,8 @@ class TemaController extends Controller
     public function newAction(Request $request)
     {
         $tema = new Tema();
-        $form = $this->createForm('AppBundle\Form\TemaType', $tema);
+        $form = $this->createForm('AppBundle\Form\TemaType', $tema,
+            array('action' => $this->generateUrl('tema_new')));
         $form->add('submit', 'submit');
             
         $form->handleRequest($request);
@@ -70,16 +71,13 @@ class TemaController extends Controller
      */
     public function showAction(Tema $tema)
     {
-        $deleteForm = $this->createDeleteForm($tema);
-
         return $this->render('tema/show.html.twig', array(
             'tema' => $tema,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing Tema entity.
+     * Displays a form to edit an existing Tema entcity.
      *
      * @Route("/{id}/edit", name="tema_edit")
      * @Method({"GET", "POST"})
@@ -87,7 +85,9 @@ class TemaController extends Controller
     public function editAction(Request $request, Tema $tema)
     {
         //$deleteForm = $this->createDeleteForm($tema);
-        $editForm = $this->createForm('AppBundle\Form\TemaType', $tema);
+        $editForm = $this->createForm('AppBundle\Form\TemaType', $tema/*,
+            array('action' => $this->generateUrl('tema_edit')));
+        $form->add('submit', 'submit'*/);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -107,43 +107,7 @@ class TemaController extends Controller
         return $this->render('tema/new.html.twig', array(
             'tema' => $tema,
             'form' => $editForm->createView(),
-            'edition' => true,
+            'edition' => $tema->getId(),
         ));
-    }
-
-    /**
-     * Deletes a Tema entity.
-     *
-     * @Route("/{id}", name="tema_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Tema $tema)
-    {
-        $form = $this->createDeleteForm($tema);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($tema);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('tema_index');
-    }
-
-    /**
-     * Creates a form to delete a Tema entity.
-     *
-     * @param Tema $tema The Tema entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Tema $tema)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('tema_delete', array('id' => $tema->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }

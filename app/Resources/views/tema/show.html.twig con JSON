@@ -3,30 +3,24 @@
 {% block body %}
 <div ng-controller="showTemaController">
     <section class="content-header">
-        <h1>{{tema.nombre}}&nbsp;<small>Tema</small></h1>
+        <h1>[[tema.nombre]]&nbsp;<small>Tema</small></h1>
     </section>
     <section class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <ul>Temas Padres
-                {% for padre in tema.padres %}
-                    <li><a class="" href="{{ path('tema_show', { 'id': padre.id }) }}">{{ padre }}&nbsp;<i class="fa fa-arrow-circle-right"></i></a></li>
-                {% endfor %}
+                    <li ng-repeat="padre in tema.padres"><a class="" href="{{ path('tema_show', { 'id': 1 }) }}">[[padre]]&nbsp;<i class="fa fa-arrow-circle-right"></i></a></li>
                 </ul>
                 <ul>Categorias
-                {% for categoria in tema.categorias %}
-                    <li><a ng-init="addCategoria('{{categoria.nombre}}','{{categoria.procedimiento}}');" href="#" data-toggle="modal" data-target="#categoriaModal" ng-click="openAction({{loop.index0}})">{{ categoria }}</a></li>
-                {% endfor %}
+                    <li ng-repeat="categoria in tema.categorias"><a href="#" data-toggle="modal" data-target="#categoriaModal" ng-click="openAction([[$index]])">[[categoria]]</a></li>
                 </ul>
                 <ul>Temas Hijos
-                {% for hijo in tema.hijos %}
-                    <li><a class="" href="{{ path('tema_show', { 'id': hijo.id }) }}">{{ hijo }}&nbsp;<i class="fa fa-arrow-circle-right"></i></a></li>
-                {% endfor %}
+                    <li ng-repeat="hijo in tema.hijos"><a class="" href="{{ path('tema_show', { 'id': 1 }) }}">[[hijo]]&nbsp;<i class="fa fa-arrow-circle-right"></i></a></li>
                 </ul>
             </div>
             <div class="box-footer">
                 <a class="btn btn-default btn-flat" href="{{ path('tema_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;ir a lista</a>
-                <a class="btn btn-warning btn-flat pull-right" href="{{ path('tema_edit', { 'id': tema.id }) }}"><i class="fa fa-edit"></i>&nbsp;Editar</a>
+                <a class="btn btn-warning btn-flat pull-right" href="{{ path('tema_edit', { 'id': 1 }) }}"><i class="fa fa-edit"></i>&nbsp;Editar</a>
             </div>
         </div>
     </section>
@@ -52,25 +46,15 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-/*
           var response = "{{ tema }}";
           var div = document.createElement('div');
           div.innerHTML = response;
           response = div.firstChild.nodeValue;
           response = JSON.parse(response);
           console.log("response",response);
-        function getJSonObject(value) {
-            return $.parseJSON(value.replace(/&quot;/ig, '"'));
-        }
-
-        var storeJSON = getJSonObject("{{tema.categorias|json_encode()}}");
-        console.log(storeJSON);
-        $.each(storeJSON, function(k,v){
-            alert('Key = ' + k + '\n' + 'Value = ' + v);
-        });*/
     </script>
     
-    <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>
+    <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js') }}"></script>
 
 {% javascripts
     '@AppBundle/Resources/public/angularjs/showTema/showTemaModule.js'

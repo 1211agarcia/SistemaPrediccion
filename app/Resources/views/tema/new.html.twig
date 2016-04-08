@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{asset('bundles/app/plugins/select2/select2.min.css')}}">
 {% endblock %} 
 {% block body %}
-<div class="" ng-controller="newTemaController">
+<div ng-controller="newTemaController">
     <section class="content-header">
         <h1>Tema&nbsp;<small class="label {% if edition is defined %}bg-yellow">Edición{% else %}bg-green">Nuevo{% endif %}</small></h1>
     </section>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-danger btn-flat" href="{{ path('tema_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                    <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('tema_show', { 'id': edition }) }}{% else %}{{ path('tema_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
                     <button class="btn btn-primary btn-flat pull-right" type="submit" id="tema_submit" name="tema[submit]"><i class="fa fa-save"></i>&nbsp;Guardar</button>
                 </div>
             {{ form_row(form._token) }}
