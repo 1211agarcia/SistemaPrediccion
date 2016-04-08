@@ -43,12 +43,9 @@ class TemaController extends Controller
     public function newAction(Request $request)
     {
         $tema = new Tema();
-        $form = $this->createForm('AppBundle\Form\TemaType', $tema, array(
-            'action' => $this->generateUrl('tema_new')
-        ));
-        
-        dump($form);
-        //$form->add('submit', submitType::class);
+        $form = $this->createForm('AppBundle\Form\TemaType', $tema);
+        $form->add('submit', 'submit');
+            
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

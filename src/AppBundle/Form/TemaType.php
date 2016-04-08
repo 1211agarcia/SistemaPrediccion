@@ -39,7 +39,9 @@ class TemaType extends AbstractType
                 array(
                     'label_attr' => array('class' => 'control-label'),
                     'entry_type' => new CategoriaType(),
-                    'allow_add'    => true,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'prototype' => true,
                     )
             )
         ;

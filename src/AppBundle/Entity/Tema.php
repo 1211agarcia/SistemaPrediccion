@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -38,6 +39,13 @@ class Tema
      *      joinColumns={@ORM\JoinColumn(name="tema_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="categoria_id", referencedColumnName="id", unique=true)}
      *      )
+     * @Assert\Valid
+     * @Assert\Count(
+     *      min = "1",
+     *      max = "10",
+     *      minMessage = "Debe tener al menos 1 Categoria",
+     *      maxMessage = "Sólo puede tener como maximo {{ limit }} Categorias"
+     * )
      */
     private $categorias;
 
