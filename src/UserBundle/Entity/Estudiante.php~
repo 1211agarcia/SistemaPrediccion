@@ -38,6 +38,14 @@ class Estudiante
         /*2*/"Parasistemas ",
         /*3*/"Bachillerato integral",
         /*4*/"Institución militar");
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
      * @var integer
@@ -49,8 +57,8 @@ class Estudiante
     /**
      * @var \UserBundle\Entity\Usuario
      *
-     * @ORM\Id
      * @ORM\OneToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario;
 
@@ -183,6 +191,16 @@ class Estudiante
      * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
      */
     private $progreso;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tema", inversedBy="estudiantes")
+     * @ORM\JoinTable(name="temas_estudiantes",
+     *      joinColumns={@ORM\JoinColumn(name="estudiante_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tema_id", referencedColumnName="id")}
+     *      )
+     */
+    private $temas;
+
     /**
      * Get id
      *
@@ -190,7 +208,7 @@ class Estudiante
      */
     public function getId()
     {
-        return $this->usuario->getId();
+        return $this->$id;
     }
 
     /**
@@ -651,5 +669,45 @@ class Estudiante
     public function getProgreso()
     {
         return $this->progreso;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->temas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add temas
+     *
+     * @param \AppBundle\Entity\Tema $temas
+     * @return Estudiante
+     */
+    public function addTema(\AppBundle\Entity\Tema $temas)
+    {
+        $this->temas[] = $temas;
+
+        return $this;
+    }
+
+    /**
+     * Remove temas
+     *
+     * @param \AppBundle\Entity\Tema $temas
+     */
+    public function removeTema(\AppBundle\Entity\Tema $temas)
+    {
+        $this->temas->removeElement($temas);
+    }
+
+    /**
+     * Get temas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTemas()
+    {
+        return $this->temas;
     }
 }

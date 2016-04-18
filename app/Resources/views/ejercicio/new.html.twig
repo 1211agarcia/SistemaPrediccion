@@ -4,22 +4,78 @@
     <script src="http://cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
 {% endblock %} 
 {% block body %}
-    <h1>Ejercicio creation</h1>
+<div ng-controller="newEjercicioController">
+    <section class="content-header">
+        <h1>Ejercicio&nbsp;<small class="label {% if edition is defined %}bg-yellow">Edición{% else %}bg-green">Nuevo{% endif %}</small></h1>
+    </section>
+    <section class="content">
+        <div class="box box-primary">
+            <!-- form start -->
+            {{ form_start(form) }}
+                <div class="box-body">
+                    {{ form_errors(form) }}
+                    {{ form_row(form.dificultad) }}
+                    {{ form_row(form.tema) }}
+                    <div ng-init="{% for i in form.soluciones %}addSolucion('{{ i.tema.vars.value}}', '{{ i.expresion.vars.value}}');{% endfor %}">
+                        {{ form_label(form.soluciones) }}
+                        {{ form_errors(form.soluciones) }}
+                        <fieldset data-ng-repeat="solucion in soluciones">
+                            <div class="input-group">
+                                <span class="form-control">[[ solucion.expresion ]]</span>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-default btn-flat" data-toggle="modal" data-target="#solucionModal" ng-click="editAction([[$index]])"><i class="fa fa-edit text-yellow"></i></a>
+                                </span>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-default btn-flat" ng-click="removeAction([[$index]])"><i class="fa fa-trash text-red"></i></a>
+                                </span>
+                            </div>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('ejercicio_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                            <div ng-hide="true">
+                            <input type="text" value="[[ solucion.tema ]]" id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[solucions]['+$index+'][tema]' ]]">
+                            <textarea id="[[ 'ejercicio_soluciones_'+$index+'_expresion' ]]" name="[['ejercicio[soluciones]['+$index+'][expresion]' ]]">[[ solucion.expresion ]]</textarea>
+                            </div>
+                        </fieldset>
+                        <a class="btn btn-success btn-xs btn-flat" data-toggle="modal" data-target="#solucionModal" ng-click="addNewSolucion()"><i class="fa fa-plus"></i>&nbsp;Agregar</a>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('ejercicio_show', { 'id': edition }) }}{% else %}{{ path('ejercicio_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="ejercicio_submit" name="ejercicio[submit]"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                </div>
+            {{ form_row(form._token) }}
+            
+                    {#
+                    {{ form_widget(form.solucions) }}
+                    <input type="submit" value="Create" />
+                    #}
+            {{ form_end(form) }}
+            {#, 'render_rest': false} #}
+        </div>
+    </section>
+    <div id="solucionModal"class="modal modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Solución</h4>
+                </div>
+                <div class="modal-body">
+                    <div><label class="label-control">Nombre&nbsp;<i class="fa fa-asterisk text-red" title="Campo requerido"></i></label><input type="text" class="form-control" ng-model="solucion.nombre"></div>
+                    <div><label class="label-control">Expresion&nbsp;<i class="fa fa-asterisk text-red" title="Campo requerido"></i></label> 
+                    <textarea ck-editor id="editor1" name="editor1" ng-model="solucion.expresion"></textarea></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Cancelar</button>
+                    <button type="button" class="btn btn-success" ng-click="saveSolucion()"  data-dismiss="modal" ng-disabled="invalidSolucion"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script>
+    {#<script>
         CKEDITOR.replace( 'ejercicio_enunciado', {
             extraPlugins: 'mathjax',
             mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
@@ -38,8 +94,15 @@
             height: 200
         } );
 
-        if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) {
-            document.getElementById( 'ie8-warning' ).className = 'tip alert';
-        }
+    </script>#}
+    <script src="{{asset('bundles/app/plugins/ckeditor/ckeditor.js')}}"></script>
+    <script>
+        var urlMath = "{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}";
+        console.log(urlMath);
     </script>
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/newEjercicio/newEjercicioModule.js'
+        '@AppBundle/Resources/public/angularjs/newEjercicio/newEjercicioController.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

@@ -2,9 +2,9 @@ angular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null || val === '';
 }
 
-var newTema = angular.module('AppModule', ['chieffancypants.loadingBar']);
+var newEjercicio = angular.module('AppModule', ['chieffancypants.loadingBar']);
 
-newTema.directive('ckEditor', function() {
+newEjercicio.directive('ckEditor', function() {
   console.log(urlMath);
   return {
     require: '?ngModel',
@@ -30,7 +30,7 @@ newTema.directive('ckEditor', function() {
   };
 });
 
-newTema.directive('stringToNumber', function() {
+newEjercicio.directive('stringToNumber', function() {
   return {
     require: 'ngModel',
     link: function(scope, element, attrs, ngModel) {
@@ -44,16 +44,16 @@ newTema.directive('stringToNumber', function() {
   };
 });
 
-newTema.config(function($interpolateProvider){
+newEjercicio.config(function($interpolateProvider){
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
 });
 
-newTema.config(function(cfpLoadingBarProvider) {
+newEjercicio.config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeBar = true;
     cfpLoadingBarProvider.latencyThreshold = 500;
   });
 
-newTema.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadingBar) {
+newEjercicio.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadingBar) {
     $scope.posts = [];
     $scope.section = null;
     $scope.subreddit = null;
@@ -77,5 +77,5 @@ newTema.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadingBar)
   });
 
 /*angular.element(document).ready(function() {
-      angular.bootstrap(document, ['newTemaModule']);
+      angular.bootstrap(document, ['newEjercicioModule']);
 });*/

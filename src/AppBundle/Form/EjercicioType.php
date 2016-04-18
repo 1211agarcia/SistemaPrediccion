@@ -21,6 +21,7 @@ class EjercicioType extends AbstractType
         $builder
             ->add('dificultad', ChoiceType::class,
                 array(
+                    'attr'=> array('class' => 'form-control'),
                     'choices' => array(
                         1=>'1 - Facil',2=>'2',3=>'3',4=>'4',5=>'5',6=>'6',7=>'7',8=>'8',9=>'9',10=>'10 Dificil')
                 )
