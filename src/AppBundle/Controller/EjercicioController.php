@@ -42,7 +42,9 @@ class EjercicioController extends Controller
     public function newAction(Request $request)
     {
         $ejercicio = new Ejercicio();
-        $form = $this->createForm('AppBundle\Form\EjercicioType', $ejercicio);
+        $form = $this->createForm('AppBundle\Form\EjercicioType', $ejercicio,
+            array('action' => $this->generateUrl('ejercicio_new')));
+        $form->add('submit', 'submit');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

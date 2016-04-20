@@ -5,31 +5,29 @@ newEjercicio.controller('newEjercicioController', function ($scope) {
     $scope.formData = {};
     //indice que apunta a la solucion a editar o crear
     $scope.indexPointer = 0;
-    $scope.solucion = {};
+    //$scope.solucionExpresion = "";
     //$scope.formData.tema_soluciones = [];
     $scope.soluciones = [];
 
     $scope.invalidSolucionFunc = function () {
-        $scope.invalidsolucion = (angular.isUndefinedOrNull($scope.solucion.tema) || angular.isUndefinedOrNull($scope.solucion.expresion));
+        $scope.invalidSolucion = (angular.isUndefinedOrNull($scope.solucionExpresion));
     }
     $scope.$watch($scope.invalidSolucionFunc);
-    $scope.addSolucion = function (tema, expresion) {
+    $scope.addSolucion = function (expresion) {
         var newItemNo = $scope.soluciones.length+1;
-        $scope.soluciones.push({'id':newItemNo, 'tema':tema, 'expresion':expresion});        
+        $scope.soluciones.push({'id':newItemNo, 'expresion':expresion});        
     }
     $scope.addNewSolucion = function(){
-        $scope.solucion.tema = "";
-        $scope.solucion.expresion = "";
+        $scope.solucionExpresion = "";
     }
     $scope.saveSolucion = function() {
         if($scope.isNew){
             var newItemNo = $scope.soluciones.length+1;
-            $scope.soluciones.push({'id':newItemNo, 'tema':$scope.solucion.tema, 'expresion':$scope.solucion.expresion});
+            $scope.soluciones.push({'id':newItemNo, 'expresion':$scope.solucionExpresion});
         }
         else
         {
-            $scope.soluciones[$scope.indexPointer].tema = $scope.solucion.tema;
-            $scope.soluciones[$scope.indexPointer].expresion = $scope.solucion.expresion;
+            $scope.soluciones[$scope.indexPointer].expresion = $scope.solucionExpresion;
             $scope.isNew = true
             $scope.indexPointer = 0;
         }
@@ -37,8 +35,7 @@ newEjercicio.controller('newEjercicioController', function ($scope) {
     };
     $scope.editAction = function (item) {
         $scope.isNew = false;
-        $scope.solucion.tema = $scope.soluciones[item].tema;
-        $scope.solucion.expresion = $scope.soluciones[item].expresion;
+        $scope.solucionExpresion = $scope.soluciones[item].expresion;
         $scope.indexPointer = item;
     }
     $scope.removeAction = function (item) {

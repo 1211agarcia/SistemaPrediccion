@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}
-    <script src="http://cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
-{% endblock %} 
+
 {% block body %}
 <div ng-controller="newEjercicioController">
     <section class="content-header">
@@ -15,8 +12,13 @@
                 <div class="box-body">
                     {{ form_errors(form) }}
                     {{ form_row(form.dificultad) }}
-                    {{ form_row(form.tema) }}
-                    <div ng-init="{% for i in form.soluciones %}addSolucion('{{ i.tema.vars.value}}', '{{ i.expresion.vars.value}}');{% endfor %}">
+                    <div>
+                        {{ form_errors(form.tema) }}
+                        {{ form_label(form.tema) }}
+                        {{ form_widget(form.tema, { 'attr': { 'ng-model':'formData.tema'} }) }}
+                    </div>
+                    {{ form_row(form.enunciado) }}
+                    <div ng-init="{% for i in form.soluciones %}addSolucion('{{ i.expresion.vars.value}}');{% endfor %}">
                         {{ form_label(form.soluciones) }}
                         {{ form_errors(form.soluciones) }}
                         <fieldset data-ng-repeat="solucion in soluciones">
@@ -30,17 +32,19 @@
                                 </span>
                             </div>
 
-                            <div ng-hide="true">
-                            <input type="text" value="[[ solucion.tema ]]" id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[solucions]['+$index+'][tema]' ]]">
+                            <div ng-hide="false">
+                            <input type="text" ng-model="formData.tema" id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[solucions]['+$index+'][tema]' ]]">
                             <textarea id="[[ 'ejercicio_soluciones_'+$index+'_expresion' ]]" name="[['ejercicio[soluciones]['+$index+'][expresion]' ]]">[[ solucion.expresion ]]</textarea>
                             </div>
                         </fieldset>
                         <a class="btn btn-success btn-xs btn-flat" data-toggle="modal" data-target="#solucionModal" ng-click="addNewSolucion()"><i class="fa fa-plus"></i>&nbsp;Agregar</a>
                     </div>
+                    {{ form_row(form.solucionDetallada) }}
+                    
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('ejercicio_show', { 'id': edition }) }}{% else %}{{ path('ejercicio_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
-                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="ejercicio_submit" name="ejercicio[submit]"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="ejercicio_submit" name="ejercicio[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
                 </div>
             {{ form_row(form._token) }}
             
@@ -48,7 +52,7 @@
                     {{ form_widget(form.solucions) }}
                     <input type="submit" value="Create" />
                     #}
-            {{ form_end(form) }}
+            {{ form_end(form, {'render_rest': false}) }}
             {#, 'render_rest': false} #}
         </div>
     </section>
@@ -60,9 +64,8 @@
                     <h4 class="modal-title">Solución</h4>
                 </div>
                 <div class="modal-body">
-                    <div><label class="label-control">Nombre&nbsp;<i class="fa fa-asterisk text-red" title="Campo requerido"></i></label><input type="text" class="form-control" ng-model="solucion.nombre"></div>
                     <div><label class="label-control">Expresion&nbsp;<i class="fa fa-asterisk text-red" title="Campo requerido"></i></label> 
-                    <textarea ck-editor id="editor1" name="editor1" ng-model="solucion.expresion"></textarea></div>
+                    <textarea ck-editor id="editor1" name="editor1" ng-model="solucionExpresion"></textarea></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Cancelar</button>

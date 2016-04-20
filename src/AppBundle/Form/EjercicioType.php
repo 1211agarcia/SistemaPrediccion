@@ -23,7 +23,7 @@ class EjercicioType extends AbstractType
                 array(
                     'attr'=> array('class' => 'form-control'),
                     'choices' => array(
-                        1=>'1 - Facil',2=>'2',3=>'3',4=>'4',5=>'5',6=>'6',7=>'7',8=>'8',9=>'9',10=>'10 Dificil')
+                        1=>'1 - Facil',2=>'2',3=>'3',4=>'4',5=>'5',6=>'6',7=>'7',8=>'8',9=>'9',10=>'10 - Dificil')
                 )
             )
             ->add('tema', EntityType::class, 
@@ -39,10 +39,21 @@ class EjercicioType extends AbstractType
                 array(
                     'entry_type' => new ExpresionMatematicaType(),
                     'allow_add'    => true,
+                    'label_attr' => array('class' => 'control-label'),
                     )
             )
-            ->add('solucionDetallada')
-            ->add('enunciado')
+            ->add('solucionDetallada', TextareaType::class,
+                array(
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control', 'ck-editor' => ''),
+                    )
+            )
+            ->add('enunciado', TextareaType::class,
+                array(
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control', 'ck-editor' => ''),
+                    )
+            )
         ;
     }
     
