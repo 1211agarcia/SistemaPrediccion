@@ -24,15 +24,17 @@ class ExpresionMatematica
     /**
      * @var string
      *
-     * @ORM\Column(name="expresion", type="string", length=255, unique=true)
+     * @Assert\NotNull(message="Debe ingresar Expresión")
+     * @ORM\Column(name="expresion", type="string", length=255, unique=true, nullable=false)
      */
     private $expresion;
 
     /**
      * @var \Tema
      *
+     * @Assert\NotNull(message="Debe indicar Tema de Expresión")
      * @ORM\OneToOne(targetEntity="Tema")
-     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", nullable=false)
      */
     private $tema;
 

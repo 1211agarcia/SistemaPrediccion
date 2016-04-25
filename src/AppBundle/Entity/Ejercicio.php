@@ -50,7 +50,7 @@ class Ejercicio
      * @Assert\Count(
      *      min = "1",
      *      max = "5",
-     *      minMessage = "Debe tener al menos 1 solucion",
+     *      minMessage = "Debe tener al menos 1 solución",
      *      maxMessage = "Sólo puede tener como maximo {{ limit }} Soluciones"
      * )
      */

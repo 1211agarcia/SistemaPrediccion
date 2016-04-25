@@ -12,9 +12,12 @@
                 <div class="box-body">
                     {{ form_errors(form) }}
                     {{ form_row(form.dificultad) }}
-                    <div>
-                        {{ form_errors(form.tema) }}
+                    <div ng-init="formData.tema = {{form.tema.vars.value}}">
+                        {#
+                    {{ form_row(form.tema) }}
+                        #}
                         {{ form_label(form.tema) }}
+                        {{ form_errors(form.tema) }}
                         {{ form_widget(form.tema, { 'attr': { 'ng-model':'formData.tema'} }) }}
                     </div>
                     {{ form_row(form.enunciado) }}
@@ -32,8 +35,11 @@
                                 </span>
                             </div>
 
-                            <div ng-hide="false">
-                            <input type="text" ng-model="formData.tema" id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[solucions]['+$index+'][tema]' ]]">
+                            <div ng-hide="true">
+                            {#
+                            <select id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[soluciones]['+$index+'][tema]' ]]" class="form-control"><option value="[[formData.tema]]" ng-model="formData.tema" selected="selected">[[formData.tema]]</option></select>
+                             #}
+                             <input type="text" ng-model="formData.tema" id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[soluciones]['+$index+'][tema]' ]]"> 
                             <textarea id="[[ 'ejercicio_soluciones_'+$index+'_expresion' ]]" name="[['ejercicio[soluciones]['+$index+'][expresion]' ]]">[[ solucion.expresion ]]</textarea>
                             </div>
                         </fieldset>

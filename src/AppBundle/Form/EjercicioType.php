@@ -38,18 +38,23 @@ class EjercicioType extends AbstractType
             ->add('soluciones', CollectionType::class,
                 array(
                     'entry_type' => new ExpresionMatematicaType(),
-                    'allow_add'    => true,
+                    'required' => true,
                     'label_attr' => array('class' => 'control-label'),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'prototype' => true,
                     )
             )
             ->add('solucionDetallada', TextareaType::class,
                 array(
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control', 'ck-editor' => ''),
+                    'required' => true,
                     )
             )
             ->add('enunciado', TextareaType::class,
                 array(
+                    'required' => true,
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control', 'ck-editor' => ''),
                     )
@@ -63,7 +68,8 @@ class EjercicioType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Ejercicio'
+            'data_class' => 'AppBundle\Entity\Ejercicio',
+            //'cascade_validation' => true
         ));
     }
 }

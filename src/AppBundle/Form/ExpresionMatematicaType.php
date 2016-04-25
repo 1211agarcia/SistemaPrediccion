@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ExpresionMatematicaType extends AbstractType
 {
@@ -17,7 +18,15 @@ class ExpresionMatematicaType extends AbstractType
     {
         $builder
             ->add('expresion', TextareaType::class)
-            ->add('tema')
+            ->add('tema', EntityType::class, 
+                array(
+                    'class' => 'AppBundle:Tema',
+                    'choice_label' => 'nombre',
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control'),
+                    'required' => true,
+                )
+            )
         ;
     }
     
