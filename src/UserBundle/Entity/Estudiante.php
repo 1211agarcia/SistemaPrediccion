@@ -39,13 +39,11 @@ class Estudiante
         /*3*/"Bachillerato integral",
         /*4*/"Institución militar");
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var integer
@@ -199,7 +197,7 @@ class Estudiante
      */
     public function getId()
     {
-        return $this->$id;
+        return $this->id;
     }
 
     /**
