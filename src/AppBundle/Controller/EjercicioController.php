@@ -86,7 +86,9 @@ class EjercicioController extends Controller
     public function editAction(Request $request, Ejercicio $ejercicio)
     {
         $deleteForm = $this->createDeleteForm($ejercicio);
-        $editForm = $this->createForm('AppBundle\Form\EjercicioType', $ejercicio);
+        $editForm = $this->createForm('AppBundle\Form\EjercicioType', $ejercicio,
+            array('action' => $this->generateUrl('ejercicio_edit')));
+        $editForm->add('submit', 'submit');
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
