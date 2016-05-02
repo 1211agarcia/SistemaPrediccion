@@ -1,51 +1,53 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-    <h1>Ejercicio</h1>
+    <section class="content-header">
+        <h1>Ejercicio&nbsp;<small class="label bg-blue">{{ejercicio.id}}</small></h1>
+    </section>
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-2 control-label">Tema</label> 
+                    <div class="col-xs-12 col-md-10">
+                        <p class="form-control-static">{{ ejercicio.tema }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-2 control-label">Enunciado</label> 
+                    <div class="col-xs-12 col-md-10">
+                        <p class="form-control-static">{{ ejercicio.enunciado|raw }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-2 control-label">Solución Detallada</label> 
+                    <div class="col-xs-12 col-md-10">
+                        <p class="form-control-static">{{ ejercicio.solucionDetallada|raw }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-md-2 control-label">Soluciones</label> 
+                    <div class="col-xs-12 col-md-10">
+                        {% for sol in ejercicio.soluciones %}
+                            <p class="form-control-static">{{ sol|raw }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <a class="btn btn-default btn-flat" href="{{ path('ejercicio_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;ir a lista</a>
+                <a class="btn btn-warning btn-flat pull-right" href="{{ path('ejercicio_edit', { 'id': ejercicio.id }) }}"><i class="fa fa-edit"></i>&nbsp;Editar</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ejercicio.id }}</td>
-            </tr>
-            <tr>
-                <th>Dificultad</th>
-                <td>{{ ejercicio.dificultad }}</td>
-            </tr>
-            <tr>
-                <th>Enunciado</th>
-                <td>{{ ejercicio.enunciado|raw }}</td>
-            </tr>
-            <tr>
-                <th>Solucion Detallada</th>
-                <td>{{ ejercicio.solucionDetallada|raw }}</td>
-            </tr>
-            <tr>
-                <th>Soluciones</th>
-                <td>
-                    <ul>
-                    {% for sol in ejercicio.soluciones %}
-                        <li>{{ sol|raw }}</li>
-                    {% endfor %}
-                    </ul>        
-                </td>
-                    
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('ejercicio_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('ejercicio_edit', { 'id': ejercicio.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>
+    
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/loadModule.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

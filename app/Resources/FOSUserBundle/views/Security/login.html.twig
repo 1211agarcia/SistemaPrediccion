@@ -10,23 +10,16 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Bienvenido!{% endblock %}</title>
         {% block stylesheets %}
-            <script type='text/javascript'>
-            window.onload = detectarCarga;
-            function detectarCarga(){
-            document.getElementById("imgLOAD").style.display="none";
-            }
-            </script>
             <link href="{{ asset('bundles/app/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet"/>
-            <link href="{{ asset('bundles/app/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet"/>
             <link href="{{ asset('bundles/app/plugins/angular-loading-bar/loading-bar.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/style.css') }}" type="text/css" rel="stylesheet"/>
             <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app//img/favicon2.ico') }}"/>
 
             <link rel="stylesheet" href="{{ asset('bundles/app/bootstrap/css/bootstrap.min.css')}}">
             <!-- Font Awesome -->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+            <link href="{{ asset('bundles/app/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet"/>
             <!-- Ionicons -->
-            <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+            <link rel="stylesheet" href="{{ asset('bundles/app/css/ionicons.min.css') }}">
             <!-- Theme style -->
             <link rel="stylesheet" href="{{ asset('bundles/app/dist/css/AdminLTE.min.css')}}">
             <link rel="stylesheet" href="{{ asset('bundles/app/plugins/iCheck/square/blue.css')}}">
