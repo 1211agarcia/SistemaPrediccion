@@ -34,7 +34,7 @@ class Ejercicio
      * @var \Tema
      *
      * @ORM\OneToOne(targetEntity="Tema")
-     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", unique=false)
      */
     private $tema;
 

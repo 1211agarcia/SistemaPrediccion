@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
- * expresionMatematicaSolucion
+ * expresionMatematica
  *
  * @ORM\Table(name="expresion_matematica")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ExpresionMatematicaSolucionRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ExpresionMatematicaRepository")
  */
 class ExpresionMatematica
 {
@@ -34,7 +34,7 @@ class ExpresionMatematica
      *
      * @Assert\NotNull(message="Debe indicar Tema de Expresión")
      * @ORM\OneToOne(targetEntity="Tema")
-     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", nullable=false, unique=false)
      */
     private $tema;
 

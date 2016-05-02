@@ -85,20 +85,20 @@ class TemaController extends Controller
     public function editAction(Request $request, Tema $tema)
     {
         //$deleteForm = $this->createDeleteForm($tema);
-        $editForm = $this->createForm('AppBundle\Form\TemaType', $tema/*,
-            array('action' => $this->generateUrl('tema_edit')));
-        $form->add('submit', 'submit'*/);
+        $editForm = $this->createForm('AppBundle\Form\TemaType', $tema,
+            array('action' => $this->generateUrl('tema_edit', array('id' => $tema->getId()))));
+        $editForm->add('submit', 'submit');
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             dump(get_class($tema));
             dump($tema);
-            /*Brujeria esto DA!*/
+            /*Gracia Divina, esto DA!*/
             foreach ($tema->getPadres() as $actual) {
                 $actual->addHijo($tema);
             }
-            $em->persist($tema);
+            //$em->persist($tema);
             $em->flush();
 
             return $this->redirectToRoute('tema_show', array('id' => $tema->getId()));

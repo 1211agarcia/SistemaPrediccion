@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <label class="col-xs-12 col-md-2 control-label">Tema</label> 
                     <div class="col-xs-12 col-md-10">
-                        <p class="form-control-static">{{ ejercicio.tema }}</p>
+                        <a href="{{ path('tema_show', { 'id': ejercicio.tema.id }) }}"><p class="form-control-static">{{ ejercicio.tema }}</p></a>
                     </div>
                 </div>
                 <div class="form-group">
