@@ -33,7 +33,7 @@ class ExpresionMatematica
      * @var \Tema
      *
      * @Assert\NotNull(message="Debe indicar Tema de Expresión")
-     * @ORM\OneToOne(targetEntity="Tema")
+     * @ORM\ManyToOne(targetEntity="Tema")
      * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", nullable=false, unique=false)
      */
     private $tema;

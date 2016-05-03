@@ -33,8 +33,8 @@ class Ejercicio
     /**
      * @var \Tema
      *
-     * @ORM\OneToOne(targetEntity="Tema")
-     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", unique=false)
+     * @ORM\ManyToOne(targetEntity="Tema")
+     * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", nutllable=false, unique=false)
      */
     private $tema;
 
