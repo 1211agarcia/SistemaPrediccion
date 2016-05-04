@@ -84,7 +84,6 @@ class TemaController extends Controller
      */
     public function editAction(Request $request, Tema $tema)
     {
-        //$deleteForm = $this->createDeleteForm($tema);
         $editForm = $this->createForm('AppBundle\Form\TemaType', $tema,
             array('action' => $this->generateUrl('tema_edit', array('id' => $tema->getId()))));
         $editForm->add('submit', 'submit');

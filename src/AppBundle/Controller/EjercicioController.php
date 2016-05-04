@@ -85,7 +85,6 @@ class EjercicioController extends Controller
      */
     public function editAction(Request $request, Ejercicio $ejercicio)
     {
-        $deleteForm = $this->createDeleteForm($ejercicio);
         $editForm = $this->createForm('AppBundle\Form\EjercicioType', $ejercicio,
             array('action' => $this->generateUrl('ejercicio_edit', array('id' => $ejercicio->getId()))));
         $editForm->add('submit', 'submit');
@@ -102,6 +101,7 @@ class EjercicioController extends Controller
         return $this->render('ejercicio/new.html.twig', array(
             'ejercicio' => $ejercicio,
             'form' => $editForm->createView(),
+            'edition'=>$ejercicio->getId()
         ));
     }
 
