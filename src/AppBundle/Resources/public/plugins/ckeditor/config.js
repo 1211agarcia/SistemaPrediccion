@@ -38,4 +38,5 @@ CKEDITOR.editorConfig = function( config ) {
 
 	//config.extraPlugins = 'eqneditor';
 	config.extraPlugins = 'mathjax';
+	config.removePlugins = 'eqneditor';
 };
