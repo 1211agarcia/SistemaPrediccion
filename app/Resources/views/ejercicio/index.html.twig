@@ -1,40 +1,80 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Ejercicio list</h1>
+<section class="content-header">
+    <h1>Ejercicios</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Incio</a></li>
+        <li><a href="#">Ejercicios</a></li>
+        <li class="active">Listar</li>
+    </ol>
+</section>
+<div class="box">
+    <div class="box-body">
+        <table id="tabla-ejercicios" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tema</th>
+                    <th>Dificultad</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ejercicio in ejercicios %}
+                    <tr>
+                        <td><a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">{{ ejercicio.id }}</a></td>
+                        <td>{{ ejercicio.tema }}</td>
+                        <td>{{ ejercicio.dificultad }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">  
+{% endblock %}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Dificultad</th>
-                <th>Tema</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ejercicio in ejercicios %}
-            <tr>
-                <td><a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">{{ ejercicio.id }}</a></td>
-                <td>{{ ejercicio.dificultad }}</td>
-                <td>{{ ejercicio.tema }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('ejercicio_edit', { 'id': ejercicio.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('ejercicio_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+{% block javascripts %}
+    {{ parent() }}  
+    <script src="{{ asset('bundles/app/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+    <script> $(document).ready(function() {
+        $('#tabla-ejercicios').DataTable({
+            "responsive": true,
+            "scrollX": true,
+            "language": {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ ejercicios",
+                "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 ejercicios",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ ejercicios)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    } );
+    </script>    
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/loadModule.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

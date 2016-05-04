@@ -1,39 +1,82 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>ExpresionMatematica list</h1>
+<section class="content-header">
+    <h1>Expresiones Matematicas</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Incio</a></li>
+        <li><a href="#">Expresiones</a></li>
+        <li class="active">Listar</li>
+    </ol>
+</section>
+<div class="box">
+    <div class="box-body">
+        <table id="tabla-expresiones" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tema</th>
+                    <th>Expresión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expresion in expresionMatematicas %}
+                    <tr>
+                        <td><a href="{{ path('expresionmatematica_show', { 'id': expresion.id }) }}">{{ expresion.id }}</a></td>
+                        <td>{{ expresion.tema }}</td>
+                        <td>{{ expresion.expresion|raw }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">  
+{% endblock %}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Expresion</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for expresionMatematica in expresionMatematicas %}
-            <tr>
-                <td><a href="{{ path('expresionmatematica_show', { 'id': expresionMatematica.id }) }}">{{ expresionMatematica.id }}</a></td>
-                <td>{{ expresionMatematica.expresion }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('expresionmatematica_show', { 'id': expresionMatematica.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('expresionmatematica_edit', { 'id': expresionMatematica.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('expresionmatematica_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>  
+    <script src="{{ asset('bundles/app/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+    <script> $(document).ready(function() {
+        $('#tabla-expresiones').DataTable({
+            "responsive": true,
+            "scrollX": true,
+            "language": {
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ expresiones",
+                "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 expresiones",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ expresiones)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            }
+        });
+    } );
+    </script>    
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/loadModule.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

@@ -10,7 +10,7 @@
 </section>
 <div class="box">
     <div class="box-body">
-        <table id="tabla-users" class="dataTables_wrapper form-inline dt-bootstrap">
+        <table id="tabla-users" class="table table-bordered table-hover">
             <thead>
             <tr>
                 <th>Cedula</th>
@@ -94,4 +94,9 @@
     });
 } );
 </script>    
+
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/loadModule.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

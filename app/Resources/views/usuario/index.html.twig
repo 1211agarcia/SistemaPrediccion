@@ -97,4 +97,9 @@
     });
 } );
 </script>    
+
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/loadModule.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
