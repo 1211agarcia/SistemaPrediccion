@@ -17,14 +17,20 @@ class ExpresionMatematicaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('expresion', TextareaType::class)
+            ->add('expresion', TextareaType::class,
+                array(
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control', 'ck-editor' => ''),
+                    'required' => true,
+                    )
+            )
             ->add('tema', EntityType::class, 
                 array(
                     'class' => 'AppBundle:Tema',
                     'choice_label' => 'nombre',
                     'label_attr' => array('class' => 'control-label'),
-                    'attr'=> array('class' => 'form-control'),
-                    'required' => true,
+                    'attr'=> array('class' => 'form-control select2', 'data-placeholder'=>'Seleccione un tema', 'style'=>"width: 100%" ),
+                    'required' => false,
                 )
             )
         ;

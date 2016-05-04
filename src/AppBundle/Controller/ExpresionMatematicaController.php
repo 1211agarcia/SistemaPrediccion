@@ -42,9 +42,10 @@ class ExpresionMatematicaController extends Controller
     public function newAction(Request $request)
     {
         $expresionMatematica = new ExpresionMatematica();
-        $form = $this->createForm('AppBundle\Form\ExpresionMatematicaType', $expresionMatematica);
+        $form = $this->createForm('AppBundle\Form\ExpresionMatematicaType', $expresionMatematica,
+            array('action' => $this->generateUrl('expresionmatematica_new')));
+        $form->add('submit', 'submit');
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($expresionMatematica);
@@ -83,8 +84,9 @@ class ExpresionMatematicaController extends Controller
      */
     public function editAction(Request $request, ExpresionMatematica $expresionMatematica)
     {
-        $deleteForm = $this->createDeleteForm($expresionMatematica);
-        $editForm = $this->createForm('AppBundle\Form\ExpresionMatematicaType', $expresionMatematica);
+        $editForm = $this->createForm('AppBundle\Form\ExpresionMatematicaType', $expresionMatematica,
+            array('action' => $this->generateUrl('expresionmatematica_edit', array('id'=>$expresionMatematica->getId()))));
+        $editForm->add('submit', 'submit');
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -95,10 +97,10 @@ class ExpresionMatematicaController extends Controller
             return $this->redirectToRoute('expresionmatematica_edit', array('id' => $expresionMatematica->getId()));
         }
 
-        return $this->render('expresionmatematica/edit.html.twig', array(
+        return $this->render('expresionmatematica/new.html.twig', array(
             'expresionMatematica' => $expresionMatematica,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
+            'edition' => $expresionMatematica->getId(),
         ));
     }
 
