@@ -31,7 +31,7 @@ class EjercicioType extends AbstractType
                     'class' => 'AppBundle:Tema',
                     'choice_label' => 'nombre',
                     'label_attr' => array('class' => 'control-label'),
-                    'attr'=> array('class' => 'form-control'),
+                    'attr'=> array('class' => 'form-control select2'),
                     'required' => true,
                 )
             )

@@ -16,7 +16,7 @@
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('expresionmatematica_show', { 'id': edition }) }}{% else %}{{ path('expresionmatematica_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
-                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="expresion_submit" name="expresion[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
+                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="expresion_matematica_submit" name="expresion_matematica[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
                 </div>
             {{ form_row(form._token) }}
             {{ form_end(form, {'render_rest': false}) }}

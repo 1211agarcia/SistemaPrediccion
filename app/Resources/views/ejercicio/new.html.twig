@@ -82,32 +82,18 @@
     </div><!-- /.modal -->
 </div>
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('bundles/app/plugins/select2/select2.min.css')}}">
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {#<script>
-        CKEDITOR.replace( 'ejercicio_enunciado', {
-            extraPlugins: 'mathjax',
-            mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
-            height: 200
-        } );
-        CKEDITOR.add 
-        CKEDITOR.replace( 'ejercicio_solucionDetallada', {
-            extraPlugins: 'mathjax',
-            mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
-            height: 200
-        } );
-        CKEDITOR.add 
-        CKEDITOR.replace( 'ejercicio_soluciones_0_expresion', {
-            extraPlugins: 'mathjax',
-            mathJaxLib: 'http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
-            height: 200
-        } );
-
-    </script>#}
     <script src="{{asset('bundles/app/plugins/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{ asset('bundles/app/plugins/select2/select2.full.min.js') }}"></script>
     <script>
+        $(function () {/*Initialize Select2 Elements*/$(".select2").select2();});
         var urlMath = "{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}";
-        console.log(urlMath);
     </script>
     {% javascripts
         '@AppBundle/Resources/public/angularjs/newEjercicio/newEjercicioModule.js'
