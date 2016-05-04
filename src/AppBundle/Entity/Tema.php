@@ -50,17 +50,17 @@ class Tema
     private $categorias;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tema", mappedBy="hijos")
+     * @ORM\ManyToMany(targetEntity="Tema", inversedBy="padres")
      * @ORM\JoinTable(name="temas_hijos",
      *      joinColumns={@ORM\JoinColumn(name="tema_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="tema_hijo_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tema_padre_id", referencedColumnName="id")}
      *      )
      */
-    private $padres;
-    /**
-     * @ORM\ManyToMany(targetEntity="Tema", inversedBy="padres")
-     */
     private $hijos;
+    /**
+     * @ORM\ManyToMany(targetEntity="Tema", mappedBy="hijos")
+     */
+    private $padres;
 
     /**
      * Constructor
