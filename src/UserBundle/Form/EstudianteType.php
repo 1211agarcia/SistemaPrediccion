@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Entity\Estudiante as estudiante;
+use UserBundle\Form\Type\RegistrationType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +23,7 @@ class EstudianteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('usuario', EntityType::class, 
+            /*  ->add('usuario', EntityType::class, 
                 array(
                     'class' => 'UserBundle:Usuario',
                     'choice_label' => 'username',
@@ -33,7 +34,8 @@ class EstudianteType extends AbstractType
                     'attr'=> array('class' => 'form-control'),
                     'required' => true,
                 )
-            )
+            )*/
+            ->add('usuario', RegistrationType::class)
             ->add('nombre', TextType::class,
                 array(
                     'label_attr' => array('class' => 'control-label'),
@@ -226,7 +228,8 @@ class EstudianteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'UserBundle\Entity\Estudiante'
+            'data_class' => 'UserBundle\Entity\Estudiante',
+            'cascade_validation' => true
         ));
     }
 

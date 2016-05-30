@@ -5,6 +5,7 @@ namespace UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class RegistrationType extends AbstractType
 {
@@ -12,20 +13,21 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('roles', 'collection', array(
-                'label_attr' => array('class' => 'control-label col-xs-3'),
-                'type'   => 'choice',
-                'allow_add' => true,
-                'prototype' => true,
-                'options'  => array(
-                    'required'  => true,
-                    'attr'      => array('class' => 'form-control'),
+            /*
+            ->add('roles', ChoiceType::class,
+                array(
+                    'label'=>'Rol',
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control'),
+                    'empty_value' => 'Seleccionar',
                     'choices'  => array(
                         '1' => 'Estudiante',
                         '2' => 'Administrador'),
-                    ),
+                    'required' => true,
                 )
             )
+            */
+            //->add('plainPassword', HiddenType::class)
         ;
     }
     /**
@@ -34,7 +36,8 @@ class RegistrationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'UserBundle\Entity\usuario'
+            'data_class' => 'UserBundle\Entity\usuario',
+            'cascade_validation' => true
         ));
     }
     

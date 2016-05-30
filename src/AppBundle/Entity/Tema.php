@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="tema")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TemaRepository")
+ * @UniqueEntity("nombre")
  */
 class Tema
 {
@@ -68,7 +69,6 @@ class Tema
     public function __construct()
     {
         $this->categorias = new ArrayCollection();
-        
         $this->padres = new ArrayCollection();
         $this->hijos = new ArrayCollection();
     }

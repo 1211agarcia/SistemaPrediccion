@@ -42,37 +42,30 @@ class EstudianteController extends Controller
     public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $userManager = $this->get('fos_user.user_manager');
 
         $estudiantes = $em->getRepository('UserBundle:Usuario')->findStudentsToCreate("ROLE_ESTUDIANTE");
         dump($estudiantes);
-        if (!(count($estudiantes) > 0 )) {
-            //throw $this->createNotFoundException('Quiero trabajar.');
-            //return $this->redirectToRoute('fos_user_registration_register');
 
-        }
         $estudiante = new Estudiante();
         $form = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
-            array(
-            'action' => $this->generateUrl('estudiante_new')
-        ));
+            array('action' => $this->generateUrl('estudiante_new')));
 
-        $form
-            ->add('submit', 'submit', array('label' => 'Guardar',
-                                             'attr' => array('class' => 'btn btn-primary' )
-                                             )
-            )
-            ->add('reset', 'reset', array('label' => 'Limpiar',
-                                             'attr' => array('class' => 'btn btn-default' )
-                                             )
-            )
-        ;
+        $form->add('submit', 'submit', array('label' => 'Guardar','attr' => array('class' => 'btn btn-primary' )));
         $form->handleRequest($request);
+
+        dump($estudiante);
+        /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
+        $estudiante->getUsuario()->setEnabled(true);
+        $estudiante->getUsuario()->addRole(1);
+        $estudiante->getUsuario()->setPlainPassword("V".$estudiante->getCedula());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
             $em->flush();
-
+            /*** Inicialización de Estudiante ***/
+            
             return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
         }
 

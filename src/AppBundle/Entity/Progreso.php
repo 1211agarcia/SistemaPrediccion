@@ -55,6 +55,7 @@ class Progreso
      * @var string
      *
      * @ORM\Column(name="estado", type="string", length=255)
+     * no se ha definido el estado con relacion a los tema o arbol de temas, y la difusidadd entre oro, plata, y broce
      */
     private $estado;
 

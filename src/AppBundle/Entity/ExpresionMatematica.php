@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="expresion_matematica")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ExpresionMatematicaRepository")
+ * @UniqueEntity("expresion")
  */
 class ExpresionMatematica
 {

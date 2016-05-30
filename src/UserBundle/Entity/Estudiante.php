@@ -4,12 +4,14 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Estudiante
  *
  * @ORM\Table(name="estudiante")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\EstudianteRepository")
+ * @UniqueEntity(fields={"cedula", "usuario"})
  */
 class Estudiante
 {
@@ -54,8 +56,8 @@ class Estudiante
     
     /**
      * @var \UserBundle\Entity\Usuario
-     *
-     * @ORM\OneToOne(targetEntity="Usuario")
+     * @Assert\Valid
+     * @ORM\OneToOne(targetEntity="Usuario", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario;

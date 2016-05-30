@@ -114,19 +114,12 @@
 {% endspaceless %}
 {% endblock form_label %}
 {############################################################################}
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('plugins/bootstrap-switch/bootstrap-switch.min.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('plugins/ngTagsInput/ng-tags-input.min.css') }}" type="text/css" rel="stylesheet" />
-    
-    <link href="{{ asset('css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
-{% endblock %} 
 {% block body %}
     <section class="content-header">
         <h1>Estudiante</h1>
     </section>
     <!-- Main content -->
-    <section class="content">
+    <section class="content" ng-controller="newEstudianteController">
         <div class="row">
             <div class="col-xs-12">
               <div class="box box-success">
@@ -135,62 +128,82 @@
                 </div><!-- /.box-header -->
                 <div class="box-body">
         {{ form_start(form) }}
+        {{ form_errors(form) }}
         <fieldset>
             <legend>Datos Personales:</legend>
-            <div class="form-group col-lg-2">
-                {{ form_row(form.usuario) }}
+            <div class="col-md-6 form-group{% if form.usuario.email.vars.errors[0].message is defined %} has-error{% endif %}">
+                {{ form_label(form.usuario.email, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                <div class="col-sm-9">
+                    {{ form_widget(form.usuario.email, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.usuario.email.vars.errors[0].message is defined %}
+                    <span class="help-block" style="position: absolute;">
+                        {{ form.usuario.email.vars.errors[0].message }}
+                    </span>
+                    {% endif %}
+                </div>
             </div>
-            <div class="form-group col-lg-3">
+            <div class="col-md-6 form-group{% if form.usuario.username.vars.errors[0].message is defined %} has-error{% endif %}">
+                {{ form_label(form.usuario.username, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                <div class="col-sm-9">
+                    {{ form_widget(form.usuario.username, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.usuario.username.vars.errors[0].message is defined %}
+                    <span class="help-block" style="position: absolute;">
+                        {{ form.usuario.username.vars.errors[0].message }}
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group col-md-3">
                 {{ form_row(form.cedula) }}
             </div>
-            <div class="form-group col-lg-3">
+            <div class="form-group col-md-3">
                 {{ form_row(form.nombre) }}
             </div>
-            <div class="form-group col-lg-3">
+            <div class="form-group col-md-3">
                 {{ form_row(form.apellido) }}
             </div>
-            <div class="form-group col-lg-2">
+            <div class="form-group col-md-3">
                 {{ form_row(form.sexo) }}
             </div>
         </fieldset>
         <fieldset>
             <legend>Datos Academicos:</legend>
-        <fieldset class="form-group col-lg-6">
-            <legend>OPSU</legend>
-            <div class="form-group col-lg-4">
+        <div class="form-group">
+            <h4 class="col-md-3">OPSU</h4>
+            <div class="form-group col-md-3">
                 {{ form_row(form.primeraOpcionOpsu) }}
             </div>
-            <div class="form-group col-lg-4">
+            <div class="form-group col-md-3">
                 {{ form_row(form.segundaOpcionOpsu) }}
             </div>
-            <div class="form-group col-lg-4">
+            <div class="form-group col-md-2">
                 {{ form_row(form.esAsignadoOPSU) }}
             </div>
-        </fieldset>
-        <fieldset class="form-group col-lg-4">
-            <legend>Promedio</legend>
-            <div class="form-group col-lg-6">
+        </div>
+        <div class="form-group">
+            <h4 class="col-md-3 col-md-4">Promedio</h4>
+            <div class="form-group col-md-4 col-sm-4 col-xs-6">
                 {{ form_row(form.promedio) }}
             </div>
-            <div class="form-group col-lg-6">
+            <div class="form-group col-md-4 col-sm-4 col-xs-6">
                 {{ form_row(form.cantMaterias) }}
             </div>
-        </fieldset>
-        <fieldset class="form-group col-lg-4">
-            <legend>Notas Matematica</legend>
-            <div class="form-group col-lg-4">
+        </div>
+        <div class="form-group">
+            <h4 class="col-md-3">Notas Matematica</h4>
+            <div class="form-group col-md-2 col-sm-3 col-xs-6">
                 {{ form_row(form.notaPrimero) }}
             </div>
-            <div class="form-group col-lg-4">
+            <div class="form-group col-md-2 col-sm-3 col-xs-6">
                 {{ form_row(form.notaSegundo) }}
             </div>
-            <div class="form-group col-lg-4">
+            <div class="form-group col-md-2 col-sm-3 col-xs-6">
                 {{ form_row(form.notaTercero) }}
             </div>
-            <div class="form-group col-lg-4">
+            <div class="form-group col-md-2 col-sm-3 col-xs-6">
                 {{ form_row(form.notaCuarto) }}
             </div>
-        </fieldset>
+        </div>
         </fieldset>
         <fieldset>
             <legend>Datos Socio:</legend>   
@@ -213,8 +226,13 @@
                 {{ form_row(form.tieneAccesoInternet) }}
             </div>
         </fieldset>
-            {{ form_end(form) }}
-
+        <fieldset>
+            <div class="form-group col-lg-6">
+                {{ form_row(form.submit) }}
+            </div>
+        </fieldset>
+                {{ form_row(form._token) }}
+                {{ form_end(form, {'render_rest': false}) }}
             <ul>
                 <li>
                     <a href="{{ path('estudiante_index') }}">Back to the list</a>
@@ -222,4 +240,13 @@
             </ul>
         </div>
     </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/newEstudiante/newEstudianteModule.js'
+        '@AppBundle/Resources/public/angularjs/newEstudiante/newEstudianteController.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

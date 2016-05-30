@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Usuario
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @version 1/02/2016
  *
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UsuarioRepository")
- * 
+ * @UniqueEntity(fields={"email", "username"})
  */
 class Usuario extends BaseUser
 {
