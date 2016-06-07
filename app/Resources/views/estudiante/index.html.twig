@@ -13,14 +13,14 @@
         <table id="tabla-users" class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th>Cedula</th>
+                <th>CI</th>
                 <th>1er Año</th>
                 <th>2do Año</th>
                 <th>3er Año</th>
                 <th>4to Año</th>
+                <th>Total Materias</th>
                 <th>Promedio</th>
                 <th>Sexo</th>
-                <th>Proviene</th>
                 <th>Opsu</th>
                 <th>Gestion plantel</th>
                 <th>Tipo plantel</th>
@@ -37,9 +37,9 @@
                 <td>{{ estudiante.notaCuarto }}</td>
                 <td>{{ estudiante.cantMaterias }}</td>
                 <td>{{ estudiante.promedio }}</td>
-                <td>{{ estudiante.sexo }}</td>
+                <td>{% if estudiante.sexo %}Hombre{% else %}Mujer{% endif %}</td>
                 <td>{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}</td>
-                <td>{{ estudiante.gestionPlantel }}</td>
+                <td>{% if estudiante.gestionPlantel %}Privado{% else %}Público{% endif %}</td>
                 <td>{{ estudiante.tipoPlantel }}</td>
                 <td>{{ estudiante.nivelSocioeconomico }}</td>
             </tr>

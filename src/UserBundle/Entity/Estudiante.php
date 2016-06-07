@@ -135,9 +135,9 @@ class Estudiante
      */
     private $segundaOpcionOpsu;
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $sexo;
@@ -157,30 +157,30 @@ class Estudiante
     private $esAsignadoOPSU;
 
     /**
-     * @var 
+     * @var boolean
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $gestionPlantel;
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $tipoPlantel;
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $nivelSocioeconomico;
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar ")
      */
     private $nivelEstudioPadres;
@@ -458,7 +458,7 @@ class Estudiante
     /**
      * Set sexo
      *
-     * @param integer $sexo
+     * @param boolean $sexo
      * @return Estudiante
      */
     public function setSexo($sexo)
@@ -471,7 +471,7 @@ class Estudiante
     /**
      * Get sexo
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getSexo()
     {
@@ -527,7 +527,7 @@ class Estudiante
     /**
      * Set gestionPlantel
      *
-     * @param integer $gestionPlantel
+     * @param boolean $gestionPlantel
      * @return Estudiante
      */
     public function setGestionPlantel($gestionPlantel)
@@ -540,7 +540,7 @@ class Estudiante
     /**
      * Get gestionPlantel
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getGestionPlantel()
     {
