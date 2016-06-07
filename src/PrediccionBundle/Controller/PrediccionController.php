@@ -4,10 +4,40 @@ namespace PrediccionBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
 class PrediccionController extends Controller
 {
+
+/*
+    $objData = serialize( $obj);
+$filePath = getcwd().DIRECTORY_SEPARATOR."note".DIRECTORY_SEPARATOR."notice.txt";
+if (is_writable($filePath)) {
+    $fp = fopen($filePath, "w"); 
+    fwrite($fp, $objData); 
+    fclose($fp);
+}*/
+    /**
+     * Finds and displays a Estudiante entity.
+     *
+     * @Route("prediccion2/{id}", name="estudiante_prediccion")
+     * @Method("POST")
+     */
+    public function prediccionAction(Estudiante $estudiante)
+    {
+        $objData = serialize( $estudiante);
+        $filePath = getcwd().DIRECTORY_SEPARATOR."note".DIRECTORY_SEPARATOR."notice.txt";
+        if (is_writable($filePath)) {
+            $fp = fopen($filePath, "w"); 
+            fwrite($fp, $objData); 
+            fclose($fp);
+        }
+
+        return $this->render('estudiante/show.html.twig', array(
+            'estudiante' => $estudiante,
+        ));
+    }
     /**
      * @Route("prediccion/{n}")
      */
