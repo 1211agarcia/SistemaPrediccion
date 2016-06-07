@@ -93,15 +93,10 @@ class EstudianteController extends Controller
      */
     public function editAction(Request $request, Estudiante $estudiante)
     {
-        $editForm = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
+        $editForm = $this->createForm('UserBundle\Form\EstudianteEditType', $estudiante,
             array('action' => $this->generateUrl('estudiante_edit', array('id' => $estudiante->getId()))));
-        $editForm
-            ->add('prediccion', Checkboxtype::class,
-                array('attr' => array('ng-model'=>'checked'),
-                    'required'=> false,
-                'mapped' => false))
-            ->add('submit', 'submit');
-        dump($editForm['prediccion']->getData());
+        $editForm->add('submit', 'submit');
+
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -115,6 +110,34 @@ class EstudianteController extends Controller
             'estudiante' => $estudiante,
             'form' => $editForm->createView(),
             'edition'=>$estudiante->getId()
+        ));
+    }
+    /**
+     * Displays a form to edit an existing Estudiante entity.
+     *
+     * @Route("/{id}/editAvanced", name="estudiante_edit_advanced")
+     * @Method({"GET", "POST"})
+     */
+    public function editAdvancedAction(Request $request, Estudiante $estudiante)
+    {
+        $editForm = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
+            array('action' => $this->generateUrl('estudiante_edit_advanced', array('id' => $estudiante->getId()))));
+        $editForm->add('submit', 'submit');
+
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($estudiante);
+            $em->flush();
+
+            return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
+        }
+
+        return $this->render('estudiante/new.html.twig', array(
+            'estudiante' => $estudiante,
+            'form' => $editForm->createView(),
+            'edition'=>$estudiante->getId(),
+            'advanced' => true
         ));
     }
 

@@ -157,18 +157,25 @@
                         <div class="form-group col-md-3">
                             {{ form_row(form.apellido) }}
                         </div>
+                        {% if form.sexo is defined %}
                         <div class="form-group col-md-3">
                             {{ form_row(form.sexo) }}
                         </div>
+                        {% endif %}
                     </fieldset>
                     {% if edition is defined %}
-                        <label ng-init="checked={% if form.prediccion.vars.value %}true{% else %}false{% endif %};">¿Editar Variables de Predicción?: {#<input type="checkbox" ng-model="checked" ng-init="checked=false" id="estudiante_prediccion" name="estudiante[prediccion]"/> #}
-                            {{ form_widget(form.prediccion, { 'name': 'formInputTeg' }) }} </label><br/>
-                        <div ng-show="checked" class="alert alert-danger" role="alert"><strong>AVISO:</strong> Se pierda <strong>Todo el progreso</strong> que el estudiante alla alcanzado, ya que se realizará una nueva predicción.</div>
+                        {% if advanced is defined %}
+                            <a class="btn btn-primary btn-flat" href="{{ path('estudiante_edit', { 'id': edition }) }}"><i class="fa fa-arrow-up"></i>&nbsp;Edición Simple</a>
+                            <br/>
+                            <div ng-show="checked" class="alert alert-danger" role="alert"><strong>AVISO:</strong> Se pierda <strong>Todo el progreso</strong> que el estudiante alla alcanzado, ya que se realizará una nueva predicción.</div>
+                        {% else %}
+                            <a class="btn btn-default btn-flat" href="{{ path('estudiante_edit_advanced', { 'id': edition }) }}"><i class="fa fa-arrow-down"></i>&nbsp;Edición Avanzada</a>
+                        {% endif %}
                     {% else %}
                         <div ng-init="checked=true" class="alert alert-info" role="alert">Los datos acontinuación seran usados para la predicción, <strong>Es importante</strong> que estos no se editen.</div>
                     {% endif %}
-                    <fieldset ng-show="checked">
+                    {% if edition is defined and advanced is defined %}
+                    <fieldset>
                         <legend>Datos Academicos:</legend>
                         <div class="form-group">
                             <h4 class="col-md-3">OPSU</h4>
@@ -207,7 +214,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset ng-show="checked">
+                    <fieldset>
                         <legend>Datos Socio:</legend>   
                         <div class="form-group col-lg-2">
                             {{ form_row(form.gestionPlantel) }}
@@ -222,6 +229,7 @@
                             {{ form_row(form.nivelEstudioPadres) }}
                         </div>
                     </fieldset>
+                    {% endif %}
             </div>
             <div class="box-footer">
                 <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('estudiante_show', { 'id': edition }) }}{% else %}{{ path('estudiante_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
