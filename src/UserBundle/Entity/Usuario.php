@@ -16,7 +16,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @version 1/02/2016
  *
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UsuarioRepository")
- * @UniqueEntity(fields={"email", "username"})
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class Usuario extends BaseUser
 {
@@ -26,7 +27,6 @@ class Usuario extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
 
     public function __construct()
     {

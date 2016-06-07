@@ -162,15 +162,6 @@ class EstudianteType extends AbstractType
                     'required' => true,
                 )
             )
-            ->add('tieneAccesoInternet', ChoiceType::class,
-                array(
-                    'label_attr' => array('class' => 'control-label'),
-                    'attr'=> array('class' => 'form-control'),
-                    'placeholder' => 'placeholder',
-                    'choices' => array('Sí' => true, 'No' => false),
-                    'required' => true,
-                )
-            )
             ->add('esAsignadoOPSU', ChoiceType::class,
                 array(
                     'label'=>'¿es Asignado?',

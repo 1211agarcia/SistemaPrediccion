@@ -11,7 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="estudiante")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\EstudianteRepository")
- * @UniqueEntity(fields={"cedula", "usuario"})
+ * @UniqueEntity("cedula")
+ * @UniqueEntity("usuario")
  */
 class Estudiante
 {
@@ -82,28 +83,28 @@ class Estudiante
      * @var float
      *
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar primera nota de matemática")
      */
     private $notaPrimero;
     /**
      * @var float
      *
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar segunda nota de matemática")
      */
     private $notaSegundo;
     /**
      * @var float
      *
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar tercera nota de matemática")
      */
     private $notaTercero;
     /**
      * @var float
      *
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar cuarta nota de matemática")
      */
     private $notaCuarto;
     /**
@@ -117,42 +118,36 @@ class Estudiante
      * @var float
      *
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar promedio")
      */
     private $promedio;
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar primera opcion OPSU")
      */
     private $primeraOpcionOpsu;
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar segunda opcion OPSU")
      */
     private $segundaOpcionOpsu;
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe ingresar sexo")
      */
     private $sexo;
+
     /**
      * @var boolean
      *
      * @ORM\Column(type="boolean")
-     * @Assert\NotBlank(message="Debe ingresar ")
-     */
-    private $tieneAccesoInternet;
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean")
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe indicar si esta o no, asignado por la OPSU")
      */
     private $esAsignadoOPSU;
 
@@ -160,28 +155,28 @@ class Estudiante
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe indicar la gestion del plantel")
      */
     private $gestionPlantel;
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe indicar el tipo de plantel")
      */
     private $tipoPlantel;
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe indicar nivel socioeconomico")
      */
     private $nivelSocioeconomico;
     /**
      * @var integer
      *
      * @ORM\Column(type="integer", nullable=false)
-     * @Assert\NotBlank(message="Debe ingresar ")
+     * @Assert\NotBlank(message="Debe indicar nivel de estudio de padres")
      */
     private $nivelEstudioPadres;
 

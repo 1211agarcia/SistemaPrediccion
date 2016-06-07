@@ -52,7 +52,7 @@
                     <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('ejercicio_show', { 'id': edition }) }}{% else %}{{ path('ejercicio_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
                     <button class="btn btn-primary btn-flat pull-right" type="submit" id="ejercicio_submit" name="ejercicio[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
                 </div>
-            {{ form_row(form._token) }}
+                {{ form_row(form._token) }}
             
                     {#
                     {{ form_widget(form.solucions) }}

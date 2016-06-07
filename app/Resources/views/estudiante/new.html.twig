@@ -115,131 +115,122 @@
 {% endblock form_label %}
 {############################################################################}
 {% block body %}
-    <section class="content-header">
-        <h1>Estudiante</h1>
-    </section>
-    <!-- Main content -->
-    <section class="content" ng-controller="newEstudianteController">
-        <div class="row">
-            <div class="col-xs-12">
-              <div class="box box-success">
-                <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-user-plus"></i> Registro</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
+<section class="content-header">
+    <h1>Estudiante&nbsp;<small class="label {% if edition is defined %}bg-yellow"><i class="fa fa-edit"></i> Edición{% else %}bg-green"><i class="fa fa-user-plus"></i> Registro{% endif %}</small></h1>
+</section>
+<!-- Main content -->
+<section class="content" ng-controller="newEstudianteController">
+    <div class="box box-success">
         {{ form_start(form) }}
-        {{ form_errors(form) }}
-        <fieldset>
-            <legend>Datos Personales:</legend>
-            <div class="col-md-6 form-group{% if form.usuario.email.vars.errors[0].message is defined %} has-error{% endif %}">
-                {{ form_label(form.usuario.email, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-                <div class="col-sm-9">
-                    {{ form_widget(form.usuario.email, {'attr': {'class': 'form-control'}}) }}
-                    {% if form.usuario.email.vars.errors[0].message is defined %}
-                    <span class="help-block" style="position: absolute;">
-                        {{ form.usuario.email.vars.errors[0].message }}
-                    </span>
+            {{ form_errors(form) }}
+            <div class="box-body">
+                    <fieldset>
+                        <legend>Datos Personales:</legend>
+                        <div class="col-md-6 form-group{% if form.usuario.email.vars.errors[0].message is defined %} has-error{% endif %}">
+                            {{ form_label(form.usuario.email, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.usuario.email, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.usuario.email.vars.errors[0].message is defined %}
+                                <span class="help-block" style="position: absolute;">
+                                    {{ form.usuario.email.vars.errors[0].message }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group{% if form.usuario.username.vars.errors[0].message is defined %} has-error{% endif %}">
+                            {{ form_label(form.usuario.username, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.usuario.username, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.usuario.username.vars.errors[0].message is defined %}
+                                <span class="help-block" style="position: absolute;">
+                                    {{ form.usuario.username.vars.errors[0].message }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.cedula) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.nombre) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.apellido) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.sexo) }}
+                        </div>
+                    </fieldset>
+                    {% if edition is defined %}
+                        <label ng-init="checked={% if form.prediccion.vars.value %}true{% else %}false{% endif %};">¿Editar Variables de Predicción?: {#<input type="checkbox" ng-model="checked" ng-init="checked=false" id="estudiante_prediccion" name="estudiante[prediccion]"/> #}
+                            {{ form_widget(form.prediccion, { 'name': 'formInputTeg' }) }} </label><br/>
+                        <div ng-show="checked" class="alert alert-danger" role="alert"><strong>AVISO:</strong> Se pierda <strong>Todo el progreso</strong> que el estudiante alla alcanzado, ya que se realizará una nueva predicción.</div>
+                    {% else %}
+                        <div ng-init="checked=true" class="alert alert-info" role="alert">Los datos acontinuación seran usados para la predicción, <strong>Es importante</strong> que estos no se editen.</div>
                     {% endif %}
-                </div>
+                    <fieldset ng-show="checked">
+                        <legend>Datos Academicos:</legend>
+                        <div class="form-group">
+                            <h4 class="col-md-3">OPSU</h4>
+                            <div class="form-group col-md-3">
+                                {{ form_row(form.primeraOpcionOpsu) }}
+                            </div>
+                            <div class="form-group col-md-3">
+                                {{ form_row(form.segundaOpcionOpsu) }}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{ form_row(form.esAsignadoOPSU) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4 class="col-md-3 col-md-4">Promedio</h4>
+                            <div class="form-group col-md-4 col-sm-4 col-xs-6">
+                                {{ form_row(form.promedio) }}
+                            </div>
+                            <div class="form-group col-md-4 col-sm-4 col-xs-6">
+                                {{ form_row(form.cantMaterias) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4 class="col-md-3">Notas Matematica</h4>
+                            <div class="form-group col-md-2 col-sm-3 col-xs-6">
+                                {{ form_row(form.notaPrimero) }}
+                            </div>
+                            <div class="form-group col-md-2 col-sm-3 col-xs-6">
+                                {{ form_row(form.notaSegundo) }}
+                            </div>
+                            <div class="form-group col-md-2 col-sm-3 col-xs-6">
+                                {{ form_row(form.notaTercero) }}
+                            </div>
+                            <div class="form-group col-md-2 col-sm-3 col-xs-6">
+                                {{ form_row(form.notaCuarto) }}
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset ng-show="checked">
+                        <legend>Datos Socio:</legend>   
+                        <div class="form-group col-lg-2">
+                            {{ form_row(form.gestionPlantel) }}
+                        </div>
+                        <div class="form-group col-lg-3">
+                            {{ form_row(form.tipoPlantel) }}
+                        </div>
+                        <div class="form-group col-lg-3">
+                            {{ form_row(form.nivelSocioeconomico) }}
+                        </div>
+                        <div class="form-group col-lg-4">
+                            {{ form_row(form.nivelEstudioPadres) }}
+                        </div>
+                    </fieldset>
             </div>
-            <div class="col-md-6 form-group{% if form.usuario.username.vars.errors[0].message is defined %} has-error{% endif %}">
-                {{ form_label(form.usuario.username, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
-                <div class="col-sm-9">
-                    {{ form_widget(form.usuario.username, {'attr': {'class': 'form-control'}}) }}
-                    {% if form.usuario.username.vars.errors[0].message is defined %}
-                    <span class="help-block" style="position: absolute;">
-                        {{ form.usuario.username.vars.errors[0].message }}
-                    </span>
-                    {% endif %}
-                </div>
+            <div class="box-footer">
+                <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('estudiante_show', { 'id': edition }) }}{% else %}{{ path('estudiante_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                <button class="btn btn-primary btn-flat pull-right" type="submit" id="estudiante_submit" name="estudiante[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
             </div>
-            <div class="form-group col-md-3">
-                {{ form_row(form.cedula) }}
-            </div>
-            <div class="form-group col-md-3">
-                {{ form_row(form.nombre) }}
-            </div>
-            <div class="form-group col-md-3">
-                {{ form_row(form.apellido) }}
-            </div>
-            <div class="form-group col-md-3">
-                {{ form_row(form.sexo) }}
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>Datos Academicos:</legend>
-        <div class="form-group">
-            <h4 class="col-md-3">OPSU</h4>
-            <div class="form-group col-md-3">
-                {{ form_row(form.primeraOpcionOpsu) }}
-            </div>
-            <div class="form-group col-md-3">
-                {{ form_row(form.segundaOpcionOpsu) }}
-            </div>
-            <div class="form-group col-md-2">
-                {{ form_row(form.esAsignadoOPSU) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <h4 class="col-md-3 col-md-4">Promedio</h4>
-            <div class="form-group col-md-4 col-sm-4 col-xs-6">
-                {{ form_row(form.promedio) }}
-            </div>
-            <div class="form-group col-md-4 col-sm-4 col-xs-6">
-                {{ form_row(form.cantMaterias) }}
-            </div>
-        </div>
-        <div class="form-group">
-            <h4 class="col-md-3">Notas Matematica</h4>
-            <div class="form-group col-md-2 col-sm-3 col-xs-6">
-                {{ form_row(form.notaPrimero) }}
-            </div>
-            <div class="form-group col-md-2 col-sm-3 col-xs-6">
-                {{ form_row(form.notaSegundo) }}
-            </div>
-            <div class="form-group col-md-2 col-sm-3 col-xs-6">
-                {{ form_row(form.notaTercero) }}
-            </div>
-            <div class="form-group col-md-2 col-sm-3 col-xs-6">
-                {{ form_row(form.notaCuarto) }}
-            </div>
-        </div>
-        </fieldset>
-        <fieldset>
-            <legend>Datos Socio:</legend>   
-            <div class="form-group col-lg-2">
-                {{ form_row(form.gestionPlantel) }}
-            </div>
-            <div class="form-group col-lg-3">
-                {{ form_row(form.tipoPlantel) }}
-            </div>
-            <div class="form-group col-lg-3">
-                {{ form_row(form.nivelSocioeconomico) }}
-            </div>
-            <div class="form-group col-lg-4">
-                {{ form_row(form.nivelEstudioPadres) }}
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>Otro dato de interes:</legend>
-            <div class="form-group col-lg-2">
-                {{ form_row(form.tieneAccesoInternet) }}
-            </div>
-        </fieldset>
-        <fieldset>
-            <div class="form-group col-lg-6">
-                {{ form_row(form.submit) }}
-            </div>
-        </fieldset>
-                {{ form_row(form._token) }}
-                {{ form_end(form, {'render_rest': false}) }}
-            <ul>
-                <li>
-                    <a href="{{ path('estudiante_index') }}">Back to the list</a>
-                </li>
-            </ul>
-        </div>
-    </section>
+            {{ form_row(form._token) }}
+            {{ form_end(form, {'render_rest': false}) }}
+</section>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

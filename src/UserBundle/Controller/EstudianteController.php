@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use UserBundle\Entity\Estudiante;
 use UserBundle\Form\EstudianteType;
-
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 /**
  * Estudiante controller.
  *
@@ -44,23 +44,18 @@ class EstudianteController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userManager = $this->get('fos_user.user_manager');
 
-        $estudiantes = $em->getRepository('UserBundle:Usuario')->findStudentsToCreate("ROLE_ESTUDIANTE");
-        dump($estudiantes);
-
         $estudiante = new Estudiante();
         $form = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
             array('action' => $this->generateUrl('estudiante_new')));
-
-        $form->add('submit', 'submit', array('label' => 'Guardar','attr' => array('class' => 'btn btn-primary' )));
+        $form->add('submit', 'submit');
         $form->handleRequest($request);
 
-        dump($estudiante);
-        /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
-        $estudiante->getUsuario()->setEnabled(true);
-        $estudiante->getUsuario()->addRole(1);
-        $estudiante->getUsuario()->setPlainPassword("V".$estudiante->getCedula());
-
+        //dump($estudiante);
         if ($form->isSubmitted() && $form->isValid()) {
+            /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
+            $estudiante->getUsuario()->setEnabled(true);
+            $estudiante->getUsuario()->addRole(1);
+            $estudiante->getUsuario()->setPlainPassword("V".$estudiante->getCedula());
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
             $em->flush();
@@ -87,7 +82,6 @@ class EstudianteController extends Controller
 
         return $this->render('estudiante/show.html.twig', array(
             'estudiante' => $estudiante,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -99,22 +93,28 @@ class EstudianteController extends Controller
      */
     public function editAction(Request $request, Estudiante $estudiante)
     {
-        $deleteForm = $this->createDeleteForm($estudiante);
-        $editForm = $this->createForm('UserBundle\Form\EstudianteType', $estudiante);
+        $editForm = $this->createForm('UserBundle\Form\EstudianteType', $estudiante,
+            array('action' => $this->generateUrl('estudiante_edit', array('id' => $estudiante->getId()))));
+        $editForm
+            ->add('prediccion', Checkboxtype::class,
+                array('attr' => array('ng-model'=>'checked'),
+                    'required'=> false,
+                'mapped' => false))
+            ->add('submit', 'submit');
+        dump($editForm['prediccion']->getData());
         $editForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
             $em->flush();
 
-            return $this->redirectToRoute('estudiante_edit', array('id' => $estudiante->getId()));
+            return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
         }
 
-        return $this->render('estudiante/edit.html.twig', array(
+        return $this->render('estudiante/new.html.twig', array(
             'estudiante' => $estudiante,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
+            'edition'=>$estudiante->getId()
         ));
     }
 
