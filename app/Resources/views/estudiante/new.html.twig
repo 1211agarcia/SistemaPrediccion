@@ -165,25 +165,29 @@
                     </fieldset>
                     {% if edition is defined %}
                         {% if advanced is defined %}
-                            <a class="btn btn-primary btn-flat" href="{{ path('estudiante_edit', { 'id': edition }) }}"><i class="fa fa-arrow-up"></i>&nbsp;Edición Simple</a>
+                            <div style="text-align:center;">
+                                <a class="btn btn-primary btn-flat" href="{{ path('estudiante_edit', { 'id': edition }) }}"><i class="fa fa-arrow-up"></i>&nbsp;Edición Simple</a>
+                            </div>
                             <br/>
-                            <div ng-show="checked" class="alert alert-danger" role="alert"><strong>AVISO:</strong> Se pierda <strong>Todo el progreso</strong> que el estudiante alla alcanzado, ya que se realizará una nueva predicción.</div>
+                            <div class="alert alert-danger" role="alert"><strong>AVISO:</strong> Se pierda <strong>Todo el progreso</strong> que el estudiante alla alcanzado, ya que se realizará una nueva predicción.</div>
                         {% else %}
-                            <a class="btn btn-default btn-flat" href="{{ path('estudiante_edit_advanced', { 'id': edition }) }}"><i class="fa fa-arrow-down"></i>&nbsp;Edición Avanzada</a>
+                            <div style="text-align:center;">
+                                <a class="btn btn-default btn-flat" href="{{ path('estudiante_edit_advanced', { 'id': edition }) }}"><i class="fa fa-arrow-down"></i>&nbsp;Edición Avanzada</a>
+                            </div>
                         {% endif %}
                     {% else %}
-                        <div ng-init="checked=true" class="alert alert-info" role="alert">Los datos acontinuación seran usados para la predicción, <strong>Es importante</strong> que estos no se editen.</div>
+                        <div class="alert alert-info" role="alert">Los datos acontinuación seran usados para la predicción, <strong>Es importante</strong> que estos no se editen.</div>
                     {% endif %}
                     {% if edition is defined and advanced is defined %}
                     <fieldset>
                         <legend>Datos Academicos:</legend>
                         <div class="form-group">
-                            <h4 class="col-md-3">OPSU</h4>
+                            <h4 class="col-md-3">Admisión</h4>
                             <div class="form-group col-md-3">
-                                {{ form_row(form.primeraOpcionOpsu) }}
+                                {{ form_row(form.primeraOpcion) }}
                             </div>
                             <div class="form-group col-md-3">
-                                {{ form_row(form.segundaOpcionOpsu) }}
+                                {{ form_row(form.segundaOpcion) }}
                             </div>
                             <div class="form-group col-md-2">
                                 {{ form_row(form.esAsignadoOPSU) }}

@@ -82,6 +82,12 @@ class EstudianteController extends Controller
 
         return $this->render('estudiante/show.html.twig', array(
             'estudiante' => $estudiante,
+            'CONST'=> array(
+                'CARRERAS' => Estudiante::CARRERAS,
+                'NIVELES_EDUCATIVOS'=> Estudiante::NIVELES_EDUCATIVOS,
+                'GESTIONES_PLANTEL' => Estudiante::GESTIONES_PLANTEL,
+                'TIPOS_PLANTEL' => Estudiante::TIPOS_PLANTEL,
+                'NIVELES_SOCIOECONOMICOS'=> Estudiante::NIVELES_SOCIOECONOMICOS)
         ));
     }
 
@@ -130,7 +136,8 @@ class EstudianteController extends Controller
             $em->persist($estudiante);
             $em->flush();
 
-            return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
+            return $this->redirectToRoute('estudiante_prediccion', array('id' => $estudiante->getId()));
+            //return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
         }
 
         return $this->render('estudiante/new.html.twig', array(

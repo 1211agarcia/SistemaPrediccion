@@ -44,10 +44,10 @@
                             <p class="text-muted text-center">Plantel</p>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                  <b>Tipo</b> <a class="pull-right">{{ estudiante.tipoPlantel }}</a>
+                                  <b>Tipo</b> <a class="pull-right">{{ CONST['TIPOS_PLANTEL'][estudiante.tipoPlantel] }}</a>
                                 </li>
                                 <li class="list-group-item">
-                                  <b>Gestión</b> <a class="pull-right">{{ estudiante.gestionPlantel }}</a>
+                                  <b>Gestión</b> <a class="pull-right">{{ CONST['GESTIONES_PLANTEL'][estudiante.gestionPlantel] }}</a>
                                 </li>
                             </ul>
                         </div><!-- /.datos basicos -->
@@ -85,14 +85,16 @@
                     <!-- Opsu y socio-econimicos-->
                     <div class="box-primary col-sm-4 ">
                         <div class="box-body">
-                            <h3 class="profile-username text-center">Opsu</h3>
-                            <p class="text-muted text-center">{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}, asignado</p>
+                            <h3 class="profile-username text-center">Admisión</h3>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                  <b>1era Opción</b> <a class="pull-right">{{ estudiante.primeraOpcionOpsu }}</a>
+                                  <b>OPSU</b> <a class="pull-right">{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}, asignado.</a>
                                 </li>
                                 <li class="list-group-item">
-                                  <b>2da Opción</b> <a class="pull-right">{{ estudiante.segundaOpcionOpsu }}</a>
+                                  <b>1era Opción</b> <a class="pull-right">{{ CONST['CARRERAS'][estudiante.primeraOpcion] }}</a>
+                                </li>
+                                <li class="list-group-item">
+                                  <b>2da Opción</b> <a class="pull-right">{{ CONST['CARRERAS'][estudiante.segundaOpcion] }}</a>
                                 </li>
                             </ul>
                         </div><!-- /.box-body -->
@@ -103,10 +105,10 @@
                             <h3 class="profile-username text-center">Socio-economicos</h3>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                  <b>Nivel</b> <a class="pull-right">{{ estudiante.nivelSocioeconomico }}</a>
+                                  <b>Nivel</b> <a class="pull-right">{{ CONST['NIVELES_SOCIOECONOMICOS'][estudiante.nivelSocioeconomico] }}</a>
                                 </li>
                                 <li class="list-group-item">
-                                  <b>Gestión</b> <a class="pull-right">{{ estudiante.nivelEstudioPadres }}</a>
+                                  <b>Gestión</b> <a class="pull-right">{{ CONST['NIVELES_EDUCATIVOS'][estudiante.nivelEstudioPadres] }}</a>
                                 </li>
                             </ul>
                         </div><!-- /.box-body -->

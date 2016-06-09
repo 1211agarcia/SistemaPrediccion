@@ -125,16 +125,16 @@ class Estudiante
      * @var integer
      *
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Debe ingresar primera opcion OPSU")
+     * @Assert\NotBlank(message="Debe ingresar primera opción")
      */
-    private $primeraOpcionOpsu;
+    private $primeraOpcion;
     /**
      * @var integer
      *
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Debe ingresar segunda opcion OPSU")
+     * @Assert\NotBlank(message="Debe ingresar segunda opción")
      */
-    private $segundaOpcionOpsu;
+    private $segundaOpcion;
     /**
      * @var boolean
      *
@@ -152,9 +152,9 @@ class Estudiante
     private $esAsignadoOPSU;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank(message="Debe indicar la gestion del plantel")
      */
     private $gestionPlantel;
@@ -186,6 +186,25 @@ class Estudiante
      * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
      */
     private $progreso;
+
+
+    public function prediction_format_file()
+    {
+        return ($this->getNotaPrimero().' '.
+        $this->getNotaSegundo().' '.
+        $this->getNotaTercero().' '.
+        $this->getNotaCuarto().' '.
+        $this->getPromedio().' '.
+        $this->getCantMaterias().' '.
+        $this->getGestionPlantel().' '.
+        $this->getTipoPlantel().' '.
+        ($this->getEsAsignadoOPSU()? '1' : '0').' '.
+        $this->getPrimeraOpcion().' '.
+        $this->getSegundaOpcion().' '.
+        $this->getNivelSocioeconomico().' '.
+        $this->getNivelEstudioPadres().' '.
+        ($this->getSexo()? '1' : '0').' ');
+    }
 
     /**
      * Get id
@@ -405,49 +424,49 @@ class Estudiante
     }
 
     /**
-     * Set primeraOpcionOpsu
+     * Set primeraOpcion
      *
-     * @param integer $primeraOpcionOpsu
+     * @param integer $primeraOpcion
      * @return Estudiante
      */
-    public function setPrimeraOpcionOpsu($primeraOpcionOpsu)
+    public function setPrimeraOpcion($primeraOpcion)
     {
-        $this->primeraOpcionOpsu = $primeraOpcionOpsu;
+        $this->primeraOpcion = $primeraOpcion;
 
         return $this;
     }
 
     /**
-     * Get primeraOpcionOpsu
+     * Get primeraOpcion
      *
      * @return integer 
      */
-    public function getPrimeraOpcionOpsu()
+    public function getPrimeraOpcion()
     {
-        return $this->primeraOpcionOpsu;
+        return $this->primeraOpcion;
     }
 
     /**
-     * Set segundaOpcionOpsu
+     * Set segundaOpcion
      *
-     * @param integer $segundaOpcionOpsu
+     * @param integer $segundaOpcion
      * @return Estudiante
      */
-    public function setSegundaOpcionOpsu($segundaOpcionOpsu)
+    public function setSegundaOpcion($segundaOpcion)
     {
-        $this->segundaOpcionOpsu = $segundaOpcionOpsu;
+        $this->segundaOpcion = $segundaOpcion;
 
         return $this;
     }
 
     /**
-     * Get segundaOpcionOpsu
+     * Get segundaOpcion
      *
      * @return integer 
      */
-    public function getSegundaOpcionOpsu()
+    public function getSegundaOpcion()
     {
-        return $this->segundaOpcionOpsu;
+        return $this->segundaOpcion;
     }
 
     /**
@@ -522,7 +541,7 @@ class Estudiante
     /**
      * Set gestionPlantel
      *
-     * @param boolean $gestionPlantel
+     * @param int $gestionPlantel
      * @return Estudiante
      */
     public function setGestionPlantel($gestionPlantel)
@@ -535,7 +554,7 @@ class Estudiante
     /**
      * Get gestionPlantel
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getGestionPlantel()
     {
