@@ -33,21 +33,23 @@ class Progreso
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="primerEntrenamiento", type="datetime")
+     * @ORM\Column(name="primeraPractica", type="datetime")
      */
-    private $primerEntrenamiento;
+    private $primeraPractica;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ultimoEntrenamiento", type="datetime")
+     * @ORM\Column(name="ultimaPractica", type="datetime")
      */
-    private $ultimoEntrenamiento;
+    private $ultimaPractica;
 
     /**
      * @var string
      *
      * @ORM\Column(name="primerEstado", type="string", length=255)
+     *
+     * se refiere a la primera inicialización del progreso del estudiante luego de la predicción, esto para verificar si el progreso el estudiante ha ido en aumento o descenso.
      */
     private $primerEstado;
 
@@ -101,49 +103,49 @@ class Progreso
     }
 
     /**
-     * Set primerEntrenamiento
+     * Set primeraPractica
      *
-     * @param \DateTime $primerEntrenamiento
+     * @param \DateTime $primeraPractica
      * @return Progreso
      */
-    public function setPrimerEntrenamiento($primerEntrenamiento)
+    public function setPrimeraPractica($primeraPractica)
     {
-        $this->primerEntrenamiento = $primerEntrenamiento;
+        $this->primeraPractica = $primeraPractica;
 
         return $this;
     }
 
     /**
-     * Get primerEntrenamiento
+     * Get primeraPractica
      *
      * @return \DateTime 
      */
-    public function getPrimerEntrenamiento()
+    public function getPrimeraPractica()
     {
-        return $this->primerEntrenamiento;
+        return $this->primeraPractica;
     }
 
     /**
-     * Set ultimoEntrenamiento
+     * Set ultimaPractica
      *
-     * @param \DateTime $ultimoEntrenamiento
+     * @param \DateTime $ultimaPractica
      * @return Progreso
      */
-    public function setUltimoEntrenamiento($ultimoEntrenamiento)
+    public function setUltimaPractica($ultimaPractica)
     {
-        $this->ultimoEntrenamiento = $ultimoEntrenamiento;
+        $this->ultimaPractica = $ultimaPractica;
 
         return $this;
     }
 
     /**
-     * Get ultimoEntrenamiento
+     * Get ultimaPractica
      *
      * @return \DateTime 
      */
-    public function getUltimoEntrenamiento()
+    public function getUltimaPractica()
     {
-        return $this->ultimoEntrenamiento;
+        return $this->ultimaPractica;
     }
 
     /**

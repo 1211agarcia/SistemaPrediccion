@@ -135,8 +135,8 @@ class EstudianteController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
             $em->flush();
-
-            return $this->redirectToRoute('estudiante_prediccion', array('id' => $estudiante->getId()));
+            dump($estudiante);
+            //return $this->redirectToRoute('estudiante_prediccion', array('id' => $estudiante->getId()));
             //return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
         }
 

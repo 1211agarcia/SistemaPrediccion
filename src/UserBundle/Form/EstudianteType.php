@@ -114,10 +114,11 @@ class EstudianteType extends AbstractType
             )
             ->add('cantMaterias', IntegerType::class,
                 array(
+                    'label'=>'Total materias cursadas',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array(
                         'class' => 'form-control',
-                        'min' => 1
+                        'min' => 5
                     ),
                     'required' => true,
                 )
@@ -134,7 +135,7 @@ class EstudianteType extends AbstractType
                     'required' => true,
                 )
             )
-            ->add('primeraOpcionOpsu', ChoiceType::class,
+            ->add('primeraOpcion', ChoiceType::class,
                 array(
                     'label'=>'1ra Opción',
                     'label_attr' => array('class' => 'control-label'),
@@ -144,7 +145,7 @@ class EstudianteType extends AbstractType
                     'required' => true,
                 )
             )
-            ->add('segundaOpcionOpsu', ChoiceType::class,
+            ->add('segundaOpcion', ChoiceType::class,
                 array(
                     'label'=>'2da Opción',
                     'label_attr' => array('class' => 'control-label'),
@@ -168,7 +169,7 @@ class EstudianteType extends AbstractType
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
-                    'choices' => array('Sí' => true, 'No' => false),
+                    'choices' => array('Sí' => '1', 'No' => '0'),
                     // always include this
                     'choices_as_values' => true,
                     'required' => true,

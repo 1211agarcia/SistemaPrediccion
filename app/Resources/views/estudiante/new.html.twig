@@ -169,7 +169,7 @@
                                 <a class="btn btn-primary btn-flat" href="{{ path('estudiante_edit', { 'id': edition }) }}"><i class="fa fa-arrow-up"></i>&nbsp;Edición Simple</a>
                             </div>
                             <br/>
-                            <div class="alert alert-danger" role="alert"><strong>AVISO:</strong> Se pierda <strong>Todo el progreso</strong> que el estudiante alla alcanzado, ya que se realizará una nueva predicción.</div>
+                            <div class="alert alert-danger" role="alert"><strong>AVISO:</strong> Se perderá <strong>Todo el progreso</strong> que el estudiante alla alcanzado, ya que se realizará una nueva predicción.</div>
                         {% else %}
                             <div style="text-align:center;">
                                 <a class="btn btn-default btn-flat" href="{{ path('estudiante_edit_advanced', { 'id': edition }) }}"><i class="fa fa-arrow-down"></i>&nbsp;Edición Avanzada</a>
@@ -178,7 +178,7 @@
                     {% else %}
                         <div class="alert alert-info" role="alert">Los datos acontinuación seran usados para la predicción, <strong>Es importante</strong> que estos no se editen.</div>
                     {% endif %}
-                    {% if edition is defined and advanced is defined %}
+                    {% if edition is defined and advanced is defined or not edition is defined and not advanced is defined %}
                     <fieldset>
                         <legend>Datos Academicos:</legend>
                         <div class="form-group">

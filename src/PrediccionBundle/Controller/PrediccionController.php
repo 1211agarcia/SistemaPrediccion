@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
+use UserBundle\Entity\Estudiante;
 
 class PrediccionController extends Controller
 {
@@ -21,22 +22,25 @@ if (is_writable($filePath)) {
     /**
      * Finds and displays a Estudiante entity.
      *
-     * @Route("prediccion2/{id}", name="estudiante_prediccion")
-     * @Method("POST")
+     * @Route("prediccion/{id}", name="estudiante_prediccion")
      */
     public function prediccionAction(Estudiante $estudiante)
     {
+        echo getcwd() . "\n";
+        dump(chdir('../src/AppBundle/R'));
+        dump($estudiante);
         $objData = serialize( $estudiante);
-        $filePath = getcwd().DIRECTORY_SEPARATOR."note".DIRECTORY_SEPARATOR."notice.txt";
-        if (is_writable($filePath)) {
-            $fp = fopen($filePath, "w"); 
-            fwrite($fp, $objData); 
+        dump($objData);
+        $filePath = getcwd().DIRECTORY_SEPARATOR."estudiante.in";
+        //if (is_writable($filePath)) {
+            $fp = fopen($filePath, "w") or die("Can't create file");
+            fwrite($fp, $estudiante->prediction_format_file());
             fclose($fp);
-        }
+        //}
 
         return $this->render('estudiante/show.html.twig', array(
             'estudiante' => $estudiante,
-        ));
+            'CONST'=> array('CARRERAS' => Estudiante::CARRERAS,'NIVELES_EDUCATIVOS'=> Estudiante::NIVELES_EDUCATIVOS,'GESTIONES_PLANTEL' => Estudiante::GESTIONES_PLANTEL,'TIPOS_PLANTEL' => Estudiante::TIPOS_PLANTEL,'NIVELES_SOCIOECONOMICOS'=> Estudiante::NIVELES_SOCIOECONOMICOS)));
     }
     /**
      * @Route("prediccion/{n}")
