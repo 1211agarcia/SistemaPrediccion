@@ -41,6 +41,8 @@ class Estudiante
         /*2*/"Parasistemas ",
         /*3*/"Bachillerato integral",
         /*4*/"Institución militar");
+    const VERIFICADO = true;
+    const SIN_VERIFICAR = false;
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -181,12 +183,25 @@ class Estudiante
     private $nivelEstudioPadres;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $verificado;
+
+    /**
      * @var \AppBundle\Entity\Progreso
      *
      * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
      */
     private $progreso;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->verificado = SIN_VERIFICAR;
+        // tu propia lógica
+    }
 
     public function prediction_format_file()
     {
