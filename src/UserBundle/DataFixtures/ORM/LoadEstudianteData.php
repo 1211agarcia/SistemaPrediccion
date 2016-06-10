@@ -30,8 +30,8 @@ class LoadEstudianteData extends AbstractFixture implements OrderedFixtureInterf
             $est->setCantMaterias(rand(40,60));
             $est->setPromedio(rand(1000,2000)/100);
             
-            $est->setPrimeraOpcionOpsu(rand(0,4));
-            $est->setSegundaOpcionOpsu(rand(0,4));
+            $est->setPrimeraOpcion(rand(0,4));
+            $est->setSegundaOpcion(rand(0,4));
             $est->setSexo(rand(0,1));
             $est->setTieneAccesoInternet(rand(0,1));
             $est->setEsAsignadoOPSU(rand(0,1));
