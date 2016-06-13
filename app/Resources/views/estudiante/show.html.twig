@@ -30,7 +30,10 @@
                                   <b>Cédula</b> <a class="pull-right"> {{ estudiante.cedula }}</a>
                                 </li>
                                 <li class="list-group-item">
-                                  <b>Sexo</b> <a class="pull-right"> {% if estudiante.sexo %}Masculino{% else %}Femenino{% endif %}</a>
+                                  <b>Genero</b> <a class="pull-right"> {% if estudiante.genero %}Masculino{% else %}Femenino{% endif %}</a>
+                                </li>
+                                <li class="list-group-item">
+                                  <b>Credenciales</b> <a class="pull-right" href="{{ asset('uploads/credenciales/' ~ estudiante.credencial ) }}" target="_blank" > Abrir archivo</a>
                                 </li>
                                 {#
                                 <li class="list-group-item">
@@ -38,7 +41,8 @@
                                 </li>
                                 <li class="list-group-item">
                                   <b>Friends</b> <a class="pull-right">13,287</a>
-                                </li>#}
+                                </li>
+                                #}
                             </ul>
                             <h3 class="profile-username text-center">Institucionales</h3>
                             <p class="text-muted text-center">Plantel</p>

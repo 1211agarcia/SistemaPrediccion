@@ -35,7 +35,7 @@
         {% endblock %}
     </head>
 <body class="hold-transition login-page">
-    <div class="login-box">
+    <div class="login-box" style="margin-top: 0;">
         <h5><b>S</b>istema de <b>E</b>ntrenamiento <b>M</b>atematico <b>P</b>re<b>U</b>niversitario</h5>
       <div class="login-logo">
         <b>SE</b>M<b>PU</b>
@@ -68,8 +68,10 @@
             </div><!-- /.col -->
           </div>
         </form>
-
         <a href="{{ path("fos_user_resetting_request") }}">Olvide mi contraseña</a><br>
+        <hr>
+        <a class="btn btn-success btn-block btn-flat" href="{{ path("estudiante_new") }}">Registrarme</a><br>
+
 
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->

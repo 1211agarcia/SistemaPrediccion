@@ -20,7 +20,7 @@
                 <th>4to Año</th>
                 <th>Total Materias</th>
                 <th>Promedio</th>
-                <th>Sexo</th>
+                <th>Genero</th>
                 <th>Opsu</th>
                 <th>Gestion plantel</th>
                 <th>Tipo plantel</th>
@@ -37,7 +37,7 @@
                 <td>{{ estudiante.notaCuarto }}</td>
                 <td>{{ estudiante.cantMaterias }}</td>
                 <td>{{ estudiante.promedio }}</td>
-                <td>{% if estudiante.sexo %}Hombre{% else %}Mujer{% endif %}</td>
+                <td>{% if estudiante.genero %}Masculino{% else %}Fenemino{% endif %}</td>
                 <td>{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}</td>
                 <td>{% if estudiante.gestionPlantel %}Privado{% else %}Público{% endif %}</td>
                 <td>{{ estudiante.tipoPlantel }}</td>

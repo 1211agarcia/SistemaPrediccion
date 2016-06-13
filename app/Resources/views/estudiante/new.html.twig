@@ -148,6 +148,30 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if not edition is defined %}
+                        <div class="col-md-6 form-group{% if form.usuario.plainPassword.first.vars.errors[0].message is defined %} has-error{% endif %}">
+                            {{ form_label(form.usuario.plainPassword.first, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.usuario.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.usuario.plainPassword.first.vars.errors[0].message is defined %}
+                                <span class="help-block" style="position: absolute;">
+                                    {{ form.usuario.plainPassword.first.vars.errors[0].message }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group{% if form.usuario.plainPassword.second.vars.errors[0].message is defined %} has-error{% endif %}">
+                            {{ form_label(form.usuario.plainPassword.second, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                            <div class="col-sm-9">
+                                {{ form_widget(form.usuario.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                                {% if form.usuario.plainPassword.second.vars.errors[0].message is defined %}
+                                <span class="help-block" style="position: absolute;">
+                                    {{ form.usuario.plainPassword.second.vars.errors[0].message }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="form-group col-md-3">
                             {{ form_row(form.cedula) }}
                         </div>
@@ -157,9 +181,9 @@
                         <div class="form-group col-md-3">
                             {{ form_row(form.apellido) }}
                         </div>
-                        {% if form.sexo is defined %}
+                        {% if form.genero is defined %}
                         <div class="form-group col-md-3">
-                            {{ form_row(form.sexo) }}
+                            {{ form_row(form.genero) }}
                         </div>
                         {% endif %}
                     </fieldset>
@@ -233,10 +257,26 @@
                             {{ form_row(form.nivelEstudioPadres) }}
                         </div>
                     </fieldset>
+                    <fieldset>
+                        <legend>Credenciales:</legend>   
+                        <div class="callout callout-info">
+                            <p>Debe Adjuntar un archivo PDF, que contenga: <strong>Cedula de indentidad, Tutulo de Bachiller y Notas certificada</strong>, cuyos datos deben coincidir con los suministrados. <a href="">Archivo Demo</a></p>
+                        </div>
+                        <div class="form-group">
+                            {% if form.credencial.errors[0].message is defined %} 
+                                <span class="help-block">{{ form_errors(form.credencial) }}</span>
+                            {% endif %}
+                            {{ form_widget(form.credencial) }}
+                        </div>
+                    </fieldset>
                     {% endif %}
             </div>
             <div class="box-footer">
-                <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('estudiante_show', { 'id': edition }) }}{% else %}{{ path('estudiante_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                {% if app.user %}
+                    <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('estudiante_show', { 'id': edition }) }}{% else %}{{ path('estudiante_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                {% else %}
+                    <a class="btn btn-danger btn-flat" href="{{ path('fos_user_security_login') }}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                {% endif %}
                 <button class="btn btn-primary btn-flat pull-right" type="submit" id="estudiante_submit" name="estudiante[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
             </div>
             {{ form_row(form._token) }}
@@ -244,9 +284,23 @@
 </section>
 
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/css/fileinput.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    
+    <script src="{{ asset('bundles/app/js/fileinput.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/app/js/fileinput_locale_es.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('#estudiante_registration_credencial').fileinput({
+            language: 'es',
+            //uploadUrl: '#',
+            allowedFileExtensions : ['pdf'],
+            showUpload: false,
+            showClose:false
+        });
+    </script>
     {% javascripts
         '@AppBundle/Resources/public/angularjs/newEstudiante/newEstudianteModule.js'
         '@AppBundle/Resources/public/angularjs/newEstudiante/newEstudianteController.js'%}

@@ -141,9 +141,9 @@ class Estudiante
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
-     * @Assert\NotBlank(message="Debe ingresar sexo")
+     * @Assert\NotBlank(message="Debe indicar género")
      */
-    private $sexo;
+    private $genero;
 
     /**
      * @var boolean
@@ -195,11 +195,25 @@ class Estudiante
      * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
      */
     private $progreso;
+    
+
+    /* @var UploadedFile
+     *
+     * @ORM\Column(type="string")
+     * @Assert\File(
+     *     maxSize = "20Mi",
+     *     mimeTypes = {"application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "Por favor cargar un PDF valido",
+     * )
+     * @Assert\NotNull(message="Por favor, cargar las credenciales como un archivo PDF.")
+     * @Assert\NotBlank(message="Por favor, cargue sus credenciales como un archivo PDF.")
+     */
+    private $credencial;
 
     public function __construct()
     {
-        parent::__construct();
-        $this->verificado = SIN_VERIFICAR;
+        //parent::__construct();
+        $this->verificado = false;//SIN_VERIFICAR;
         // tu propia lógica
     }
 
@@ -218,7 +232,7 @@ class Estudiante
         $this->getSegundaOpcion().' '.
         $this->getNivelSocioeconomico().' '.
         $this->getNivelEstudioPadres().' '.
-        ($this->getSexo()? '1' : '0').' ');
+        ($this->getGenero()? '1' : '0').' ');
     }
 
     /**
@@ -485,49 +499,26 @@ class Estudiante
     }
 
     /**
-     * Set sexo
+     * Set genero
      *
-     * @param boolean $sexo
+     * @param boolean $genero
      * @return Estudiante
      */
-    public function setSexo($sexo)
+    public function setGenero($genero)
     {
-        $this->sexo = $sexo;
+        $this->genero = $genero;
 
         return $this;
     }
 
     /**
-     * Get sexo
+     * Get genero
      *
      * @return boolean 
      */
-    public function getSexo()
+    public function getGenero()
     {
-        return $this->sexo;
-    }
-
-    /**
-     * Set tieneAccesoInternet
-     *
-     * @param boolean $tieneAccesoInternet
-     * @return Estudiante
-     */
-    public function setTieneAccesoInternet($tieneAccesoInternet)
-    {
-        $this->tieneAccesoInternet = $tieneAccesoInternet;
-
-        return $this;
-    }
-
-    /**
-     * Get tieneAccesoInternet
-     *
-     * @return boolean 
-     */
-    public function getTieneAccesoInternet()
-    {
-        return $this->tieneAccesoInternet;
+        return $this->genero;
     }
 
     /**
@@ -689,5 +680,52 @@ class Estudiante
     public function getProgreso()
     {
         return $this->progreso;
+    }
+
+    /**
+     * Set verificado
+     *
+     * @param boolean $verificado
+     * @return Estudiante
+     */
+    public function setVerificado($verificado)
+    {
+        $this->verificado = $verificado;
+
+        return $this;
+    }
+
+    /**
+     * Get verificado
+     *
+     * @return boolean 
+     */
+    public function getVerificado()
+    {
+        return $this->verificado;
+    }
+    
+
+    /**
+     * Set credencial
+     *
+     * @param string $credencial
+     * @return Estudiante
+     */
+    public function setCredencial($credencial)
+    {
+        $this->credencial = $credencial;
+
+        return $this;
+    }
+
+    /**
+     * Get credencial
+     *
+     * @return string 
+     */
+    public function getCredencial()
+    {
+        return $this->credencial;
     }
 }

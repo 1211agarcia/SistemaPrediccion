@@ -50,18 +50,18 @@ class EstudianteController extends Controller
         $form->add('submit', 'submit');
         $form->handleRequest($request);
 
-        //dump($estudiante);
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $estudiante->getCredencial();
+            $fileName = $this->get('app.credencial_uploader')->upload($file);
+            $estudiante->setCredencial($fileName);
+        dump($estudiante);
             /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
             $estudiante->getUsuario()->setEnabled(true);
             $estudiante->getUsuario()->addRole(1);
-            $estudiante->getUsuario()->setPlainPassword("V".$estudiante->getCedula());
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
-            $em->flush();
-            /*** Inicialización de Estudiante ***/
-            
-            return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
+        $em->flush();
+            //return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
         }
 
         return $this->render('estudiante/new.html.twig', array(

@@ -10,6 +10,7 @@ use UserBundle\Form\Type\RegistrationType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use UserBundle\Repository\UsuarioRepository as UserRepository;
@@ -155,11 +156,11 @@ class EstudianteType extends AbstractType
                     'required' => true,
                 )
             )
-            ->add('sexo', ChoiceType::class,
+            ->add('genero', ChoiceType::class,
                 array(
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
-                    'choices' => array('0' => 'Masculino', '1' => 'Femenino'),
+                    'choices' => array('1' => 'Masculino', '0' => 'Femenino'),
                     'required' => true,
                 )
             )
@@ -209,6 +210,13 @@ class EstudianteType extends AbstractType
                     'placeholder' => 'Seleccionar',
                     'choices'  => estudiante::NIVELES_EDUCATIVOS,
                     'required' => true,
+                )
+            )
+            ->add('credencial', FileType::class,
+                array(
+                    'label' => false,
+                    'required' => true,
+                    'data_class' => null
                 )
             )
         ;
