@@ -13,23 +13,41 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+        
+        $user = new User();
+        $user->setUserName('admin');
+        $user->setEmail('admin'.'@facyt.uc.edu.ve');
+        $user->setPlainPassword('123456');
+        $user->addRole('ROLE_ADMIN');
+        $user->setEnabled(true);
+        $manager->persist($user);
+        $manager->flush();
+        $user = new User();
+        $user->setUserName('profesor');
+        $user->setEmail('profesor'.'@facyt.uc.edu.ve');
+        $user->setPlainPassword('123456');
+        $user->addRole('ROLE_PROFESOR');
+        $user->setEnabled(true);
+        $manager->persist($user);
+        $manager->flush();
+        $user = new User();
+        $user->setUserName('verificador');
+        $user->setEmail('verificador'.'@facyt.uc.edu.ve');
+        $user->setPlainPassword('123456');
+        $user->addRole('ROLE_VERIFICADOR');
+        $user->setEnabled(true);
+        $manager->persist($user);
+        $manager->flush();
+        
+
         for ($i=1; $i <= 50 ; $i++) { 
            
             $user = new User();
-            //$user->setIndentityCard($entityCard);
-            $user->setUserName('user'.$i);
-            //$user->setName('name'.$i);
-            //$user->setLastName('user'.$i.'last_name');
-            $user->setEmail('user'.$i.'@facyt.uc.edu.ve');
+            $user->setUserName('estudiante'.$i);
+            $user->setEmail('estudiante'.$i.'@facyt.uc.edu.ve');
             $user->setPlainPassword('123456');
-            //$user->setPhone('0412-000000'.$i);
-            //$school = $manager->getRepository('DSFacytDomain:School')->findOneById(1);
-            //$user->setSchool($school);
-            $user->addRole($i);
-            
+            $user->addRole('ROLE_ESTUDIANTE');
             $user->setEnabled(true);
-
-
             $manager->persist($user);
             $manager->flush();
         }

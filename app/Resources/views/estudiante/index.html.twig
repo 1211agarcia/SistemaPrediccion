@@ -10,6 +10,7 @@
 </section>
 <div class="box">
     <div class="box-body">
+        <div class="table-responsive">
         <table id="tabla-users" class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -20,11 +21,10 @@
                 <th>4to Año</th>
                 <th>Total Materias</th>
                 <th>Promedio</th>
-                <th>Genero</th>
                 <th>Opsu</th>
                 <th>Gestion plantel</th>
                 <th>Tipo plantel</th>
-                <th>Nivel socioeconomico</th>
+                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -37,15 +37,15 @@
                 <td>{{ estudiante.notaCuarto }}</td>
                 <td>{{ estudiante.cantMaterias }}</td>
                 <td>{{ estudiante.promedio }}</td>
-                <td>{% if estudiante.genero %}Masculino{% else %}Fenemino{% endif %}</td>
                 <td>{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}</td>
                 <td>{% if estudiante.gestionPlantel %}Privado{% else %}Público{% endif %}</td>
-                <td>{{ estudiante.tipoPlantel }}</td>
-                <td>{{ estudiante.nivelSocioeconomico }}</td>
+                <td>{{ CONST['TIPOS_PLANTEL'][estudiante.tipoPlantel] }}</td>
+                <td>{{ CONST['ESTADOS'][estudiante.estado]}}</td>
             </tr>
         {% endfor %}
        </tbody>
         </table>
+    </div>
     </div>
 </div>
 
@@ -54,6 +54,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/jquery.dataTables.bootstrap.css') }}">
     
 {% endblock %}
 
@@ -65,8 +66,8 @@
 
 <script> $(document).ready(function() {
     $('#tabla-users').DataTable({
-        "responsive": true,
-        "scrollX": true,
+        /*"responsive": true,
+        "scrollX": true,*/
         "language": {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_",

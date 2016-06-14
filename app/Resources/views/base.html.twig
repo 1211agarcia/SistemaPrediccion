@@ -37,47 +37,44 @@
     </head>
     <body ng-app="AppModule" class="hold-transition skin-blue layout-top-nav" ng-controller="LoadCtrl">
         <div id="imgLOAD" style="text-align:center;position:absolute;top:0;bottom:0;left:0;right:0;height:20%;margin: auto;">
-          <h3>Cargando...</h3>
-          <div style="margin:auto;width:24px;height:24px;border:solid 2px transparent;border-top-color:  #29d;border-left-color:#29d;border-radius:50%;-webkit-animation: loading-bar-spinner 400ms linear infinite;-moz-animation: loading-bar-spinner 400ms linear infinite;-ms-animation: loading-bar-spinner 400ms linear infinite;-o-animation:      loading-bar-spinner 400ms linear infinite;animation: loading-bar-spinner 400ms linear infinite;"></div>
+            <h3>Cargando...</h3>
+            <div style="margin:auto;width:24px;height:24px;border:solid 2px transparent;border-top-color:  #29d;border-left-color:#29d;border-radius:50%;-webkit-animation: loading-bar-spinner 400ms linear infinite;-moz-animation: loading-bar-spinner 400ms linear infinite;-ms-animation: loading-bar-spinner 400ms linear infinite;-o-animation:      loading-bar-spinner 400ms linear infinite;animation: loading-bar-spinner 400ms linear infinite;"></div>
         </div>
         <div id="body" class="wrapper" style="display:none;">
-
             
-        {% include 'header.html.twig' %}
-        {% if app.user %}{# If alguien esta login se muestra el menu #}
-        {#% else %}
-            {% include 'header_admin.html.twig' %#}
-        {% endif %}
-
+            {% include 'header.html.twig' %}
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-              <div class="container">
-                {% block body %}{% endblock %}
-              </div>
+                <div class="container">
+                    {% block body %}{% endblock %}
+                </div>
             </div><!-- /.content-wrapper -->
 
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs">
-              <b>Version</b> 1.0
-            </div>
-            <strong>Copyright &copy; 2014-2015 <a href="http://facyt.uc.edu.ve">Facyt</a>.</strong>
-        </footer>
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                  <b>Version</b> 1.0
+                </div>
+                <strong>Copyright &copy; 2014-2015 <a href="http://facyt.uc.edu.ve">Facyt</a>.</strong>
+            </footer>
 
-    </div><!-- ./wrapper -->
+        </div><!-- ./wrapper -->
 
 
         {% block javascripts %}
-        {#<!-- jQuery 2.1.4 -->#}
+        {#<!-- jQuery 2.1.4 -->
+        <script src="{{asset('bundles/app/plugins/jQuery/jQuery-1.11.3.min.js')}}"></script>
+        #}
         <script src="{{asset('bundles/app/plugins/jQuery/jQuery-2.1.4.min.js')}}"></script>
         {#<!-- AngularJs -->#}
         <script src="{{asset('bundles/app/angularjs/angular.min.js')}}"></script>
         <script src="{{asset('bundles/app/plugins/angular-loading-bar/loading-bar.min.js') }}"></script>
-        {#<!-- Bootstrap 3.3.5 -->#}
+        {#<!-- Bootstrap 3.3.6 -->#}
         <script src="{{asset('bundles/app/bootstrap/js/bootstrap.min.js')}}"></script>
         {#<!-- FastClick -->}#}
         <script src="{{asset('bundles/app/plugins/fastclick/fastclick.min.js')}}"></script>
-        {#<!-- AdminLTE App -->#}
+        {#<!-- AdminLTE App -->
         <script src="{{asset('bundles/app/dist/js/app.min.js')}}"></script>
+        #}
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>    
         {% endblock %} 

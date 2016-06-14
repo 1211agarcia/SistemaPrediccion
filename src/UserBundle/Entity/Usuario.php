@@ -43,11 +43,14 @@ class Usuario extends BaseUser
     public function addRole($rol)
     {
         switch($rol){
-            case 1:
+            case 'ROLE_ESTUDIANTE':
                 array_push($this->roles, 'ROLE_ESTUDIANTE');
                 break;
-            case 2:
+            case 'ROLE_ADMIN':
                 array_push($this->roles, 'ROLE_ADMIN');
+                break;
+            case 'ROLE_VERIFICADOR':
+                array_push($this->roles, 'ROLE_VERIFICADOR');
                 break;
             default:
                 array_push($this->roles, 'ROLE_ESTUDIANTE');

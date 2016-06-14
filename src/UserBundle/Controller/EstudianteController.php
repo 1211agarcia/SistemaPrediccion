@@ -30,6 +30,13 @@ class EstudianteController extends Controller
 
         return $this->render('estudiante/index.html.twig', array(
             'estudiantes' => $estudiantes,
+            'CONST'=> array(
+                'CARRERAS' => Estudiante::CARRERAS,
+                'NIVELES_EDUCATIVOS'=> Estudiante::NIVELES_EDUCATIVOS,
+                'GESTIONES_PLANTEL' => Estudiante::GESTIONES_PLANTEL,
+                'TIPOS_PLANTEL' => Estudiante::TIPOS_PLANTEL,
+                'NIVELES_SOCIOECONOMICOS'=> Estudiante::NIVELES_SOCIOECONOMICOS,
+                'ESTADOS' => Estudiante::ESTADOS)
         ));
     }
 
@@ -54,14 +61,14 @@ class EstudianteController extends Controller
             $file = $estudiante->getCredencial();
             $fileName = $this->get('app.credencial_uploader')->upload($file);
             $estudiante->setCredencial($fileName);
-        dump($estudiante);
+            dump($estudiante);
             /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
             $estudiante->getUsuario()->setEnabled(true);
             $estudiante->getUsuario()->addRole(1);
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
         $em->flush();
-            //return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
+            return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
         }
 
         return $this->render('estudiante/new.html.twig', array(
@@ -87,7 +94,8 @@ class EstudianteController extends Controller
                 'NIVELES_EDUCATIVOS'=> Estudiante::NIVELES_EDUCATIVOS,
                 'GESTIONES_PLANTEL' => Estudiante::GESTIONES_PLANTEL,
                 'TIPOS_PLANTEL' => Estudiante::TIPOS_PLANTEL,
-                'NIVELES_SOCIOECONOMICOS'=> Estudiante::NIVELES_SOCIOECONOMICOS)
+                'NIVELES_SOCIOECONOMICOS'=> Estudiante::NIVELES_SOCIOECONOMICOS,
+                'ESTADOS' => Estudiante::ESTADOS)
         ));
     }
 

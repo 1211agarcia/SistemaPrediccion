@@ -10,7 +10,8 @@
 </section>
 <div class="box">
     <div class="box-body">
-        <table id="tabla-users" class="table table-bordered table-hover">
+    <div class="table-responsive">
+        <table id="tabla-users" class="table table-bordered table-hover display" cellspacing="0" width="100%">
             <thead>    
                     <th><i class="fa fa-user"></i> Usuario</th>
                     <th>Rol</th>
@@ -49,6 +50,7 @@
             </tbody>
         </table>
     </div>
+    </div>
 </div>
 
 {% endblock %}
@@ -68,8 +70,10 @@
 
 <script> $(document).ready(function() {
     $('#tabla-users').DataTable({
-        "responsive": true,
-        "scrollX": true,
+        //"responsive": true,
+        //"scrollX": "100%",
+        //"scrollX" : "100%",
+        //"autoWidth": false,
         "language": {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_",
@@ -95,6 +99,9 @@
             }
         }
     });
+    //$table.closest(".dataTables_wrapper").find("*").css("box-sizing","content-box").css("-moz-box-sizing","content-box");
+
+    
 } );
 </script>    
 

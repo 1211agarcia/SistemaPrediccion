@@ -35,6 +35,9 @@
                                 <li class="list-group-item">
                                   <b>Credenciales</b> <a class="pull-right" href="{{ asset('uploads/credenciales/' ~ estudiante.credencial ) }}" target="_blank" > Abrir archivo</a>
                                 </li>
+                                <li class="list-group-item">
+                                  <b>Ha sido verificado</b> <a class="pull-right">{{ CONST['ESTADOS'][estudiante.estado] }}</a>
+                                </li>
                                 {#
                                 <li class="list-group-item">
                                   <b>Último Acceso</b> <a class="pull-right">{% if estudiante.usuario.lastLogin %}{{ estudiante.usuario.lastLogin|date('Y-m-d H:i') }}{% else %}nunca{% endif %}</a>

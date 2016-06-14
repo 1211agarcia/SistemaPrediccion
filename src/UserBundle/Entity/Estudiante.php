@@ -41,8 +41,13 @@ class Estudiante
         /*2*/"Parasistemas ",
         /*3*/"Bachillerato integral",
         /*4*/"Institución militar");
-    const VERIFICADO = true;
-    const SIN_VERIFICAR = false;
+    const PENDIENTE = 1;
+    const DATOS_INVALIDOS = 2;
+    const VERIFICADO = 3;
+    const ESTADOS = array(
+        1 => "Pendiente",
+        2 => "Datos Invalidos",
+        3 => "Verificado");
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -185,9 +190,9 @@ class Estudiante
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer", nullable=false)
      */
-    private $verificado;
+    private $estado;
 
     /**
      * @var \AppBundle\Entity\Progreso
@@ -197,7 +202,8 @@ class Estudiante
     private $progreso;
     
 
-    /* @var UploadedFile
+    /**
+     * @var UploadedFile
      *
      * @ORM\Column(type="string")
      * @Assert\File(
@@ -246,6 +252,29 @@ class Estudiante
     }
 
     /**
+     * Set cedula
+     *
+     * @param integer $cedula
+     * @return Estudiante
+     */
+    public function setCedula($cedula)
+    {
+        $this->cedula = $cedula;
+
+        return $this;
+    }
+
+    /**
+     * Get cedula
+     *
+     * @return integer 
+     */
+    public function getCedula()
+    {
+        return $this->cedula;
+    }
+
+    /**
      * Set nombre
      *
      * @param string $nombre
@@ -289,29 +318,6 @@ class Estudiante
     public function getApellido()
     {
         return $this->apellido;
-    }
-
-    /**
-     * Set cedula
-     *
-     * @param integer $cedula
-     * @return Estudiante
-     */
-    public function setCedula($cedula)
-    {
-        $this->cedula = $cedula;
-
-        return $this;
-    }
-
-    /**
-     * Get cedula
-     *
-     * @return integer 
-     */
-    public function getCedula()
-    {
-        return $this->cedula;
     }
 
     /**
@@ -432,7 +438,7 @@ class Estudiante
     /**
      * Set promedio
      *
-     * @param string $promedio
+     * @param float $promedio
      * @return Estudiante
      */
     public function setPromedio($promedio)
@@ -445,7 +451,7 @@ class Estudiante
     /**
      * Get promedio
      *
-     * @return string 
+     * @return float 
      */
     public function getPromedio()
     {
@@ -547,7 +553,7 @@ class Estudiante
     /**
      * Set gestionPlantel
      *
-     * @param int $gestionPlantel
+     * @param integer $gestionPlantel
      * @return Estudiante
      */
     public function setGestionPlantel($gestionPlantel)
@@ -637,6 +643,29 @@ class Estudiante
     }
 
     /**
+     * Set estado
+     *
+     * @param integer $estado
+     * @return Estudiante
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
      * Set usuario
      *
      * @param \UserBundle\Entity\Usuario $usuario
@@ -681,30 +710,6 @@ class Estudiante
     {
         return $this->progreso;
     }
-
-    /**
-     * Set verificado
-     *
-     * @param boolean $verificado
-     * @return Estudiante
-     */
-    public function setVerificado($verificado)
-    {
-        $this->verificado = $verificado;
-
-        return $this;
-    }
-
-    /**
-     * Get verificado
-     *
-     * @return boolean 
-     */
-    public function getVerificado()
-    {
-        return $this->verificado;
-    }
-    
 
     /**
      * Set credencial
