@@ -36,10 +36,10 @@ class LoadEstudianteData extends AbstractFixture implements OrderedFixtureInterf
                 $est->setSegundaOpcion(rand(0,4));
                 $est->setGenero(rand(0,1));
                 $est->setEsAsignadoOPSU(rand(0,1));
-                $est->setGestionPlantel(rand(0,2));
-                $est->setTipoPlantel(rand(0,1));
+                $est->setGestionPlantel(rand(0,1));
+                $est->setTipoPlantel(rand(0,4));
                 $est->setNivelSocioeconomico(rand(0,2));
-                $est->setNivelEstudioPadres(rand(0,3));
+                $est->setNivelEstudioPadres(rand(0,4));
                 if ($i < 17 ) {//Estudiantes en estado Verificado
                     $est->setEstado(Estudiante::VERIFICADO);
                 } elseif ($i < 34) {//Estudiantes en estado Datos Invalidos

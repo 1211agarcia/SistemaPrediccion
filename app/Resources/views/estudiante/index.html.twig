@@ -22,8 +22,7 @@
                 <th>Total Materias</th>
                 <th>Promedio</th>
                 <th>Opsu</th>
-                <th>Gestion plantel</th>
-                <th>Tipo plantel</th>
+                <th>Registrado</th>
                 <th>Estado</th>
             </tr>
         </thead>
@@ -38,8 +37,7 @@
                 <td>{{ estudiante.cantMaterias }}</td>
                 <td>{{ estudiante.promedio }}</td>
                 <td>{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}</td>
-                <td>{% if estudiante.gestionPlantel %}Privado{% else %}Público{% endif %}</td>
-                <td>{{ CONST['TIPOS_PLANTEL'][estudiante.tipoPlantel] }}</td>
+                <td>{{ estudiante.usuario.created|date('Y-m-d H:i') }}</td>
                 <td>{{ CONST['ESTADOS'][estudiante.estado]}}</td>
             </tr>
         {% endfor %}

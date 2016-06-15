@@ -95,7 +95,7 @@
                             <h3 class="profile-username text-center">Admisión</h3>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                  <b>OPSU</b> <a class="pull-right">{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}, asignado.</a>
+                                  <b>OPSU</b> <a class="pull-right">{% if estudiante.esAsignadoOPSU %}Sí,{% else %}No{% endif %} asignado.</a>
                                 </li>
                                 <li class="list-group-item">
                                   <b>1era Opción</b> <a class="pull-right">{{ CONST['CARRERAS'][estudiante.primeraOpcion] }}</a>

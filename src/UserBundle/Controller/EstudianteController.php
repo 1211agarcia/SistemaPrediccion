@@ -3,19 +3,44 @@
 namespace UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
+//use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use UserBundle\Entity\Estudiante;
 use UserBundle\Form\EstudianteType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * Estudiante controller.
  *
  * @Route("/estudiante")
  */
-class EstudianteController extends Controller
+class EstudianteController extends BaseController
 {
+
+
+    /**
+     * Authenticate a user with Symfony Security
+     *
+     * @param \FOS\UserBundle\Model\UserInterface        $user
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     */
+    protected function authenticateUser(UserInterface $user, Response $response)
+    {
+        try {
+            $this->container->get('fos_user.security.login_manager')->loginUser(
+                $this->container->getParameter('fos_user.firewall_name'),
+                $user,
+                $response);
+        } catch (AccountStatusException $ex) {
+            // We simply do not authenticate users which do not pass the user
+            // checker (not enabled, expired, etc.).
+        }
+    }
     /**
      * Lists all Estudiante entities.
      *
@@ -61,14 +86,33 @@ class EstudianteController extends Controller
             $file = $estudiante->getCredencial();
             $fileName = $this->get('app.credencial_uploader')->upload($file);
             $estudiante->setCredencial($fileName);
+            $estudiante->setEstado(Estudiante::PENDIENTE);
             dump($estudiante);
             /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
             $estudiante->getUsuario()->setEnabled(true);
             $estudiante->getUsuario()->addRole(1);
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
-        $em->flush();
-            return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
+        //$em->flush();
+            $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($estudiante->getUsuario(), null, "main", $estudiante->getUsuario()->getRoles());
+            $this->get('security.context')->setToken($token);
+
+            $event = new \Symfony\Component\Security\Http\Event\InteractiveLoginEvent($this->getRequest(), $token);
+            $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
+
+            //$user = $this->get('security.context')->getToken()->getUser();
+            //return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
+            //$url = $this->generateUrl('fos_user_registration_confirmed');
+            //$response = new RedirectResponse($url);
+
+            //$this->authenticateUser($estudiante->getUsuario(), $response);
+            //$route = 'fos_user_registration_confirmed';
+
+            //$this->setFlash('fos_user_success', 'registration.flash.user_created');
+            //$url = $this->container->get('router')->generate($route);
+
+            return $this->redirectToRoute('fos_user_registration_confirmed');
+            
         }
 
         return $this->render('estudiante/new.html.twig', array(
