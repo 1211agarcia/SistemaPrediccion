@@ -19,7 +19,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "ircmaxell/password-compat": "^1.0",
-        "knplabs/knp-paginator-bundle": "^2.5"
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "friendsofsymfony/jsrouting-bundle": "^1.6"
 
     },
     "require-dev": {

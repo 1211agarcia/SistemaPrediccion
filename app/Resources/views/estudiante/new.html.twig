@@ -126,6 +126,18 @@
             <div class="box-body">
                     <fieldset>
                         <legend>Datos Personales:</legend>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.nombre) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.apellido) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.cedula) }}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{ form_row(form.genero) }}
+                        </div>
                         <div class="col-md-6 form-group{% if form.usuario.email.vars.errors[0].message is defined %} has-error{% endif %}">
                             {{ form_label(form.usuario.email, null, {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
                             <div class="col-sm-9">
@@ -170,20 +182,6 @@
                                 </span>
                                 {% endif %}
                             </div>
-                        </div>
-                        {% endif %}
-                        <div class="form-group col-md-3">
-                            {{ form_row(form.cedula) }}
-                        </div>
-                        <div class="form-group col-md-3">
-                            {{ form_row(form.nombre) }}
-                        </div>
-                        <div class="form-group col-md-3">
-                            {{ form_row(form.apellido) }}
-                        </div>
-                        {% if form.genero is defined %}
-                        <div class="form-group col-md-3">
-                            {{ form_row(form.genero) }}
                         </div>
                         {% endif %}
                     </fieldset>
@@ -243,7 +241,7 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>Datos Socio:</legend>   
+                        <legend>Datos Socio :</legend>   
                         <div class="form-group col-lg-2">
                             {{ form_row(form.gestionPlantel) }}
                         </div>
@@ -298,7 +296,8 @@
             //uploadUrl: '#',
             allowedFileExtensions : ['pdf'],
             showUpload: false,
-            showClose:false
+            showClose:false,
+            maxFileSize: 2000,
         });
     </script>
     {% javascripts

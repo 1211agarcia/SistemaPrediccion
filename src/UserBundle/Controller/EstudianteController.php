@@ -4,11 +4,12 @@ namespace UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
-//use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use UserBundle\Entity\Estudiante;
 use UserBundle\Form\EstudianteType;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
@@ -93,23 +94,13 @@ class EstudianteController extends BaseController
             $estudiante->getUsuario()->addRole(1);
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
-        //$em->flush();
-            $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken($estudiante->getUsuario(), null, "main", $estudiante->getUsuario()->getRoles());
+            $em->flush();
+            //Se inicia sesion con el estudiante creado.
+            $token = new UsernamePasswordToken($estudiante->getUsuario(), null, "main", $estudiante->getUsuario()->getRoles());
             $this->get('security.context')->setToken($token);
 
-            $event = new \Symfony\Component\Security\Http\Event\InteractiveLoginEvent($this->getRequest(), $token);
+            $event = new InteractiveLoginEvent($this->getRequest(), $token);
             $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
-
-            //$user = $this->get('security.context')->getToken()->getUser();
-            //return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
-            //$url = $this->generateUrl('fos_user_registration_confirmed');
-            //$response = new RedirectResponse($url);
-
-            //$this->authenticateUser($estudiante->getUsuario(), $response);
-            //$route = 'fos_user_registration_confirmed';
-
-            //$this->setFlash('fos_user_success', 'registration.flash.user_created');
-            //$url = $this->container->get('router')->generate($route);
 
             return $this->redirectToRoute('fos_user_registration_confirmed');
             

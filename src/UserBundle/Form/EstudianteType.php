@@ -138,7 +138,7 @@ class EstudianteType extends AbstractType
             )
             ->add('primeraOpcion', ChoiceType::class,
                 array(
-                    'label'=>'1ra Opción',
+                    'label'=>'1ra Opción del curso',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'empty_value' => 'Seleccionar',
@@ -148,7 +148,7 @@ class EstudianteType extends AbstractType
             )
             ->add('segundaOpcion', ChoiceType::class,
                 array(
-                    'label'=>'2da Opción',
+                    'label'=>'2da Opción del curso',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
@@ -166,7 +166,7 @@ class EstudianteType extends AbstractType
             )
             ->add('esAsignadoOPSU', ChoiceType::class,
                 array(
-                    'label'=>'¿es Asignado?',
+                    'label'=>'¿Asignado OPSU?',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
@@ -205,6 +205,7 @@ class EstudianteType extends AbstractType
             )
             ->add('nivelEstudioPadres', ChoiceType::class,
                 array(
+                    'label'=>'Mayor nivel de estudio de padres',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'placeholder' => 'Seleccionar',
