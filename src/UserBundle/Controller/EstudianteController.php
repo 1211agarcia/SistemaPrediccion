@@ -90,7 +90,7 @@ class EstudianteController extends BaseController
             $estudiante->setEstado(Estudiante::PENDIENTE);
             dump($estudiante);
             /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
-            $estudiante->getUsuario()->setEnabled(true);
+            $estudiante->getUsuario()->setEnabled(false);
             $estudiante->getUsuario()->addRole(1);
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
@@ -102,7 +102,7 @@ class EstudianteController extends BaseController
             $event = new InteractiveLoginEvent($this->getRequest(), $token);
             $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
 
-            return $this->redirectToRoute('fos_user_registration_confirmed');
+            return $this->redirectToRoute('fos_user_registration_check_email');
             
         }
 
@@ -225,5 +225,57 @@ class EstudianteController extends BaseController
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+    /**
+     * Bloquear a user entity.
+     *
+     * @Route("/{id}", name="estudiante_lock")
+     * @Method("POST")
+     * @Template("UserBundle:usuario:show.html.twig")
+     */
+    public function toLockAction(Request $request, $id)
+    {
+        $form = $this->createToLockForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            
+            $user = $userManager->findUserBy(array('id'=>$id));
+            if (!$user) {
+                throw $this->createNotFoundException('Unable to find usuario.');
+            }
+            if(!$user->isEnabled()){
+                $user->setConfirmationToken(null);
+                $user->setEnabled(true);
+            }else
+            {
+                $user->setLocked(!$user->isLocked());
+            }
+            $userManager->updateUser($user);
+            
+        }
+        return $this->redirect($this->generateUrl('user_show', array('id' => $id)));
+        
+    }
+    /**
+     * Creates a form to "verificar" a estudiante entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createVerificationForm($id)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+            
+        $user = $userManager->findUserBy(array('id'=>$id));
+        $form = $this->createFormBuilder(null, array('attr' => array('style' => 'display:initial;')))
+            ->setAction($this->generateUrl('user_lock', array('id' => $id)))
+            ->setMethod('POST')
+            ->add('submit', 'submit')
+            ->getForm()
+        ;
+        return $form;
     }
 }
