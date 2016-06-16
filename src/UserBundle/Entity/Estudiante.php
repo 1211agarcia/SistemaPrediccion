@@ -66,14 +66,14 @@ class Estudiante
      * @var \UserBundle\Entity\Usuario
      * @Assert\Valid
      * @ORM\OneToOne(targetEntity="Usuario", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id", nullable=false)
      */
     protected $usuario;
 
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=false)
      * @Assert\NotBlank(message="Debe ingresar el nombre")
      */
     private $nombre;
@@ -81,7 +81,7 @@ class Estudiante
     /**
      * @var string
      * 
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=false)
      * @Assert\NotBlank(message="Debe ingresar el apellido")
      */
     private $apellido;
@@ -89,56 +89,56 @@ class Estudiante
     /**
      * @var float
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar primera nota de matemática")
      */
     private $notaPrimero;
     /**
      * @var float
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar segunda nota de matemática")
      */
     private $notaSegundo;
     /**
      * @var float
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar tercera nota de matemática")
      */
     private $notaTercero;
     /**
      * @var float
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar cuarta nota de matemática")
      */
     private $notaCuarto;
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar la cantidad de Materias cursadas en bachillerato")
      */
     private $cantMaterias;
     /**
      * @var float
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar promedio")
      */
     private $promedio;
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar primera opción")
      */
     private $primeraOpcion;
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank(message="Debe ingresar segunda opción")
      */
     private $segundaOpcion;
@@ -147,13 +147,14 @@ class Estudiante
      *
      * @ORM\Column(type="boolean", nullable=false)
      * @Assert\NotBlank(message="Debe indicar género")
+     * @Assert\NotNull(message="El valor del género no puede ser 'nulo'")
      */
     private $genero;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      * @Assert\NotBlank(message="Debe indicar si esta o no, asignado por la OPSU")
      */
     private $esAsignadoOPSU;
@@ -205,13 +206,13 @@ class Estudiante
     /**
      * @var UploadedFile
      *
-     * @ORM\Column(type="string")
-     * @Assert\File(
+     * @ORM\Column(type="string", nullable=false)
+     * Assert\File(
      *     maxSize = "20Mi",
      *     mimeTypes = {"application/pdf", "application/x-pdf"},
      *     mimeTypesMessage = "Por favor cargar un PDF valido",
      * )
-     * @Assert\NotNull(message="Por favor, cargar las credenciales como un archivo PDF.")
+     * @Assert\NotNull(message="El archivo de credenciales no puede ser 'nulo'.")
      * @Assert\NotBlank(message="Por favor, cargue sus credenciales como un archivo PDF.")
      */
     private $credencial;

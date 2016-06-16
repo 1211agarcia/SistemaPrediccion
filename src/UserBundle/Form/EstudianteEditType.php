@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Form\Type\RegistrationType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EstudianteEditType extends AbstractType
 {
@@ -40,6 +41,14 @@ class EstudianteEditType extends AbstractType
                         'class' => 'form-control',
                         'min' => 1
                     ),
+                    'required' => true,
+                )
+            )
+            ->add('genero', ChoiceType::class,
+                array(
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control'),
+                    'choices' => array('1' => 'Masculino', '0' => 'Femenino'),
                     'required' => true,
                 )
             );

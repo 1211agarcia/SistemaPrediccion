@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use UserBundle\Entity\Estudiante;
 use UserBundle\Form\EstudianteType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -15,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Validator\Constraints\File as FileConstraint;
+
 /**
  * Estudiante controller.
  *
@@ -83,11 +86,27 @@ class EstudianteController extends BaseController
         $form->add('submit', 'submit');
         $form->handleRequest($request);
 
+        /* Validacion de credenciales */
+        $file = $form->get('credencial');
+        $fileContraints = new FileConstraint();
+        $fileContraints->maxSizeMessage = 'msg.validator.file.import.maxFileSize';
+        $fileContraints->mimeTypes      = 'msg.validator.file.import.mimeType';
+
+        $errorList = $this->get('validator')->validate($file, $fileContraints);
+        if (count($errorList)) {
+            $errorMessage = $errorList[0]->getMessage();
+            $file->addError($errorMessage);
+
+            // adding an error causes the form to be invalid:
+            $form->isValid(); // now returns false
+        }
+        /* Estudiante de inicializa en estado de PENDIENTE */
+        $estudiante->setEstado(Estudiante::PENDIENTE);
         if ($form->isSubmitted() && $form->isValid()) {
+            /* Carga de archivo adjunto */
             $file = $estudiante->getCredencial();
             $fileName = $this->get('app.credencial_uploader')->upload($file);
             $estudiante->setCredencial($fileName);
-            $estudiante->setEstado(Estudiante::PENDIENTE);
             dump($estudiante);
             /* SE AGREGAN DATOS POR DEFECTO DE USUARIO DE ESTUDIANTE*/
             $estudiante->getUsuario()->setEnabled(false);
@@ -120,9 +139,13 @@ class EstudianteController extends BaseController
      */
     public function showAction(Estudiante $estudiante)
     {
-        $deleteForm = $this->createDeleteForm($estudiante);
+        $verifyForm = $this->createVerificationForm($estudiante);
+        /*$verifyForm = $this->createForm('UserBundle\Form\EstudianteVerifyType', $estudiante,
+            array('action' => $this->generateUrl('estudiante_verification', array('id' => $estudiante->getId()))));
+        $verifyForm->add('submit', 'submit');*/
 
         return $this->render('estudiante/show.html.twig', array(
+            'verify_form' => $verifyForm->createView(),
             'estudiante' => $estudiante,
             'CONST'=> array(
                 'CARRERAS' => Estudiante::CARRERAS,
@@ -227,36 +250,25 @@ class EstudianteController extends BaseController
         ;
     }
     /**
-     * Bloquear a user entity.
+     * Verify a estudiante entity.
      *
-     * @Route("/{id}", name="estudiante_lock")
-     * @Method("POST")
-     * @Template("UserBundle:usuario:show.html.twig")
+     * @Route("/{id}/verify", name="estudiante_verification")
+     * @Method({"GET", "POST"})
      */
-    public function toLockAction(Request $request, $id)
+    public function toVerificationAction(Request $request, Estudiante $estudiante)
     {
-        $form = $this->createToLockForm($id);
+        $form = $this->createVerificationForm($estudiante);
+        $form = $this->createForm('UserBundle\Form\EstudianteVerifyType', $estudiante,
+            array('action' => $this->generateUrl('estudiante_verification', array('id' => $estudiante->getId()))));
+        $form->add('submit', 'submit');
         $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $userManager = $this->get('fos_user.user_manager');
-            
-            $user = $userManager->findUserBy(array('id'=>$id));
-            if (!$user) {
-                throw $this->createNotFoundException('Unable to find usuario.');
-            }
-            if(!$user->isEnabled()){
-                $user->setConfirmationToken(null);
-                $user->setEnabled(true);
-            }else
-            {
-                $user->setLocked(!$user->isLocked());
-            }
-            $userManager->updateUser($user);
-            
-        }
-        return $this->redirect($this->generateUrl('user_show', array('id' => $id)));
         
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($estudiante);
+            $em->flush();            
+        }
+        return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));        
     }
     /**
      * Creates a form to "verificar" a estudiante entity by id.
@@ -265,17 +277,14 @@ class EstudianteController extends BaseController
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createVerificationForm($id)
+    private function createVerificationForm(Estudiante $estudiante)
     {
-        $userManager = $this->get('fos_user.user_manager');
-            
-        $user = $userManager->findUserBy(array('id'=>$id));
-        $form = $this->createFormBuilder(null, array('attr' => array('style' => 'display:initial;')))
-            ->setAction($this->generateUrl('user_lock', array('id' => $id)))
-            ->setMethod('POST')
-            ->add('submit', 'submit')
-            ->getForm()
-        ;
+        $form = $this->createForm('UserBundle\Form\EstudianteVerifyType', $estudiante,
+            array('action' => $this->generateUrl('estudiante_verification', array('id' => $estudiante->getId())),
+                'attr' => array('class' =>'navbar-form navbar-left')
+                )
+            );
+        $form->add('submit', 'submit');
         return $form;
     }
 }
