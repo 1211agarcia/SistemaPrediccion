@@ -87,7 +87,7 @@ class EstudianteController extends BaseController
         $form->handleRequest($request);
 
         /* Validacion de credenciales */
-        $file = $form->get('credencial');
+        /*$file = $form->get('credencial');
         $fileContraints = new FileConstraint();
         $fileContraints->maxSizeMessage = 'msg.validator.file.import.maxFileSize';
         $fileContraints->mimeTypes      = 'msg.validator.file.import.mimeType';
@@ -99,7 +99,7 @@ class EstudianteController extends BaseController
 
             // adding an error causes the form to be invalid:
             $form->isValid(); // now returns false
-        }
+        }*/
         /* Estudiante de inicializa en estado de PENDIENTE */
         $estudiante->setEstado(Estudiante::PENDIENTE);
         if ($form->isSubmitted() && $form->isValid()) {

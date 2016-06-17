@@ -28,6 +28,28 @@ if (is_writable($filePath)) {
     {
         echo getcwd() . "\n";
         dump(chdir('../src/AppBundle/R'));
+        //file_put_contents("data.txt", shell_exec("Rscript inicio.R"));
+        dump(shell_exec("Rscript inicio.R"));
+
+        echo "inicio...";
+        //echo "<pre>";
+        //echo (shell_exec("Rscript my_rscript2.R"));
+        //echo "</pre>";
+        // current directory
+
+        // current directory
+        //echo getcwd() . "\n";
+        
+        //exec("php p.php");
+        echo "fin...";die;
+
+
+
+
+
+
+        echo getcwd() . "\n";
+        dump(chdir('../src/AppBundle/R'));
         dump($estudiante);
         $objData = serialize( $estudiante);
         dump($objData);
@@ -38,9 +60,8 @@ if (is_writable($filePath)) {
             fclose($fp);
         //}
 
-        return $this->render('estudiante/show.html.twig', array(
-            'estudiante' => $estudiante,
-            'CONST'=> array('CARRERAS' => Estudiante::CARRERAS,'NIVELES_EDUCATIVOS'=> Estudiante::NIVELES_EDUCATIVOS,'GESTIONES_PLANTEL' => Estudiante::GESTIONES_PLANTEL,'TIPOS_PLANTEL' => Estudiante::TIPOS_PLANTEL,'NIVELES_SOCIOECONOMICOS'=> Estudiante::NIVELES_SOCIOECONOMICOS)));
+        return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));        
+
     }
     /**
      * @Route("prediccion/{n}")
@@ -62,7 +83,7 @@ dump(chdir('../src/AppBundle/R'));
 //echo getcwd() . "\n";
         
         //exec("php p.php");
-        echo "fin...";
+        echo "fin...";die;
  
 		  // return image tag
 		  $nocache = rand();
