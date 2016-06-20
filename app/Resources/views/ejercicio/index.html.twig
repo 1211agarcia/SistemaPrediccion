@@ -2,12 +2,11 @@
 
 {% block body %}
 <section class="content-header">
-    <h1>Ejercicios</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Incio</a></li>
-        <li><a href="#">Ejercicios</a></li>
-        <li class="active">Listar</li>
-    </ol>
+    <h1 class="box-title">Ejercicios{#% if is_granted('ROLE_PROFESOR') %#}
+        <a style="float: right;"class="btn btn-success btn-flat" href="{{ path('ejercicio_new') }}"><i class="fa fa-plus"></i>&nbsp;Agregar</a>
+        {#% endif %#}</h1>
+    {% if is_granted('ROLE_PROFESOR') %}
+    {% endif %}
 </section>
 <div class="box">
     <div class="box-body">

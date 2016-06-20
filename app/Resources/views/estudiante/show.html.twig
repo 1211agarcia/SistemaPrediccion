@@ -14,7 +14,7 @@
                 <li class="active"><a href="#datos" data-toggle="tab">Datos</a></li>
                 <li><a href="#progreso" data-toggle="tab">Progreso</a></li>
                 <li><a href="#settings" data-toggle="tab">Settings</a></li>
-                {% if verify_form is defined %}
+                {% if is_granted('ROLE_VERIFICADOR') and verify_form is defined %}
                 <li style="float: right;background:rgba(34,34,34,0.5);">
                     {{ form_start(verify_form) }}
                     {{ form_errors(verify_form) }}
