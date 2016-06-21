@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Expresiones{% endblock %}
 {% block body %}
 <section class="content-header">
-    <h1>Expresiones Matematicas</h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Incio</a></li>
-        <li><a href="#">Expresiones</a></li>
-        <li class="active">Listar</li>
-    </ol>
+    <h1 class="box-title">Expresiones Matematicas{% if is_granted('ROLE_PROFESOR') %}
+    <a style="float: right;"class="btn btn-success btn-flat" href="{{ path('expresionmatematica_new') }}"><i class="fa fa-plus"></i>&nbsp;Agregar</a>{% endif %}</h1>
 </section>
+<section class="content">
 <div class="box">
     <div class="box-body">
+        <div class="table-responsive">
         <table id="tabla-expresiones" class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -29,12 +27,14 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 </div>
+</section>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">  
+    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">
 {% endblock %}
 
 
@@ -46,8 +46,8 @@
     <script src="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
     <script> $(document).ready(function() {
         $('#tabla-expresiones').DataTable({
-            "responsive": true,
-            "scrollX": true,
+            //"responsive": true,
+            //"scrollX": true,
             "language": {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_",

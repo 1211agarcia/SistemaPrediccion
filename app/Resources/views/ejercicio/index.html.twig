@@ -1,39 +1,41 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Ejercicios{% endblock %}
 {% block body %}
 <section class="content-header">
-    <h1 class="box-title">Ejercicios{#% if is_granted('ROLE_PROFESOR') %#}
+    <h1 class="box-title">Ejercicios{% if is_granted('ROLE_PROFESOR') %}
         <a style="float: right;"class="btn btn-success btn-flat" href="{{ path('ejercicio_new') }}"><i class="fa fa-plus"></i>&nbsp;Agregar</a>
-        {#% endif %#}</h1>
-    {% if is_granted('ROLE_PROFESOR') %}
-    {% endif %}
+        {% endif %}</h1>
 </section>
+<section class="content">
 <div class="box">
     <div class="box-body">
-        <table id="tabla-ejercicios" class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tema</th>
-                    <th>Dificultad</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ejercicio in ejercicios %}
+        <div class="table-responsive">
+            <table id="tabla-ejercicios" class="table table-bordered table-hover">
+                <thead>
                     <tr>
-                        <td><a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">{{ ejercicio.id }}</a></td>
-                        <td>{{ ejercicio.tema }}</td>
-                        <td>{{ ejercicio.dificultad }}</td>
+                        <th>ID</th>
+                        <th>Tema</th>
+                        <th>Dificultad</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for ejercicio in ejercicios %}
+                        <tr>
+                            <td><a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">{{ ejercicio.id }}</a></td>
+                            <td>{{ ejercicio.tema }}</td>
+                            <td>{{ ejercicio.dificultad }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+</section>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">  
+    <link rel="stylesheet" href="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.css') }}">
 {% endblock %}
 
 
@@ -41,10 +43,11 @@
     {{ parent() }}  
     <script src="{{ asset('bundles/app/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+
     <script> $(document).ready(function() {
         $('#tabla-ejercicios').DataTable({
-            "responsive": true,
-            "scrollX": true,
+            //"responsive": true,
+            //"scrollX": true,
             "language": {
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_",

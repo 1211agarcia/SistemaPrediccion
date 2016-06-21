@@ -52,44 +52,6 @@ class Usuario extends BaseUser
     }
 
     /**
-     * Implementación de una lista de roles para los usuarios 
-     * 
-     * @throws Exception
-     * @param Rol $rol 
-     */
-    public function addRole($rol)
-    {
-        switch($rol){
-            case 'ROLE_ESTUDIANTE':
-                array_push($this->roles, 'ROLE_ESTUDIANTE');
-                break;
-            case 'ROLE_ADMIN':
-                array_push($this->roles, 'ROLE_ADMIN');
-                break;
-            case 'ROLE_VERIFICADOR':
-                array_push($this->roles, 'ROLE_VERIFICADOR');
-                break;
-            default:
-                array_push($this->roles, 'ROLE_ESTUDIANTE');
-                break;
-        }
-    }      
-    /**
-     * 
-     * @throws Exception
-     * @param array $roles 
-     */
-    public function setRoles(array $roles)
-    {
-        $this->roles = array();
-
-        foreach ($roles as $role) {
-            $this->addRole($role);
-        }
-
-        return $this;
-    }
-    /**
      * Get id
      *
      * @return integer 
