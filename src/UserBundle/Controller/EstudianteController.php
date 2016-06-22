@@ -25,8 +25,6 @@ use Symfony\Component\Validator\Constraints\File as FileConstraint;
  */
 class EstudianteController extends BaseController
 {
-
-
     /**
      * Authenticate a user with Symfony Security
      *
@@ -217,12 +215,12 @@ class EstudianteController extends BaseController
     /**
      * Deletes a Estudiante entity.
      *
-     * @Route("/{id}", name="estudiante_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="estudiante_prediction")
+     * @Method("POST")
      */
-    public function deleteAction(Request $request, Estudiante $estudiante)
+    public function predictionAction(Request $request, Estudiante $estudiante)
     {
-        $form = $this->createDeleteForm($estudiante);
+        $form = $this->createPredictionForm($estudiante);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -235,17 +233,17 @@ class EstudianteController extends BaseController
     }
 
     /**
-     * Creates a form to delete a Estudiante entity.
+     * Creates a form to Prediction a Estudiante entity.
      *
      * @param Estudiante $estudiante The Estudiante entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Estudiante $estudiante)
+    private function createPredictionForm(Estudiante $estudiante)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('estudiante_delete', array('id' => $estudiante->getId())))
-            ->setMethod('DELETE')
+            ->setAction($this->generateUrl('estudiante_prediction', array('id' => $estudiante->getId())))
+            ->setMethod('POST')
             ->getForm()
         ;
     }
@@ -266,9 +264,11 @@ class EstudianteController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($estudiante);
-            $em->flush();            
+            $em->flush();
+            if($estudiante->getEstado() === Estudiante::VERIFICADO){
+                $this->prediction($estudiante);
+            }           
         }
-        return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));        
     }
     /**
      * Creates a form to "verificar" a estudiante entity by id.
@@ -286,5 +286,39 @@ class EstudianteController extends BaseController
             );
         $form->add('submit', 'submit');
         return $form;
+    }
+
+
+    private function prediction(Estudiante $estudiante)
+    {
+        echo getcwd() . "\n";
+        dump(chdir('../src/AppBundle/R'));
+        //file_put_contents("data.txt", shell_exec("Rscript inicio.R"));
+        dump(shell_exec("Rscript inicio.R"));
+
+        echo "inicio...";
+        //echo "<pre>";
+        //echo (shell_exec("Rscript my_rscript2.R"));
+        //echo "</pre>";
+        // current directory
+
+        // current directory
+        //echo getcwd() . "\n";
+        
+        //exec("php p.php");
+        echo "fin...";die;
+        echo getcwd() . "\n";
+        dump(chdir('../src/AppBundle/R'));
+        dump($estudiante);
+        $objData = serialize( $estudiante);
+        dump($objData);
+        $filePath = getcwd().DIRECTORY_SEPARATOR."estudiante.in";
+        //if (is_writable($filePath)) {
+            $fp = fopen($filePath, "w") or die("Can't create file");
+            fwrite($fp, $estudiante->prediction_format_file());
+            fclose($fp);
+        //}
+
+        return $estudiante;
     }
 }

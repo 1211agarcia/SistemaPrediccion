@@ -183,6 +183,14 @@ class Tema
     {
         return $this->padres;
     }
+    /**
+     * Remove padres
+     *
+     */
+    public function removeAllPadres()
+    {
+        $this->padres->clear();
+    }
 
     /**
      * Add hijo
@@ -206,7 +214,6 @@ class Tema
     {
         $this->hijos->removeElement($hijo);
     }
-
     /**
      * Get hijos
      *

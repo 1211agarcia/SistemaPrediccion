@@ -94,10 +94,11 @@ class TemaController extends Controller
             dump(get_class($tema));
             dump($tema);
             /*Gracia Divina, esto DA!*/
+            $tema->removeAllPadres();
             foreach ($tema->getPadres() as $actual) {
                 $actual->addHijo($tema);
             }
-            //$em->persist($tema);
+            $em->persist($tema);
             $em->flush();
 
             return $this->redirectToRoute('tema_show', array('id' => $tema->getId()));
