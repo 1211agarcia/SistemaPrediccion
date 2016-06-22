@@ -13,13 +13,13 @@
             window.onload = detectarCarga;
             function detectarCarga(){
               document.getElementById("imgLOAD").style.display="none";
-              document.getElementById("body").style.display="initial";
+              document.getElementById("body").style.visibility = "visible";
             }
             </script>
             <link rel="stylesheet" href="{{ asset('bundles/app/bootstrap/css/bootstrap.min.css')}}">
             <link href="{{ asset('bundles/app/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet"/>
             <link href="{{ asset('bundles/app/plugins/angular-loading-bar/loading-bar.min.css') }}" type="text/css" rel="stylesheet" />
-            <link rel="icon" type="image/x-icon" href="{{ asset('bundles/app/img/favicon2.ico') }}"/>
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon2.ico') }}"/>
             <!-- Ionicons -->
             <link rel="stylesheet" href="{{ asset('bundles/app/css/ionicons.min.css') }}">
             <!-- Theme style -->
@@ -40,9 +40,10 @@
             <h3>Cargando...</h3>
             <div style="margin:auto;width:24px;height:24px;border:solid 2px transparent;border-top-color:  #29d;border-left-color:#29d;border-radius:50%;-webkit-animation: loading-bar-spinner 400ms linear infinite;-moz-animation: loading-bar-spinner 400ms linear infinite;-ms-animation: loading-bar-spinner 400ms linear infinite;-o-animation:      loading-bar-spinner 400ms linear infinite;animation: loading-bar-spinner 400ms linear infinite;"></div>
         </div>
-        <div id="body" class="wrapper" style="display:none;">
-            
             {% include 'header.html.twig' %}
+        <div id="body" class="wrapper" style="visibility: hidden;">
+            
+            
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <div class="container">
