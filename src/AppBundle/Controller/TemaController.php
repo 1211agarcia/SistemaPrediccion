@@ -47,10 +47,14 @@ class TemaController extends Controller
             array('action' => $this->generateUrl('tema_new')));
         $form->add('submit', 'submit');
             
+dump($tema);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+/*Gracia Divina, esto DA!*/
+            foreach ($tema->getPadres() as $actual) {
+                $actual->addHijo($tema);
+            }
             $em->persist($tema);
             $em->flush();
 
@@ -91,10 +95,7 @@ class TemaController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            dump(get_class($tema));
-            dump($tema);
             /*Gracia Divina, esto DA!*/
-            $tema->removeAllPadres();
             foreach ($tema->getPadres() as $actual) {
                 $actual->addHijo($tema);
             }

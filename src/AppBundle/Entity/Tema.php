@@ -31,24 +31,13 @@ class Tema
      * @ORM\Column(name="nombre", type="string", length=255, unique=true)
      */
     private $nombre;
-
+    
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\ManyToMany(targetEntity="Categoria", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinTable(name="temas_categorias",
-     *      joinColumns={@ORM\JoinColumn(name="tema_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="categoria_id", referencedColumnName="id", unique=true)}
-     *      )
-     * @Assert\Valid
-     * @Assert\Count(
-     *      min = "1",
-     *      max = "10",
-     *      minMessage = "Debe tener al menos 1 Categoria",
-     *      maxMessage = "Sólo puede tener como maximo {{ limit }} Categorias"
-     * )
+     * @ORM\Column(name="descripcion", type="text")
      */
-    private $categorias;
+    private $descripcion;
 
     /**
      * @ORM\ManyToMany(targetEntity="Tema", inversedBy="padres")
@@ -68,7 +57,6 @@ class Tema
      */
     public function __construct()
     {
-        $this->categorias = new ArrayCollection();
         $this->padres = new ArrayCollection();
         $this->hijos = new ArrayCollection();
     }
@@ -110,47 +98,6 @@ class Tema
         return $this->nombre;
     }
 
-
-    /**
-     * Add categorias
-     *
-     * @param \AppBundle\Entity\Categoria $categorias
-     * @return Tema
-     */
-    public function addCategoria(\AppBundle\Entity\Categoria $categorias)
-    {
-        $this->categorias[] = $categorias;
-
-        return $this;
-    }
-
-    /**
-     * Remove categorias
-     *
-     * @param \AppBundle\Entity\Categoria $categorias
-     */
-    public function removeCategoria(\AppBundle\Entity\Categoria $categorias)
-    {
-        $this->categorias->removeElement($categorias);
-    }
-    /**
-     * Remove categorias
-     *
-     */
-    public function removeAllCategorias()
-    {
-        $this->categorias->clear();
-    }
-    /**
-     * Get categorias
-     *
-     * @return \ArrayCollection 
-     */
-    public function getCategorias()
-    {
-        return $this->categorias;
-    }
-
     /**
      * Add padre
      *
@@ -159,7 +106,9 @@ class Tema
      */
     public function addPadre(\AppBundle\Entity\Tema $padre)
     {
-        $this->padres[] = $padre;
+        if (!$this->padres->contains($padre)) {
+            $this->padres[] = $padre;
+        }
 
         return $this;
     }
@@ -200,7 +149,9 @@ class Tema
      */
     public function addHijo(\AppBundle\Entity\Tema $hijo)
     {
-        $this->hijos[] = $hijo;
+        if (!$this->hijos->contains($hijo)) {
+            $this->hijos[] = $hijo;
+        }
 
         return $this;
     }
@@ -224,4 +175,27 @@ class Tema
         return $this->hijos;
     }
 
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Tema
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
 }
