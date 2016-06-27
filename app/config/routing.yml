@@ -6,8 +6,8 @@ app_practica:
     resource: "@AppBundle/Controller/PracticaController.php"
     type:     annotation
 
-app_expresion_matematica:
-    resource: "@AppBundle/Controller/ExpresionMatematicaController.php"
+app_respuesta:
+    resource: "@AppBundle/Controller/RespuestaController.php"
     type:     annotation
 
 app_ejercicio:
