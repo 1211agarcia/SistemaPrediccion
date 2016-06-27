@@ -9,26 +9,37 @@
         <div class="box box-primary">
             <!-- form start -->
             {{ form_start(form) }}
-                <div class="box-body">
+                <div class="row box-body">
                     {{ form_errors(form) }}
-                    {{ form_row(form.dificultad) }}
-                    <div ng-init="tema = '{{form.tema.vars.value}}';">
-                        {#
-                    {{ form_row(form.tema) }}
-                        #}
+                    <div class="form-group col-md-6 col-xs-12" ng-init="tema = '{{form.tema.vars.value}}';">
                         {{ form_label(form.tema) }}
                         {{ form_errors(form.tema) }}
                         {{ form_widget(form.tema, { 'attr': { 'ng-model':'tema'} }) }}
                     </div>
-                    {{ form_row(form.enunciado) }}
-                    <div ng-init="{% for i in form.soluciones %}addSolucion('{{ i.expresion.vars.value}}');{% endfor %}">
-                        {{ form_label(form.soluciones) }}
-                        {{ form_errors(form.soluciones) }}
-                        <fieldset data-ng-repeat="solucion in soluciones">
+                    <div class="form-group col-md-3 col-xs-12">
+                        {{ form_label(form.dificultad) }}
+                        {{ form_errors(form.dificultad) }}
+                        {{ form_widget(form.dificultad) }}
+                    </div>
+                    <div class="form-group col-md-3 col-xs-12">
+                        {{ form_label(form.estado) }}
+                        {{ form_errors(form.estado) }}
+                        {{ form_widget(form.estado) }}
+                    </div>
+                    <div class="form-group col-md-6 col-xs-12">
+                        {{ form_label(form.enunciado) }}
+                        {{ form_errors(form.enunciado) }}
+                        {{ form_widget(form.enunciado) }}
+                    </div>
+                        
+                    <div class="form-group col-md-6 col-xs-12" ng-init="{% for i in form.respuestas %}addRespuesta('{{ i.expresion.vars.value}}');{% endfor %}">
+                        {{ form_label(form.respuestas) }}
+                        {{ form_errors(form.respuestas) }}
+                        <fieldset data-ng-repeat="respuesta in respuestas">
                             <div class="input-group">
-                                <span class="form-control">[[ solucion.expresion ]]</span>
+                                <span class="form-control">[[ respuesta.expresion ]]</span>
                                 <span class="input-group-btn">
-                                    <a class="btn btn-default btn-flat" data-toggle="modal" data-target="#solucionModal" ng-click="editAction([[$index]])"><i class="fa fa-edit text-yellow"></i></a>
+                                    <a class="btn btn-default btn-flat" data-toggle="modal" data-target="#respuestaModal" ng-click="editAction([[$index]])"><i class="fa fa-edit text-yellow"></i></a>
                                 </span>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default btn-flat" ng-click="removeAction([[$index]])"><i class="fa fa-trash text-red"></i></a>
@@ -36,46 +47,35 @@
                             </div>
 
                             <div ng-hide="true">
-                            {#
-                            <select id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[soluciones]['+$index+'][tema]' ]]" class="form-control"><option value="[[formData.tema]]" ng-model="formData.tema" selected="selected">[[formData.tema]]</option></select>
-                             #}
-                             <input type="text" ng-model="tema" id="[[ 'ejercicio_soluciones_'+$index+'_tema' ]]" name="[['ejercicio[soluciones]['+$index+'][tema]' ]]"> 
-                            <textarea id="[[ 'ejercicio_soluciones_'+$index+'_expresion' ]]" name="[['ejercicio[soluciones]['+$index+'][expresion]' ]]">[[ solucion.expresion ]]</textarea>
+                             <input type="text" ng-model="tema" id="[[ 'ejercicio_respuestas_'+$index+'_tema' ]]" name="[['ejercicio[respuestas]['+$index+'][tema]' ]]"> 
+                            <textarea id="[[ 'ejercicio_respuestas_'+$index+'_expresion' ]]" name="[['ejercicio[respuestas]['+$index+'][expresion]' ]]">[[ respuesta.expresion ]]</textarea>
                             </div>
                         </fieldset>
-                        <a class="btn btn-success btn-xs btn-flat" data-toggle="modal" data-target="#solucionModal" ng-click="addNewSolucion()"><i class="fa fa-plus"></i>&nbsp;Agregar</a>
+                        <a class="btn btn-success btn-xs btn-flat" data-toggle="modal" data-target="#respuestaModal" ng-click="addNewRespuesta()"><i class="fa fa-plus"></i>&nbsp;Agregar</a>
                     </div>
-                    {{ form_row(form.solucionDetallada) }}
-                    
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('ejercicio_show', { 'id': edition }) }}{% else %}{{ path('ejercicio_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
                     <button class="btn btn-primary btn-flat pull-right" type="submit" id="ejercicio_submit" name="ejercicio[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
                 </div>
                 {{ form_row(form._token) }}
-            
-                    {#
-                    {{ form_widget(form.solucions) }}
-                    <input type="submit" value="Create" />
-                    #}
             {{ form_end(form, {'render_rest': false}) }}
-            {#, 'render_rest': false} #}
         </div>
     </section>
-    <div id="solucionModal"class="modal modal-default">
+    <div id="respuestaModal"class="modal modal-default">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Solución</h4>
+                    <h4 class="modal-title">Respeusta</h4>
                 </div>
                 <div class="modal-body">
                     <div><label class="label-control">Expresion&nbsp;<i class="fa fa-asterisk text-red" title="Campo requerido"></i></label> 
-                    <textarea ck-editor id="editor1" name="editor1" ng-model="solucionExpresion"></textarea></div>
+                    <textarea ck-editor id="editor1" name="editor1" ng-model="respuestaExpresion"></textarea></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><i class="fa fa-close"></i>&nbsp;Cancelar</button>
-                    <button type="button" class="btn btn-success" ng-click="saveSolucion()"  data-dismiss="modal" ng-disabled="invalidSolucion"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
+                    <button type="button" class="btn btn-success" ng-click="saveRespuesta()"  data-dismiss="modal" ng-disabled="invalidRespuesta"><i class="fa fa-check"></i>&nbsp;Aceptar</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

@@ -29,6 +29,9 @@ class EjercicioController extends Controller
         $ejercicios = $em->getRepository('AppBundle:Ejercicio')->findAll();
 
         return $this->render('ejercicio/index.html.twig', array(
+            'CONST' => array(
+                'DIFICULTADES' => Ejercicio::DIFICULTADES,
+                'ESTADOS' => Ejercicio::ESTADOS),
             'ejercicios' => $ejercicios,
         ));
     }
@@ -46,7 +49,6 @@ class EjercicioController extends Controller
             array('action' => $this->generateUrl('ejercicio_new')));
         $form->add('submit', 'submit');
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($ejercicio);
@@ -72,6 +74,7 @@ class EjercicioController extends Controller
         $deleteForm = $this->createDeleteForm($ejercicio);
 
         return $this->render('ejercicio/show.html.twig', array(
+            'CONST'=>array('DIFICULTADES' => Ejercicio::DIFICULTADES),
             'ejercicio' => $ejercicio,
             'delete_form' => $deleteForm->createView(),
         ));

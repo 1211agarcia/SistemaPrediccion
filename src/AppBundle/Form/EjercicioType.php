@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Entity\Ejercicio;
 
 class EjercicioType extends AbstractType
 {
@@ -21,9 +22,21 @@ class EjercicioType extends AbstractType
         $builder
             ->add('dificultad', ChoiceType::class,
                 array(
-                    'attr'=> array('class' => 'form-control'),
-                    'choices' => array(
-                        1=>'1 - Facil',2=>'2',3=>'3',4=>'4',5=>'5',6=>'6',7=>'7',8=>'8',9=>'9',10=>'10 - Dificil')
+                    'label'=>'Dificultad',
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control select2'),
+                    'empty_value' => 'Seleccionar',
+                    'choices'  => Ejercicio::DIFICULTADES,
+                    'required' => true,
+                )
+            )
+            ->add('estado', ChoiceType::class,
+                array(
+                    'label'=>'Estado',
+                    'label_attr' => array('class' => 'control-label'),
+                    'attr'=> array('class' => 'form-control select2'),
+                    'empty_value' => 'Activo para usar en practicas',
+                    'choices'  => Ejercicio::ESTADOS,
                 )
             )
             ->add('tema', EntityType::class, 
@@ -35,21 +48,14 @@ class EjercicioType extends AbstractType
                     'required' => true,
                 )
             )
-            ->add('soluciones', CollectionType::class,
+            ->add('respuestas', CollectionType::class,
                 array(
-                    'entry_type' => new ExpresionMatematicaType(),
+                    'entry_type' => new RespuestaType(),
                     'required' => true,
                     'label_attr' => array('class' => 'control-label'),
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
-                    )
-            )
-            ->add('solucionDetallada', TextareaType::class,
-                array(
-                    'label_attr' => array('class' => 'control-label'),
-                    'attr'=> array('class' => 'form-control', 'ck-editor' => ''),
-                    'required' => true,
                     )
             )
             ->add('enunciado', TextareaType::class,

@@ -1,36 +1,41 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <section class="content-header">
-        <h1>Ejercicio&nbsp;<small class="label bg-blue">{{ejercicio.id}}</small></h1>
+        <h1>Ejercicio&nbsp;<small class="label bg-blue">{{ejercicio.id}}</small>
+            {% if ejercicio.estado is defined %}<span title="Activo" class="bg-green" style="float: right;">Activo</span>{% else %}<span title="Inactivo"class="bg-red" style="float: right;">Inactivo</span>{% endif %}
+        </h1>
     </section>
     <section class="content">
         <div class="box box-primary">
-            <div class="box-body">
-                <div class="form-group">
-                    <label class="col-xs-12 col-md-2 control-label">Tema</label> 
-                    <div class="col-xs-12 col-md-10">
-                        <a href="{{ path('tema_show', { 'id': ejercicio.tema.id }) }}"><p class="form-control-static">{{ ejercicio.tema }}</p></a>
+            <div class="row box-body">
+                <div class="form-group col-md-6">
+                    <label class="col-xs-12 control-label">Tema</label> 
+                    <div class="col-xs-12">
+                        <a class="btn btn-block btn-default btn-flat" href="{{ path('tema_show', { 'id': ejercicio.tema.id }) }}">{{ ejercicio.tema }}</a>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-xs-12 col-md-2 control-label">Enunciado</label> 
-                    <div class="col-xs-12 col-md-10">
+                <div class="form-group col-md-6">
+                    <label class="col-xs-12 control-label">Dificultad</label> 
+                    <div class="col-xs-12">
+                        <h4  class="form-control-static">{{ CONST['DIFICULTADES'][ejercicio.dificultad] }}</h4>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-xs-12 control-label">Enunciado</label> 
+                    <div class="col-xs-12">
                         <p class="form-control-static">{{ ejercicio.enunciado|raw }}</p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-xs-12 col-md-2 control-label">Solución Detallada</label> 
-                    <div class="col-xs-12 col-md-10">
-                        <p class="form-control-static">{{ ejercicio.solucionDetallada|raw }}</p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-12 col-md-2 control-label">Soluciones</label> 
-                    <div class="col-xs-12 col-md-10">
-                        {% for sol in ejercicio.soluciones %}
-                            <p class="form-control-static">{{ sol|raw }}</p>
+                <div class="form-group col-md-6">
+                    <label class="col-xs-12 ccontrol-label">Respuestas</label> 
+                    <ul class="list-group">
+                        {% for resp in ejercicio.respuestas %}
+                            <li class="list-group-item">
+                                {% if resp.es_correcta is defined %}<span title="Correcta" class="badge bg-green-active color-palette"><i class="fa fa-check"></i></span>{% else %}<span title="Incorrecta"class="badge bg-red-active color-palette"><i class="fa fa-close"></i></span>{% endif %}
+                                {{ resp|raw }}
+                            </li>
                         {% endfor %}
-                    </div>
+                    </ul>
                 </div>
             </div>
             <div class="box-footer">

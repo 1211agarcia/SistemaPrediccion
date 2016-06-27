@@ -1,37 +1,32 @@
 {% extends 'base.html.twig' %}
-{% block title %}Ejercicios{% endblock %}
+{% block title %}Expresiones{% endblock %}
 {% block body %}
 <section class="content-header">
-    <h1 class="box-title">Ejercicios{% if is_granted('ROLE_PROFESOR') %}
-        <a style="float: right;"class="btn btn-success btn-flat" href="{{ path('ejercicio_new') }}"><i class="fa fa-plus"></i>&nbsp;Agregar</a>
-        {% endif %}</h1>
+    <h1 class="box-title">Expresiones Matematicas{% if is_granted('ROLE_PROFESOR') %}
+    <a style="float: right;"class="btn btn-success btn-flat" href="{{ path('expresionmatematica_new') }}"><i class="fa fa-plus"></i>&nbsp;Agregar</a>{% endif %}</h1>
 </section>
 <section class="content">
 <div class="box">
     <div class="box-body">
         <div class="table-responsive">
-            <table id="tabla-ejercicios" class="table table-bordered table-hover">
-                <thead>
+        <table id="tabla-expresiones" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tema</th>
+                    <th>Expresión</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expresion in expresionMatematicas %}
                     <tr>
-                        <th>ID</th>
-                        <th>Tema</th>
-                        <th>Dificultad</th>
-                        <th>Estado</th>
-                        <th>Operación</th>
+                        <td><a href="{{ path('expresionmatematica_show', { 'id': expresion.id }) }}">{{ expresion.id }}</a></td>
+                        <td>{{ expresion.tema }}</td>
+                        <td>{{ expresion.expresion|raw }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for ejercicio in ejercicios %}
-                        <tr>
-                            <td><a href="{{ path('ejercicio_show', { 'id': ejercicio.id }) }}">{{ ejercicio.id }}</a></td>
-                            <td>{{ ejercicio.tema }}</td>
-                            <td>{{ CONST['DIFICULTADES'][ejercicio.dificultad] }}</td>
-                            <td>{% if ejercicio.estado is defined %}<span title="Activo" class="bg-green">Activo</span>{% else %}<span title="Inactivo"class="bg-red">Inactivo</span>{% endif %}</td>
-                            <td><a class="btn btn-warning btn-flat pull-right" href="{{ path('ejercicio_edit', { 'id': ejercicio.id }) }}"><i class="fa fa-edit"></i>&nbsp;Editar</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                {% endfor %}
+            </tbody>
+        </table>
         </div>
     </div>
 </div>
@@ -44,12 +39,13 @@
 
 
 {% block javascripts %}
-    {{ parent() }}  
+    {{ parent() }}
+    
+    <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>  
     <script src="{{ asset('bundles/app/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('bundles/app/plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
-
     <script> $(document).ready(function() {
-        $('#tabla-ejercicios').DataTable({
+        $('#tabla-expresiones').DataTable({
             //"responsive": true,
             //"scrollX": true,
             "language": {
@@ -57,9 +53,9 @@
                 "sLengthMenu":     "Mostrar _MENU_",
                 "sZeroRecords":    "No se encontraron resultados",
                 "sEmptyTable":     "Ningún dato disponible",
-                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ ejercicios",
-                "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 ejercicios",
-                "sInfoFiltered":   "(filtrado de un total de _MAX_ ejercicios)",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ expresiones",
+                "sInfoEmpty":      "Mostrando del 0 al 0 de un total de 0 expresiones",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ expresiones)",
                 "sInfoPostFix":    "",
                 "sSearch":         "Buscar:",
                 "sUrl":            "",

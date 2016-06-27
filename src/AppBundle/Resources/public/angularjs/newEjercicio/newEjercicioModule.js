@@ -12,7 +12,7 @@ newEjercicio.directive('ckEditor', function() {
       var ck = CKEDITOR.replace(elm[0], {
             extraPlugins: 'mathjax',
             mathJaxLib: urlMath,
-            height: 200
+            height: 100
         } );
 
       if (!ngModel) return;

@@ -14,6 +14,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Ejercicio
 {
+    const DIFICULTADES = array(
+        /*0*/"Principiante",
+        /*1*/"Novato",
+        /*2*/"Dificil",
+        /*3*/"Muy dificil",
+        /*4*/"Experto");
+    const ESTADOS = array(
+        /*0*/"Inactivo",
+        /*1*/"Activo");
+
     /**
      * @var int
      *
@@ -31,6 +41,13 @@ class Ejercicio
     private $dificultad;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $estado;
+    
+    /**
      * @var \Tema
      *
      * @ORM\ManyToOne(targetEntity="Tema")
@@ -41,27 +58,20 @@ class Ejercicio
     /**
      * @var \ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="ExpresionMatematica", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinTable(name="ejercicios_soluciones",
+     * @ORM\ManyToMany(targetEntity="Respuesta", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\JoinTable(name="ejercicios_respuesta",
      *      joinColumns={@ORM\JoinColumn(name="ejercicio_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="expresion_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="respuesta_id", referencedColumnName="id", unique=true)}
      *      )
      * @Assert\Valid
      * @Assert\Count(
-     *      min = "1",
-     *      max = "5",
-     *      minMessage = "Debe tener al menos 1 solución",
-     *      maxMessage = "Sólo puede tener como maximo {{ limit }} Soluciones"
+     *      min = "2",
+     *      max = "50",
+     *      minMessage = "Debe tener al menos 2 respuesta",
+     *      maxMessage = "Sólo puede tener como maximo {{ limit }} respuestas"
      * )
      */
-    private $soluciones;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="solucionDetallada", type="text")
-     */
-    private $solucionDetallada;
+    private $respuestas;
 
     /**
      * @var string
@@ -72,7 +82,7 @@ class Ejercicio
 
     public function __construct()
     {
-        $this->soluciones = new ArrayCollection();
+        $this->respuestas = new ArrayCollection();
     }
 
     /**
@@ -110,29 +120,6 @@ class Ejercicio
     }
 
     /**
-     * Set solucionDetallada
-     *
-     * @param string $solucionDetallada
-     * @return Ejercicio
-     */
-    public function setSolucionDetallada($solucionDetallada)
-    {
-        $this->solucionDetallada = $solucionDetallada;
-
-        return $this;
-    }
-
-    /**
-     * Get solucionDetallada
-     *
-     * @return string 
-     */
-    public function getSolucionDetallada()
-    {
-        return $this->solucionDetallada;
-    }
-
-    /**
      * Set tema
      *
      * @param \AppBundle\Entity\Tema $tema
@@ -156,45 +143,45 @@ class Ejercicio
     }
 
     /**
-     * Add solucion
+     * Add respuesta
      *
-     * @param \AppBundle\Entity\ExpresionMatematica $solucion
+     * @param \AppBundle\Entity\Respuesta $respuesta
      * @return Ejercicio
      */
-    public function addSolucion(\AppBundle\Entity\ExpresionMatematica $solucion)
+    public function addRespuesta(\AppBundle\Entity\Respuesta $respuesta)
     {
-        $this->soluciones[] = $solucion;
+        $this->respuestas[] = $respuesta;
 
         return $this;
     }
 
     /**
-     * Remove solucion
+     * Remove respuesta
      *
-     * @param \AppBundle\Entity\ExpresionMatematica $solucion
+     * @param \AppBundle\Entity\Respuesta $respuesta
      */
-    public function removeSolucione(\AppBundle\Entity\ExpresionMatematica $solucion)
+    public function removeRespuesta(\AppBundle\Entity\Respuesta $respuesta)
     {
-        $this->soluciones->removeElement($solucion);
+        $this->respuestas->removeElement($respuesta);
     }
 
     /**
-     * Remove Soluciones
+     * Remove respuestas
      *
      */
-    public function removeAllSoluciones()
+    public function removeAllRespuestas()
     {
-        $this->soluciones->clear();
+        $this->respuestas->clear();
     }
 
     /**
-     * Get soluciones
+     * Get respuestas
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getSoluciones()
+    public function getRespuestas()
     {
-        return $this->soluciones;
+        return $this->respuestas;
     }
 
     /**
@@ -221,15 +208,25 @@ class Ejercicio
     }
 
     /**
-     * Add soluciones
+     * Set estado
      *
-     * @param \AppBundle\Entity\ExpresionMatematica $soluciones
+     * @param boolean $estado
      * @return Ejercicio
      */
-    public function addSolucione(\AppBundle\Entity\ExpresionMatematica $soluciones)
+    public function setEstado($estado)
     {
-        $this->soluciones[] = $soluciones;
+        $this->estado = $estado;
 
         return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return boolean 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

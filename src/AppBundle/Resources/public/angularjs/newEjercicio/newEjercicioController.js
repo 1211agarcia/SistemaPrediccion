@@ -1,45 +1,49 @@
 newEjercicio.controller('newEjercicioController', function ($scope) {
     $scope.isNew = true;
-    $scope.invalidSolucion = true;
+    $scope.invalidRespuesta = true;
 
     $scope.formData = {};
-    //indice que apunta a la solucion a editar o crear
+    //indice que apunta a la respuesta a editar o crear
     $scope.indexPointer = 0;
-    //$scope.solucionExpresion = "";
-    //$scope.formData.tema_soluciones = [];
-    $scope.soluciones = [];
+    //$scope.respuestaExpresion = "";
+    //$scope.formData.tema_respuestas = [];
+    $scope.respuestas = [];
 
-    $scope.invalidSolucionFunc = function () {
-        $scope.invalidSolucion = (angular.isUndefinedOrNull($scope.solucionExpresion));
+    $scope.invalidRespuestaFunc = function () {
+        $scope.invalidRespuesta = (angular.isUndefinedOrNull($scope.respuestaExpresion));
     }
-    $scope.$watch($scope.invalidSolucionFunc);
-    $scope.addSolucion = function (expresion) {
-        var newItemNo = $scope.soluciones.length+1;
-        $scope.soluciones.push({'id':newItemNo, 'expresion':expresion});        
+    $scope.$watch($scope.invalidRespuestaFunc);
+    $scope.addRespuesta = function (expresion) {
+        var newItemNo = $scope.respuestas.length+1;
+        $scope.respuestas.push({'id':newItemNo, 'expresion':expresion});        
     }
-    $scope.addNewSolucion = function(){
-        $scope.solucionExpresion = "";
+    $scope.addNewRespuesta = function(){
+        $scope.respuestaExpresion = "";
     }
-    $scope.saveSolucion = function() {
+    $scope.saveRespuesta = function() {
         if($scope.isNew){
-            var newItemNo = $scope.soluciones.length+1;
-            $scope.soluciones.push({'id':newItemNo, 'expresion':$scope.solucionExpresion});
+            var newItemNo = $scope.respuestas.length+1;
+            $scope.respuestas.push({'id':newItemNo, 'expresion':$scope.respuestaExpresion});
         }
         else
         {
-            $scope.soluciones[$scope.indexPointer].expresion = $scope.solucionExpresion;
+            $scope.respuestas[$scope.indexPointer].expresion = $scope.respuestaExpresion;
             $scope.isNew = true
             $scope.indexPointer = 0;
         }
-        console.log($scope.soluciones);
+        console.log($scope.respuestas);
     };
     $scope.editAction = function (item) {
         $scope.isNew = false;
-        $scope.solucionExpresion = $scope.soluciones[item].expresion;
+        $scope.respuestaExpresion = $scope.respuestas[item].expresion;
         $scope.indexPointer = item;
     }
     $scope.removeAction = function (item) {
-        $scope.soluciones.splice(item, 1);
+        if($scope.respuestas.length > 2){
+            $scope.respuestas.splice(item, 1);
+        }else{
+            alert("Debe tener al menos 2 respuestas.");
+        }
     }
    
 });/*Fin de newEjercicioController*/
