@@ -179,7 +179,7 @@ class Ejercicio
     /**
      * Get respuestas
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \ArrayCollection
      */
     public function getRespuestas()
     {

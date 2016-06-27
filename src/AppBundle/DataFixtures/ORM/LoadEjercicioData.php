@@ -26,14 +26,14 @@ class LoadEjercicioData extends AbstractFixture implements OrderedFixtureInterfa
 
             $ejercicio = new Ejercicio();
 
-            $ejercicio->setDificultad($i % 2);
-            $ejercicio->setEstado(($i % 2) === 0);
+            $ejercicio->setDificultad(rand(0,4));
+            $ejercicio->setEstado(rand(0,1));
             $ejercicio->setTema($tema);
 
             $ejercicio->setEnunciado('<p> ejercicio '.$i.'<img alt="MathType 6.0 Equation" src="http://www.algebra.jcbmat.com/694191170.gif" style="height:23px; width:145px" /></p>');
             $ejercicio->removeAllRespuestas();
             $ejercicio->addRespuesta($respuesta);
-            for ($ii=0; $ii < 4; $ii++) { 
+            for ($ii=0; $ii < 10; $ii++) { 
                 $respuesta = new Respuesta();
                 $respuesta->setExpresion('<p>respuesta incorrecta</p>');
                 $respuesta->setTema($tema);

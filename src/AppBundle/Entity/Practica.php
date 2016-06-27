@@ -42,7 +42,7 @@ class Practica
     /**
      * @var \Datetime $fin
      *
-     * @ORM\Column(name="fin", type="datetime")
+     * @ORM\Column(name="fin", type="datetime", nullable=true)
      */
     private $fin;
     /**
@@ -55,40 +55,26 @@ class Practica
     public function __construct()
     {
         $this->estado = self::PRACTICA_ESTADO_INICIADA;
+        $this->inicio = new \DateTime();
+
         $this->data = new ArrayCollection(array(
-                            '0' => array(
-                                    'ejercicio' => new Solucion(),
-                                    'opcion_1' => new Solucion(),
-                                    'opcion_2' => new Solucion(),
-                                    'opcion_3' => new Solucion(),
-                                    'opcion_4' => new Solucion(),
-                                    'respuesta' => 0
-                                ),
-                            '1' => array(
-                                    'ejercicio' => new Solucion(),
-                                    'opcion_1' => new Solucion(),
-                                    'opcion_2' => new Solucion(),
-                                    'opcion_3' => new Solucion(),
-                                    'opcion_4' => new Solucion(),
-                                    'respuesta' => 0
-                                ),
-                            '2' => array(
-                                    'ejercicio' => new Solucion(),
-                                    'opcion_1' => new Solucion(),
-                                    'opcion_2' => new Solucion(),
-                                    'opcion_3' => new Solucion(),
-                                    'opcion_4' => new Solucion(),
-                                    'respuesta' => 0
-                                ),
-                            '3' => array(
-                                    'ejercicio' => new Solucion(),
-                                    'opcion_1' => new Solucion(),
-                                    'opcion_2' => new Solucion(),
-                                    'opcion_3' => new Solucion(),
-                                    'opcion_4' => new Solucion(),
-                                    'respuesta' => 0
-                                )
-                        ));
+            '0' => array(
+                    'ejercicio' => new Ejercicio(),
+                    'respuesta' => 0
+                ),
+            '1' => array(
+                    'ejercicio' => new Ejercicio(),
+                    'respuesta' => 0
+                ),
+            '2' => array(
+                    'ejercicio' => new Ejercicio(),
+                    'respuesta' => 0
+                ),
+            '3' => array(
+                    'ejercicio' => new Ejercicio(),
+                    'respuesta' => 0
+                )
+                ));
     }
     /**
      * Get id

@@ -7,8 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Practica;
+use AppBundle\Entity\Ejercicio;
 use AppBundle\Form\PracticaType;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Practica controller.
  *
@@ -30,6 +31,69 @@ class PracticaController extends Controller
 
         return $this->render('practica/index.html.twig', array(
             'practicas' => $practicas,
+        ));
+    }
+
+    /**
+     * Generate a new Practica entity.
+     *
+     * @Route("/generate", name="practica_generate")
+     * @Method({"GET", "POST"})
+     */
+    public function generateAction($tema=null, $dificultad_min=0)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $limit = 4; //es el limite de ejrcicios que tendra la practica
+        $practica = new Practica();
+        $temas = $em->getRepository('AppBundle:Tema')->findAll();
+        $tema = $temas[0];
+        $ejercicios = $em->getRepository('AppBundle:Ejercicio')->search($tema, true,0,5);
+        //dump($em->getRepository('AppBundle:Ejercicio')->findAll()[0]->getRespuestas());
+        if (count($ejercicios) < 5 ) {
+            $limit = count($ejercicios);
+        }
+        $claves_aleatorias = array_rand($ejercicios, $limit);
+        //dump($claves_aleatorias);
+        //dump($ejercicios);
+
+        $data = new ArrayCollection();
+        //dump($data);
+        foreach ($claves_aleatorias as $key => $clave) {
+            $ejercicio_aux = new Ejercicio();
+            // Ejercicio seleccionado aleatoriamente
+            $ejercicio_aux = $ejercicios[$clave];
+            //dump($ejercicios[$clave]);
+            //dump($ejercicio_aux);
+            //Se buscan sus respuestas incorrectas
+            //$resp_incorrectas = $ejercicio_aux->getRespuestas();//$em->getRepository('AppBundle:Ejercicio')->findBy(array('correcta' => false, 'ejercicio' => $ejercicios[$clave]));
+            //dump($resp_incorrectas);
+            //Se obtienen 3 de las respuestas incorrectas
+            //$incorre_rand = array_rand($resp_incorrectas, 3);
+            //Se obtiene la respuesta correcta
+            //$resp_correcta = $em->getRepository('AppBundle:Respuesta')->findBy(array('correcta' => true, 'ejercicio' => $ejercicios[$clave]));
+            //dump($resp_correcta);
+            // El arreglo ue contendras las opciones finales
+            //$opciones = array();
+            //foreach ($incorre_rand as $value) {
+                //$ejercicio_aux->addRespuesta($resp_incorrectas[$value]);
+            //}
+            // Se añade la respuesta correcta entre las opciones
+            //$ejercicio_aux->addRespuesta($resp_correcta);
+
+            $data[] = array('Ejercicio '.$key => $ejercicio_aux, 
+                            'respuesta' => null,
+                            'correcta' => null);
+        }
+        dump($data);
+        $practica->setData($data);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($practica);
+            $em->flush();
+
+        $form = $this->createForm('AppBundle\Form\PracticaType', $practica);
+        return $this->render('practica/new.html.twig', array(
+            'practica' => $practica,
+            'form' => $form->createView(),
         ));
     }
 
