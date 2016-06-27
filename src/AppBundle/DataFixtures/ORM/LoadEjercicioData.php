@@ -18,24 +18,30 @@ class LoadEjercicioData extends AbstractFixture implements OrderedFixtureInterfa
     {
 
         $tema = $manager->getRepository('AppBundle:Tema')->findBy(array('nombre' => 'Ecuaciones de segundo grado'))[0];
-        
-        
-        $expresion = new Respuesta();
-        $expresion->setExpresion('<span class="math-tex">\(x_{1} = 1, x_{2} = \frac{2}{3}\)</span></p>');
-        $expresion->setTema($tema);
-        $expresion->setCorrecta(true);
+        for ($i=1; $i <= 10; $i++) { 
+            $respuesta = new Respuesta();
+            $respuesta->setExpresion('<p><span class="math-tex">\(x_{1} = 1, x_{2} = \frac{2}{3}\)</span></p>');
+            $respuesta->setTema($tema);
+            $respuesta->setCorrecta(true);
 
-        $ejercicio = new Ejercicio();
+            $ejercicio = new Ejercicio();
 
-        $ejercicio->setDificultad(1);
-        $ejercicio->setEstado(0);
-        $ejercicio->setTema($tema);
+            $ejercicio->setDificultad($i % 2);
+            $ejercicio->setEstado(($i % 2) === 0);
+            $ejercicio->setTema($tema);
 
-        $ejercicio->setEnunciado('<p><img alt="MathType 6.0 Equation" src="http://www.algebra.jcbmat.com/694191170.gif" style="height:23px; width:145px" /></p>');
-        $ejercicio->removeAllRespuestas();
-        $ejercicio->addRespuesta($expresion);
-
-        $manager->persist($ejercicio);
+            $ejercicio->setEnunciado('<p> ejercicio '.$i.'<img alt="MathType 6.0 Equation" src="http://www.algebra.jcbmat.com/694191170.gif" style="height:23px; width:145px" /></p>');
+            $ejercicio->removeAllRespuestas();
+            $ejercicio->addRespuesta($respuesta);
+            for ($ii=0; $ii < 4; $ii++) { 
+                $respuesta = new Respuesta();
+                $respuesta->setExpresion('<p>respuesta incorrecta</p>');
+                $respuesta->setTema($tema);
+                $respuesta->setCorrecta(false);
+                $ejercicio->addRespuesta($respuesta);
+            }
+            $manager->persist($ejercicio);
+        }
         $manager->flush();
         
     }

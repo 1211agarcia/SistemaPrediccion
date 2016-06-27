@@ -49,6 +49,9 @@ class EjercicioController extends Controller
             array('action' => $this->generateUrl('ejercicio_new')));
         $form->add('submit', 'submit');
         $form->handleRequest($request);
+        dump($ejercicio);
+        dump($form->getErrors(true));
+        dump($form->getErrors());
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($ejercicio);
@@ -92,7 +95,6 @@ class EjercicioController extends Controller
             array('action' => $this->generateUrl('ejercicio_edit', array('id' => $ejercicio->getId()))));
         $editForm->add('submit', 'submit');
         $editForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($ejercicio);

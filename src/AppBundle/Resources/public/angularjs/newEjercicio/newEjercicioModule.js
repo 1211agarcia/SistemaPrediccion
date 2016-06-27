@@ -37,7 +37,7 @@ newEjercicio.config(function($interpolateProvider){
 newEjercicio.config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeBar = true;
     cfpLoadingBarProvider.latencyThreshold = 500;
-  });
+});
 
 newEjercicio.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadingBar) {
     $scope.posts = [];
@@ -59,8 +59,7 @@ newEjercicio.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadin
       $scope.complete();
       $scope.fakeIntro = false;
     }, 750);
-
-  });
+});
 
 /*angular.element(document).ready(function() {
       angular.bootstrap(document, ['newEjercicioModule']);

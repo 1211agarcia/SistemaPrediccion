@@ -50,12 +50,14 @@ class EjercicioType extends AbstractType
             )
             ->add('respuestas', CollectionType::class,
                 array(
+                    'label' => 'Respuestas (seleccion la correcta)',
                     'entry_type' => new RespuestaType(),
                     'required' => true,
                     'label_attr' => array('class' => 'control-label'),
                     'allow_add' => true,
                     'allow_delete' => true,
                     'prototype' => true,
+                    'cascade_validation' => true,
                     )
             )
             ->add('enunciado', TextareaType::class,

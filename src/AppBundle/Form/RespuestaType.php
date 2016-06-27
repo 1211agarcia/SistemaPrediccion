@@ -17,6 +17,7 @@ class RespuestaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('correcta')
             ->add('expresion', TextareaType::class,
                 array(
                     'label_attr' => array('class' => 'control-label'),
@@ -29,7 +30,7 @@ class RespuestaType extends AbstractType
                     'class' => 'AppBundle:Tema',
                     'choice_label' => 'nombre',
                     'label_attr' => array('class' => 'control-label'),
-                    'attr'=> array('class' => 'form-control select2', 'data-placeholder'=>'Seleccione un tema', 'style'=>"width: 100%" ),
+                    'attr'=> array('class' => 'form-control select2', 'data-placeholder'=>'Seleccione un tema'),
                     'required' => false,
                 )
             )
@@ -42,7 +43,8 @@ class RespuestaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Respuesta'
+            'data_class' => 'AppBundle\Entity\Respuesta',
+            'cascade_validation' => true
         ));
     }
 }

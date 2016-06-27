@@ -31,7 +31,7 @@
                     <ul class="list-group">
                         {% for resp in ejercicio.respuestas %}
                             <li class="list-group-item">
-                                {% if resp.es_correcta is defined %}<span title="Correcta" class="badge bg-green-active color-palette"><i class="fa fa-check"></i></span>{% else %}<span title="Incorrecta"class="badge bg-red-active color-palette"><i class="fa fa-close"></i></span>{% endif %}
+                                {% if resp.correcta %}<span title="Correcta" class="badge bg-green-active color-palette"><i class="fa fa-check"></i></span>{% else %}<span title="Incorrecta"class="badge bg-red-active color-palette"><i class="fa fa-close"></i></span>{% endif %}
                                 {{ resp|raw }}
                             </li>
                         {% endfor %}

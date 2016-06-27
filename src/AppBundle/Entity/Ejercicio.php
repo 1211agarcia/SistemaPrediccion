@@ -52,6 +52,8 @@ class Ejercicio
      *
      * @ORM\ManyToOne(targetEntity="Tema")
      * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", unique=false)
+     * @Assert\NotNull(message="Debe seleccionar un tema valido")
+     * @Assert\NotBlank(message="Debe seleccionar un tema")
      */
     private $tema;
 
