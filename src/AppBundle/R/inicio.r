@@ -41,7 +41,7 @@ bg=c("blue","red","green")[unclass(clase)])
 ################################
 # Graficacion de 3 componentes #
 ################################
-
+# no funciono
 require(grDevices) # for colours
 x <- -6:16
 op <- par(mfrow = c(2, 2))
@@ -51,5 +51,15 @@ contour(x, x, z, col = "pink", add = TRUE, method = "edge",       vfont = c("san
 contour(x, x, z, ylim = c(1, 6), method = "simple", labcex = 1,        xlab = com1$score[,1], ylab = com1$score[,2])
 contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2, method = "simple",        main = "20 levels; \"simple\" labelling method")
 par(op)
+
+
 #Redes neuronales
 library(AMORE)
+#linealmente no separable
+target1<-matrix(c(0,1,1,0),ncol=1,byrow=TRUE)
+P1<-matrix(c(0,0,0,1,1,0,1,1),ncol=2,byrow=TRUE)
+net1 <- newff(n.neurons=c(2,3,1), learning.rate.global=1e-2, momentum.global=0.5,
+error.criterium="LMS", Stao=NA, hidden.layer="sigmoid",
+output.layer="sigmoid", method="ADAPTgdwm")
+result1 <- train(net1,P1 , target1, error.criterium="LMS", report=TRUE, show.step=10000, n.shows=5 )
+y <- sim(result1$net, P1)
