@@ -7,28 +7,22 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Data</th>
                 <th>Inicio</th>
                 <th>Fin</th>
-                <th>Estado</th>
-                <th>Actions</th>
+                <th>Puntuacion</th>
+                <th>Dificultad</th>
             </tr>
         </thead>
         <tbody>
         {% for practica in practicas %}
             <tr>
                 <td><a href="{{ path('practica_show', { 'id': practica.id }) }}">{{ practica.id }}</a></td>
-                <td>{% if practica.data %}{{ practica.data|join(', ') }}{% endif %}</td>
                 <td>{% if practica.inicio %}{{ practica.inicio|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if practica.fin %}{{ practica.fin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if practica.estado %}Yes{% else %}No{% endif %}</td>
                 <td>
                     <ul>
                         <li>
                             <a href="{{ path('practica_show', { 'id': practica.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('practica_edit', { 'id': practica.id }) }}">edit</a>
                         </li>
                     </ul>
                 </td>

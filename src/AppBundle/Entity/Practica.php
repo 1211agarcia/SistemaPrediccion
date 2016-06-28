@@ -56,25 +56,7 @@ class Practica
     {
         $this->estado = self::PRACTICA_ESTADO_INICIADA;
         $this->inicio = new \DateTime();
-
-        $this->data = new ArrayCollection(array(
-            '0' => array(
-                    'ejercicio' => new Ejercicio(),
-                    'respuesta' => 0
-                ),
-            '1' => array(
-                    'ejercicio' => new Ejercicio(),
-                    'respuesta' => 0
-                ),
-            '2' => array(
-                    'ejercicio' => new Ejercicio(),
-                    'respuesta' => 0
-                ),
-            '3' => array(
-                    'ejercicio' => new Ejercicio(),
-                    'respuesta' => 0
-                )
-                ));
+        $this->data = array();
     }
     /**
      * Get id

@@ -177,6 +177,21 @@ class Ejercicio
     }
 
     /**
+     * Set respuestas
+     *
+     * @param array
+     * @return Ejercicio
+     */
+    public function setRespuestas(array $respuestas)
+    {/*   $this->removeAllRespuestas();
+        $this->respuestas = new ArrayCollection();
+        foreach ($respuestas as $value) {
+            $this->respuestas[] = $value;
+        }*/
+        $this->respuestas = $respuestas;
+        return $this;
+    }
+    /**
      * Get respuestas
      *
      * @return \ArrayCollection
@@ -184,6 +199,35 @@ class Ejercicio
     public function getRespuestas()
     {
         return $this->respuestas;
+    }
+    /**
+     * Get incorrectas
+     *
+     * @return array
+     */
+    public function getIncorrectas()
+    {
+        $incorrectas = array();
+        foreach ($this->respuestas as $key => $value) {
+            if(!$value->getCorrecta()){
+                $incorrectas[] = $value;
+            }
+        }
+        return $incorrectas;
+    }
+    /**
+     * Get correcta
+     *
+     * @return \AppBundle\Entity\Respuesta
+     */
+    public function getCorrecta()
+    {
+        foreach ($this->respuestas as $key => $value) {
+            if($value->getCorrecta()){
+                return $value;
+            }
+        }
+        return null;
     }
 
     /**

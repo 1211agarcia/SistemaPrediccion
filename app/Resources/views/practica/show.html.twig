@@ -10,10 +10,6 @@
                 <td>{{ practica.id }}</td>
             </tr>
             <tr>
-                <th>Data</th>
-                <td>{% if practica.data %}{{ practica.data|join(', ') }}{% endif %}</td>
-            </tr>
-            <tr>
                 <th>Inicio</th>
                 <td>{% if practica.inicio %}{{ practica.inicio|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
@@ -22,23 +18,36 @@
                 <td>{% if practica.fin %}{{ practica.fin|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Estado</th>
+                <th>Esta finalizada?</th>
                 <td>{% if practica.estado %}Yes{% else %}No{% endif %}</td>
             </tr>
+            {% for item in practica.data %}
+            <div class="form-group">
+                <div>
+                    {{ item['ejercicio'].enunciado|raw }}
+                </div>
+                <ul class="list-group">
+                    {% for opcion in item['ejercicio'].respuestas %}
+                        <li class="list-group-item col-md-6 col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" id="[[ 'ejercicio_respuestas_'+$index+'_correcta' ]]" name="[['ejercicio[respuestas]['+$index+'][correcta]' ]]" value="1" ng-checked="isSelected([[$index]])" ng-click="selectAction([[$index]])" >
+                                </span>
+                                <span class="form-control">{{ opcion.expresion|raw }}[[ respuesta.expresion ]]</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+
+
+
+
+            
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('practica_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('practica_edit', { 'id': practica.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}
+
+

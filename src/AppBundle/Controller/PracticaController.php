@@ -56,44 +56,54 @@ class PracticaController extends Controller
         //dump($claves_aleatorias);
         //dump($ejercicios);
 
-        $data = new ArrayCollection();
+        $data = array();
         //dump($data);
         foreach ($claves_aleatorias as $key => $clave) {
             $ejercicio_aux = new Ejercicio();
             // Ejercicio seleccionado aleatoriamente
-            $ejercicio_aux = $ejercicios[$clave];
-            //dump($ejercicios[$clave]);
-            //dump($ejercicio_aux);
+            $ejercicio_aux = clone $ejercicios[$clave];
+            /*$ejercicio_aux->setEnunciado($ejercicios[$clave]->getEnunciado());
+            $ejercicio_aux->setDificultad($ejercicios[$clave]->getDificultad());
+            $ejercicio_aux->setTema($ejercicios[$clave]->getTema());
+            $ejercicio_aux->setEstado($ejercicios[$clave]->getEstado());*/
+            dump($ejercicios[$clave]);
+            dump($ejercicio_aux);
             //Se buscan sus respuestas incorrectas
-            //$resp_incorrectas = $ejercicio_aux->getRespuestas();//$em->getRepository('AppBundle:Ejercicio')->findBy(array('correcta' => false, 'ejercicio' => $ejercicios[$clave]));
-            //dump($resp_incorrectas);
+            $resp_incorrectas = $ejercicios[$clave]->getIncorrectas();
+            dump($resp_incorrectas);
             //Se obtienen 3 de las respuestas incorrectas
-            //$incorre_rand = array_rand($resp_incorrectas, 3);
+            $incorre_rand = array_rand($resp_incorrectas, 3);
             //Se obtiene la respuesta correcta
-            //$resp_correcta = $em->getRepository('AppBundle:Respuesta')->findBy(array('correcta' => true, 'ejercicio' => $ejercicios[$clave]));
-            //dump($resp_correcta);
+            $resp_correcta = $ejercicios[$clave]->getCorrecta();
+            dump($resp_correcta);
             // El arreglo ue contendras las opciones finales
-            //$opciones = array();
-            //foreach ($incorre_rand as $value) {
-                //$ejercicio_aux->addRespuesta($resp_incorrectas[$value]);
-            //}
+            $opciones = array();
+            foreach ($incorre_rand as $value) {
+                $opciones[] = $resp_incorrectas[$value];
+            }
             // Se añade la respuesta correcta entre las opciones
-            //$ejercicio_aux->addRespuesta($resp_correcta);
+            $opciones[] = $resp_correcta;
+            //se mezclan las opciones finales
+            shuffle($opciones);
+            $ejercicio_aux->setRespuestas($opciones);
 
-            $data[] = array('Ejercicio '.$key => $ejercicio_aux, 
+            $data[] = array('ejercicio' => $ejercicio_aux, 
                             'respuesta' => null,
                             'correcta' => null);
         }
         dump($data);
-        $practica->setData($data);
+        $out = array_values($data);
+        json_encode($out);
+        dump($out);
+        $practica->setData($out);
+        dump($practica);
             $em = $this->getDoctrine()->getManager();
             $em->persist($practica);
             $em->flush();
 
         $form = $this->createForm('AppBundle\Form\PracticaType', $practica);
-        return $this->render('practica/new.html.twig', array(
+        return $this->render('practica/show.html.twig', array(
             'practica' => $practica,
-            'form' => $form->createView(),
         ));
     }
 
