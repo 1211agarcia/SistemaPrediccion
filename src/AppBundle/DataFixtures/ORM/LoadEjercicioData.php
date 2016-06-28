@@ -35,7 +35,7 @@ class LoadEjercicioData extends AbstractFixture implements OrderedFixtureInterfa
             $ejercicio->addRespuesta($respuesta);
             for ($ii=0; $ii < 10; $ii++) { 
                 $respuesta = new Respuesta();
-                $respuesta->setExpresion('<p>respuesta incorrecta</p>');
+                $respuesta->setExpresion('<p>respuesta incorrecta '.$ii.'</p>');
                 $respuesta->setTema($tema);
                 $respuesta->setCorrecta(false);
                 $ejercicio->addRespuesta($respuesta);
