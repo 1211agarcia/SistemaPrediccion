@@ -2,7 +2,7 @@
 {% block body %}
     <section class="content-header">
         <h1>Ejercicio&nbsp;<small class="label bg-blue">{{ejercicio.id}}</small>
-            {% if ejercicio.estado is defined %}<span title="Activo" class="bg-green" style="float: right;">Activo</span>{% else %}<span title="Inactivo"class="bg-red" style="float: right;">Inactivo</span>{% endif %}
+            {% if ejercicio.estado %}<span title="Activo" class="bg-green" style="float: right;">Activo</span>{% else %}<span title="Inactivo"class="bg-red" style="float: right;">Inactivo</span>{% endif %}
         </h1>
     </section>
     <section class="content">

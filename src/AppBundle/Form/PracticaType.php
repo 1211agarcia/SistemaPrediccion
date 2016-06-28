@@ -18,7 +18,7 @@ class PracticaType extends AbstractType
             ->add('data', 'text')
             ->add('inicio', 'datetime')
             ->add('fin', 'datetime')
-            ->add('estado')
+            ->add('finalizada')
         ;
     }
     

@@ -10,6 +10,7 @@ use AppBundle\Entity\Practica;
 use AppBundle\Entity\Ejercicio;
 use AppBundle\Form\PracticaType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Config\Definition\Exception\Exception;
 /**
  * Practica controller.
  *
@@ -48,8 +49,10 @@ class PracticaController extends Controller
         $temas = $em->getRepository('AppBundle:Tema')->findAll();
         $tema = $temas[0];
         $ejercicios = $em->getRepository('AppBundle:Ejercicio')->search($tema, true,0,5);
+        //dump($ejercicios);
         //dump($em->getRepository('AppBundle:Ejercicio')->findAll()[0]->getRespuestas());
-        if (count($ejercicios) < 5 ) {
+        if (count($ejercicios) < $limit ) {
+            //throw new Exception('No hay suficiente ejercicios disponibles para una practica de '.$limit.'.');
             $limit = count($ejercicios);
         }
         $claves_aleatorias = array_rand($ejercicios, $limit);
@@ -66,16 +69,16 @@ class PracticaController extends Controller
             $ejercicio_aux->setDificultad($ejercicios[$clave]->getDificultad());
             $ejercicio_aux->setTema($ejercicios[$clave]->getTema());
             $ejercicio_aux->setEstado($ejercicios[$clave]->getEstado());*/
-            dump($ejercicios[$clave]);
-            dump($ejercicio_aux);
+            //dump($ejercicios[$clave]);
+            //dump($ejercicio_aux);
             //Se buscan sus respuestas incorrectas
             $resp_incorrectas = $ejercicios[$clave]->getIncorrectas();
-            dump($resp_incorrectas);
+            //dump($resp_incorrectas);
             //Se obtienen 3 de las respuestas incorrectas
             $incorre_rand = array_rand($resp_incorrectas, 3);
             //Se obtiene la respuesta correcta
             $resp_correcta = $ejercicios[$clave]->getCorrecta();
-            dump($resp_correcta);
+            //dump($resp_correcta);
             // El arreglo ue contendras las opciones finales
             $opciones = array();
             foreach ($incorre_rand as $value) {
@@ -88,21 +91,21 @@ class PracticaController extends Controller
             $ejercicio_aux->setRespuestas($opciones);
 
             $data[] = array('ejercicio' => $ejercicio_aux, 
-                            'respuesta' => null,
-                            'correcta' => null);
+                            'respuesta' => null);
         }
-        dump($data);
-        $out = array_values($data);
-        json_encode($out);
-        dump($out);
-        $practica->setData($out);
+        //dump($data);
+        //$out = array_values($data);
+        //dump(json_encode($out));die;
+        //dump($out);
+        $practica->setData($data);
         dump($practica);
-            $em = $this->getDoctrine()->getManager();
             $em->persist($practica);
             $em->flush();
+        dump($practica);
+        dump($em->getRepository('AppBundle:Practica')->findAll());
 
         $form = $this->createForm('AppBundle\Form\PracticaType', $practica);
-        return $this->render('practica/show.html.twig', array(
+        return $this->render('practica/start.html.twig', array(
             'practica' => $practica,
         ));
     }

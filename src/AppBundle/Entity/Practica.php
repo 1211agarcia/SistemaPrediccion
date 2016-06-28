@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Practica
 {
-    const PRACTICA_ESTADO_INICIADA = false;
-    const PRACTICA_ESTADO_FINALIZADA = true;
+    const PRACTICA_INICIADA = false;
+    const PRACTICA_FINALIZADA = true;
 
     /**
      * @var int
@@ -29,7 +29,8 @@ class Practica
     /**
      * @var array
      *
-     * @ORM\Column(name="data", type="json_array")
+     * ORM\Column(name="data", type="json_array")
+     * @ORM\Column(name="data", type="array")
      */
     private $data;
 
@@ -46,15 +47,15 @@ class Practica
      */
     private $fin;
     /**
-     * @var boolean $estado
+     * @var boolean $finalizada
      *
-     * @ORM\Column(name="estado", type="boolean")
+     * @ORM\Column(name="finalizada", type="boolean")
      */
-    private $estado;
+    private $finalizada;
 
     public function __construct()
     {
-        $this->estado = self::PRACTICA_ESTADO_INICIADA;
+        $this->finalizada = self::PRACTICA_INICIADA;
         $this->inicio = new \DateTime();
         $this->data = array();
     }
@@ -138,25 +139,25 @@ class Practica
     }
 
     /**
-     * Set estado
+     * Set finalizada
      *
-     * @param boolean $estado
+     * @param boolean $finalizada
      * @return Practica
      */
-    public function setEstado($estado)
+    public function setFinalizada($finalizada)
     {
-        $this->estado = $estado;
+        $this->finalizada = $finalizada;
 
         return $this;
     }
 
     /**
-     * Get estado
+     * Get finalizada
      *
      * @return boolean 
      */
-    public function getEstado()
+    public function getFinalizada()
     {
-        return $this->estado;
+        return $this->finalizada;
     }
 }

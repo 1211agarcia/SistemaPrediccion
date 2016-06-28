@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="content-header">
+        <h1>Practica&nbsp;<small class="label bg-blue">{{practica.id}}</small>
+            {% if practica.finalizada %}<span title="Finalizada" class="bg-green" style="float: right;">Finalizada</span>{% else %}<span title="Iniciada"class="bg-yellow" style="float: right;">Iniciada</span>{% endif %}
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-body">
+                {% if practica.finalizada %}
+                <div class="form-group col-md-6">
+                    <label class="col-xs-12 control-label">Calificación</label> 
+                    <div class="col-xs-12">
+                        <h4  class="form-control-static">{{ practica.calificacion }}</h4>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-xs-12 control-label">Duración</label> 
+                    <div class="col-xs-12">
+                        <p class="form-control-static">{{ practica.duracion }}</p>
+                    </div>
+                </div>
+            {% endif %}
+                {% for item in practica.data %}
+                    <div class="form-group">
+                        <div>
+                            {{ item['ejercicio'].enunciado|raw }}
+                        </div>
+                        <ul class="list-group">
+                            {% for opcion in item['ejercicio'].respuestas %}
+                                <li class="list-group-item col-md-6 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" id="[[ 'ejercicio_respuestas_'+$index+'_correcta' ]]" name="[['ejercicio[respuestas]['+$index+'][correcta]' ]]" value="1" ng-checked="isSelected([[$index]])" ng-click="selectAction([[$index]])" >
+                                        </span>
+                                        <span class="form-control">{{ opcion.expresion|raw }}[[ respuesta.expresion ]]</span>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="box-footer">
+                <a class="btn btn-default btn-flat" href="{{ path('practica_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;ir a lista</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>
+    
+    {% javascripts
+        '@AppBundle/Resources/public/angularjs/startPractica/startPracticaModule.js'
+        '@AppBundle/Resources/public/angularjs/startPractica/startPracticaController.js'%}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

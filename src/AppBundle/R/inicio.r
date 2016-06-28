@@ -63,3 +63,31 @@ error.criterium="LMS", Stao=NA, hidden.layer="sigmoid",
 output.layer="sigmoid", method="ADAPTgdwm")
 result1 <- train(net1,P1 , target1, error.criterium="LMS", report=TRUE, show.step=10000, n.shows=5 )
 y <- sim(result1$net, P1)
+
+require(AMORE)
+## Creamos dos conjuntos de datos artificiales: ''P'' es el conjunto de datos de entrada y ''target'' el de salida.
+P <- matrix(sample(seq(-1,1,length=500), 500, replace=FALSE), ncol=1)
+target <- P^2 + rnorm(500, 0, 0.5)
+## Creamos el objeto red neuronal feedforward
+net.start <- newff(n.neurons=c(1,3,1), learning.rate.global=1e-2, momentum.global=0.5,error.criterium="LMS",Stao=NA,hidden.layer="
+sigmoid",output.layer="sigmoid",method="ADAPTgdwm")
+## Entrenamos la red según P y target
+result <- train(net.start, P, target, error.criterium="LMS",
+report=TRUE, show.step=100, n.shows=5 )
+str(result)
+#objeto red neuronal entrenada con pesos y tendencias ajustadas mediante el entrenamiento adaptativo backpropagation con el método de momentum (detallado en el apartado anterior)
+#matriz con los errores obtenidos durante el entrenamiento
+result$Merror
+#[,1]
+#[1,] 0.2753484
+#[2,] 0.2749079
+#[3,] 0.2746274
+#[4,] 0.2744657
+#[5,] 0.2743568
+## Gráficos para remarcar que ahora la red entrenada en un elemento de la lista resultante
+y <- sim(result$net, P)
+#vector de 500 elementos
+str(y)
+#num [1:500, 1] 0.0374 0.8303 0.7052 0.0704 0.2761 ...
+plot(P,y, col="blue", pch="+")
+points(P,target, col="red", pch="x")
