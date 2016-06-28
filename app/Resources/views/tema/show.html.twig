@@ -11,10 +11,14 @@
                 <div class="col-xs-12 form-group">
                     <label class="col-xs-12 col-md-2 control-label">Temas Antecesores</label> 
                     <div class="col-xs-12 col-md-10">
-                        {% for padre in tema.padres %}
-                            <a class="form-control-static" href="{{ path('tema_show', { 'id': padre.id }) }}">{{ padre }}&nbsp;<i class="fa fa-arrow-circle-right"></i></a>
-                            <br>
-                        {% endfor %}
+                        {% if tema.padres|length > 0 %}
+                            {% for padre in tema.padres %}
+                                <a class="btn btn-block btn-default btn-flat" href="{{ path('tema_show', { 'id': tema.id }) }}">{{ padre }}&nbsp;<i class="fa fa-arrow-circle-right"></i></a>
+                                <br>
+                            {% endfor %}
+                        {% else %}
+                            <h5>No tiene</h5>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
@@ -26,10 +30,14 @@
                 <div class="col-xs-12 form-group">
                     <label class="col-xs-12 col-md-2 control-label">Temas Sucesores</label> 
                     <div class="col-xs-12 col-md-10">
-                        {% for hijo in tema.hijos %}
-                            <a class="form-control-static" href="{{ path('tema_show', { 'id': hijo.id }) }}">{{ hijo }}&nbsp;<i class="fa fa-arrow-circle-right"></i></a>
-                            <br>
-                        {% endfor %}
+                        {% if tema.hijos|length > 0 %}
+                            {% for hijo in tema.hijos %}
+                                <a class="btn btn-block btn-default btn-flat" href="{{ path('tema_show', { 'id': tema.id }) }}">{{ hijo }}&nbsp;<i class="fa fa-arrow-circle-right"></i></a>
+                                <br>
+                            {% endfor %}
+                        {% else %}
+                            <h5>No tiene</h5>
+                        {% endif %}
                     </div>
                 </div>
             </div>

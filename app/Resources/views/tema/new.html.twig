@@ -15,9 +15,14 @@
             {{ form_start(form) }}
                 <div class="box-body">
                     {{ form_errors(form) }}
+                    <div class="form-group col-md-6 col-xs-12">
                     {{ form_row(form.nombre) }}
-                    {{ form_row(form.padres) }}
-                    {{ form_row(form.descripcion) }}
+                    {{ form_row(form.padres) }}</div>
+                    <div class="form-group col-md-6 col-xs-12">
+                        {{ form_label(form.descripcion) }}
+                        {{ form_errors(form.descripcion) }}
+                        {{ form_widget(form.descripcion) }}
+                    </div>
                 </div>
                 <div class="box-footer">
                     <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('tema_show', { 'id': edition }) }}{% else %}{{ path('tema_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>

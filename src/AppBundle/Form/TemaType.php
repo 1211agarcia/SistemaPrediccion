@@ -23,9 +23,10 @@ class TemaType extends AbstractType
                     'class' => 'AppBundle:Tema',
                     'choice_label' => 'nombre',
                     'label_attr' => array('class' => 'control-label'),
-                    'attr'=> array('class' => 'form-control select2',  'multiple'=>'multiple', 'data-placeholder'=>'Select a Padre', 'style'=>"width: 100%" ),
+                    'attr'=> array('class' => 'form-control select2',  'multiple'=>'multiple', 'data-placeholder'=>'Select un tema', 'style'=>"width: 100%" ),
                     'required' => false,
                     'multiple' => true,
+                    'label'=>'Temas Antecesores',
                 )
             )
             ->add('nombre', TextType::class,
