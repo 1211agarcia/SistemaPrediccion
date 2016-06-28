@@ -35,7 +35,7 @@
                 <td>{{ estudiante.promedio }}</td>
                 <td>{% if estudiante.esAsignadoOPSU %}Sí{% else %}No{% endif %}</td>
                 <td>{{ estudiante.usuario.created|date('Y-m-d H:i') }}</td>
-                <td>{{ CONST['ESTADOS'][estudiante.estado]}}</td>
+                <td><span class="pull-right label label-{% if estudiante.estado == 2 %}danger{% elseif estudiante.estado == 1 %}warning{% else %}success{% endif %}">{{ CONST['ESTADOS'][estudiante.estado] }}</span></td>
                 </tr>
                 {% endfor %}
             </tbody>

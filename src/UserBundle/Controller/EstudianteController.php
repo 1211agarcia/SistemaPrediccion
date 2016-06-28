@@ -266,9 +266,10 @@ class EstudianteController extends BaseController
             $em->persist($estudiante);
             $em->flush();
             if($estudiante->getEstado() === Estudiante::VERIFICADO){
-                $this->prediction($estudiante);
+                //$this->prediction($estudiante);
             }           
         }
+        return $this->redirectToRoute('estudiante_show', array('id' => $estudiante->getId()));
     }
     /**
      * Creates a form to "verificar" a estudiante entity by id.

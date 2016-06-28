@@ -49,7 +49,7 @@
                                   <b>Credenciales</b> <a class="pull-right" href="{{ asset('uploads/credenciales/' ~ estudiante.credencial ) }}" target="_blank" > Abrir archivo</a>
                                 </li>
                                 <li class="list-group-item">
-                                  <b>Ha sido verificado</b> <a class="pull-right">{{ CONST['ESTADOS'][estudiante.estado] }}</a>
+                                    <b>Ha sido verificado</b> <span class="pull-right label label-{% if estudiante.estado == 2 %}danger{% elseif estudiante.estado == 1 %}warning{% else %}success{% endif %}">{{ CONST['ESTADOS'][estudiante.estado] }}</span>
                                 </li>
                                 {#
                                 <li class="list-group-item">
