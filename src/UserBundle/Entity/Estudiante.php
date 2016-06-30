@@ -146,7 +146,7 @@ class Estudiante
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
-     * @Assert\NotBlank(message="Debe indicar género")
+     * Assert\NotBlank(message="Debe indicar género")
      * @Assert\NotNull(message="El valor del género no puede ser 'nulo'")
      */
     private $genero;
@@ -155,7 +155,8 @@ class Estudiante
      * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false)
-     * @Assert\NotBlank(message="Debe indicar si esta o no, asignado por la OPSU")
+     * Assert\NotBlank(message="Debe indicar si esta o no, asignado por la OPSU")
+     * @Assert\NotNull(message="El valor de asignacion de Opsu no debe ser nulo")
      */
     private $esAsignadoOPSU;
 

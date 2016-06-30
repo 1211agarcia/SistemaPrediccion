@@ -13,7 +13,10 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->redirectToRoute('fos_user_security_login');
+        if(!$this->getUser())
+        {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
 
         return $this->render('home/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
