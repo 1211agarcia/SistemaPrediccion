@@ -53,6 +53,12 @@ class Practica
      */
     private $finalizada;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\Estudiante", inversedBy="practicas")
+     * @ORM\JoinColumn(name="estudiante_id", referencedColumnName="id")
+     */
+    private $estudiante;
+
     public function __construct()
     {
         $this->finalizada = self::PRACTICA_INICIADA;
@@ -159,5 +165,28 @@ class Practica
     public function getFinalizada()
     {
         return $this->finalizada;
+    }
+
+    /**
+     * Set estudiante
+     *
+     * @param \UserBundle\Entity\Estudiante $estudiante
+     * @return Practica
+     */
+    public function setEstudiante(\UserBundle\Entity\Estudiante $estudiante = null)
+    {
+        $this->estudiante = $estudiante;
+
+        return $this;
+    }
+
+    /**
+     * Get estudiante
+     *
+     * @return \UserBundle\Entity\Estudiante 
+     */
+    public function getEstudiante()
+    {
+        return $this->estudiante;
     }
 }

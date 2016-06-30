@@ -109,4 +109,17 @@ class Usuario extends BaseUser
     {
         $this->updated = new \DateTime();
     }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Usuario
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
 }

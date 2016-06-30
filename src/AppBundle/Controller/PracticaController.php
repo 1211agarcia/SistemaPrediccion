@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Practica;
 use AppBundle\Entity\Ejercicio;
+use UserBundle\Entity\Estudiante;
 use AppBundle\Form\PracticaType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -98,6 +99,9 @@ class PracticaController extends Controller
         //dump(json_encode($out));die;
         //dump($out);
         $practica->setData($data);
+        $estudiante = new Estudiante();
+        $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
+        $practica->setEstudiante($estudiante);
         dump($practica);
             $em->persist($practica);
             $em->flush();

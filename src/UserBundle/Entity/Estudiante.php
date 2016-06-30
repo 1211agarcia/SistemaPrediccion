@@ -5,6 +5,7 @@ namespace UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Estudiante
@@ -203,6 +204,12 @@ class Estudiante
      */
     private $progreso;
     
+    /**
+     * @var \ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Practica", mappedBy="estudiante")
+     */
+    private $practicas;
 
     /**
      * @var UploadedFile
@@ -222,7 +229,7 @@ class Estudiante
     {
         //parent::__construct();
         $this->verificado = false;//SIN_VERIFICAR;
-        // tu propia lógica
+        $this->practicas = new ArrayCollection();
     }
 
     public function prediction_format_file()
@@ -734,5 +741,38 @@ class Estudiante
     public function getCredencial()
     {
         return $this->credencial;
+    }
+
+    /**
+     * Add practicas
+     *
+     * @param \AppBundle\Entity\Practica $practicas
+     * @return Estudiante
+     */
+    public function addPractica(\AppBundle\Entity\Practica $practicas)
+    {
+        $this->practicas[] = $practicas;
+
+        return $this;
+    }
+
+    /**
+     * Remove practicas
+     *
+     * @param \AppBundle\Entity\Practica $practicas
+     */
+    public function removePractica(\AppBundle\Entity\Practica $practicas)
+    {
+        $this->practicas->removeElement($practicas);
+    }
+
+    /**
+     * Get practicas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPracticas()
+    {
+        return $this->practicas;
     }
 }
