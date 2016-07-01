@@ -1,10 +1,8 @@
 #se cargan los datos colocando como parametros que los decimales seran separados por un ","
 y<-read.table("datos.txt",header=TRUE,dec=",")
 y
-v<-read.table("validacion.txt",header=TRUE,dec=",")
-v
 #Se realiza el Analisis de de Componentes Principales usando la matriz de Covarianza #
-com1<-princomp(y,cor=F)
+com1<-princomp(y[,1:4],cor=F)
 #Seleccionar cuantas o cuales componentes
 summary(com1)
 plot(com1)
@@ -26,7 +24,7 @@ clase[sal<12]<-1 #Grupo Bronce
 clase[sal>=12&sal<16]<-2 #Grupo Plata
 clase[sal>=16]<-3 #Grupo Oro
 
-plot(com1$score[,1],com1$score[,2],pch=21,bg=c("blue","red","green")[unclass(clase)])
+plot(com1$score[,1],com1$score[,2],pch=21,bg=c("red", "blue","green")[unclass(clase)])
 
 
 plot(com1$score[,1],com1$score[,3])
@@ -37,13 +35,13 @@ clase[sal>=12&sal<16]<-2 #Grupo Plata
 clase[sal>=16]<-3 #Grupo Oro
 
 plot(com1$score[,1],com1$score[,3],pch=21,
-bg=c("blue","red","green")[unclass(clase)])
+bg=c("red", "blue","green")[unclass(clase)])
 
 ################################
 # Graficacion de 3 componentes #
 ################################
 library(rgl)
-plot3d(com1$scores[,1:3], col=c("blue","red","green")[unclass(clase)])
+plot3d(com1$scores[,1:3], col=c("red", "blue","green")[unclass(clase)])
 
 
 #grafico biplot 3d
@@ -74,7 +72,7 @@ Ps<-matrix(c(com1$score[1,1],com1$score[1,2]),ncol=2,byrow=TRUE)
 s <- sim(result1$net, Ps)
 
 
-plot3d(P1,s, col=c("blue","red","green")[unclass(clase)])
+plot3d(P1,s, col=c("red", "blue","green")[unclass(clase)])
 
 #lecetura de datos para entrenar
 ent<-read.table("entre.txt",header=FALSE,dec=",")
@@ -108,10 +106,10 @@ P_v<-matrix(c(com1$score[49:60,1],com1$score[49:60,2]),ncol=2,byrow=TRUE)
 s <- sim(result_e$net, P_v)
 
 
-plot3d(P_v,s, col=c("blue","red","green")[unclass(clase_v)])
+plot3d(P_v,s, col=c("red", "blue","green")[unclass(clase_v)])
 x11()
 s <- sim(result_e$net, P_e)
-plot3d(P_e,s, col=c("blue","red","green")[unclass(clase_e)])
+plot3d(P_e,s, col=c("red", "blue","green")[unclass(clase_e)])
 
 
 #PRUEBA CON COMPONENTE 1 , 2 Y 3 ###############################################
