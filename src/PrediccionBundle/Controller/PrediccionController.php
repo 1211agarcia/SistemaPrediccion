@@ -22,14 +22,14 @@ if (is_writable($filePath)) {
     /**
      * Finds and displays a Estudiante entity.
      *
-     * @Route("prediccion/{id}", name="estudiante_prediccion")
+     * @Route("prediccion/{id}/action", name="estudiante_prediccion")
      */
-    public function prediccionAction(Estudiante $estudiante)
+    public function prediccionAction(Estudiante $estudiante=null)
     {
         echo getcwd() . "\n";
         dump(chdir('../src/AppBundle/R'));
         //file_put_contents("data.txt", shell_exec("Rscript inicio.R"));
-        dump(shell_exec("Rscript inicio.R"));
+        dump(shell_exec("Rscript pca.R"));
 
         echo "inicio...";
         //echo "<pre>";

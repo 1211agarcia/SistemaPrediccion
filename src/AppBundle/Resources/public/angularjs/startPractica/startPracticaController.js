@@ -39,11 +39,6 @@ newEjercicio.controller('newEjercicioController', function ($scope) {
         }
         console.log($scope.respuestas);
     };
-    $scope.editAction = function (item) {
-        $scope.isNew = false;
-        $scope.respuestaExpresion = $scope.respuestas[item].expresion;
-        $scope.indexPointer = item;
-    }
     $scope.selectAction = function (item) {
         $scope.indexSelected = item;
         console.log($scope.indexSelected);
