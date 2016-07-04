@@ -154,6 +154,27 @@ class EstudianteController extends BaseController
                 'ESTADOS' => Estudiante::ESTADOS)
         ));
     }
+    /**
+     *
+     * @Route("/perfil", name="estudiante_perfil")
+     * @Method("GET")
+     */
+    public function perfilAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
+
+        return $this->render('estudiante/show.html.twig', array(
+            'estudiante' => $estudiante,
+            'CONST'=> array(
+                'CARRERAS' => Estudiante::CARRERAS,
+                'NIVELES_EDUCATIVOS'=> Estudiante::NIVELES_EDUCATIVOS,
+                'GESTIONES_PLANTEL' => Estudiante::GESTIONES_PLANTEL,
+                'TIPOS_PLANTEL' => Estudiante::TIPOS_PLANTEL,
+                'NIVELES_SOCIOECONOMICOS'=> Estudiante::NIVELES_SOCIOECONOMICOS,
+                'ESTADOS' => Estudiante::ESTADOS)
+        ));
+    }
 
     /**
      * Displays a form to edit an existing Estudiante entity.
