@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class PracticaType extends AbstractType
 {
@@ -15,11 +16,7 @@ class PracticaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('data', 'text')
-            ->add('inicio', 'datetime')
-            ->add('fin', 'datetime')
-            ->add('finalizada')
-        ;
+            ->add('seleccion', IntegerType::class, array('mapped' => null));
     }
     
     /**

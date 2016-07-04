@@ -161,7 +161,7 @@ class EstudianteType extends AbstractType
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control'),
                     'choices' => array('1' => 'Masculino', '0' => 'Femenino'),
-                    'required' => true,
+                    'required' => false,
                 )
             )
             ->add('esAsignadoOPSU', ChoiceType::class,
@@ -173,7 +173,7 @@ class EstudianteType extends AbstractType
                     'choices' => array('Sí' => '1', 'No' => '0'),
                     // always include this
                     'choices_as_values' => true,
-                    'required' => true,
+                    'required' => false,
                 )
             )
             ->add('gestionPlantel', ChoiceType::class,

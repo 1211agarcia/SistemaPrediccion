@@ -14,9 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Practica
 {
-    const PRACTICA_INICIADA = false;
-    const PRACTICA_FINALIZADA = true;
-
     /**
      * @var int
      *
@@ -46,12 +43,6 @@ class Practica
      * @ORM\Column(name="fin", type="datetime", nullable=true)
      */
     private $fin;
-    /**
-     * @var boolean $finalizada
-     *
-     * @ORM\Column(name="finalizada", type="boolean")
-     */
-    private $finalizada;
 
     /**
      * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\Estudiante", inversedBy="practicas")
@@ -61,7 +52,6 @@ class Practica
 
     public function __construct()
     {
-        $this->finalizada = self::PRACTICA_INICIADA;
         $this->inicio = new \DateTime();
         $this->data = array();
     }
@@ -145,26 +135,13 @@ class Practica
     }
 
     /**
-     * Set finalizada
-     *
-     * @param boolean $finalizada
-     * @return Practica
-     */
-    public function setFinalizada($finalizada)
-    {
-        $this->finalizada = $finalizada;
-
-        return $this;
-    }
-
-    /**
      * Get finalizada
      *
      * @return boolean 
      */
     public function getFinalizada()
     {
-        return $this->finalizada;
+        return !($this->fin === null);
     }
 
     /**

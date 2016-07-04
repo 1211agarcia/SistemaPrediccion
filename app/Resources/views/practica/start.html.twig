@@ -22,13 +22,12 @@
                     </div>
                 </div>
             {% endif %}
-                {% for item in practica.data %}
                     <div class="form-group">
                         <div>
-                            {{ item['ejercicio'].enunciado|raw }}
+                            {{ practica.data[0]['ejercicio'].enunciado|raw }}
                         </div>
                         <ul class="list-group">
-                            {% for opcion in item['ejercicio'].respuestas %}
+                            {% for opcion in practica.data[0]['ejercicio'].respuestas %}
                                 <li class="list-group-item col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -40,13 +39,15 @@
                             {% endfor %}
                         </ul>
                     </div>
-                {% endfor %}
             </div>
             <div class="box-footer">
                 <a class="btn btn-default btn-flat" href="{{ path('practica_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;ir a lista</a>
             </div>
         </div>
     </section>
+    {{ form_start(start_form) }}
+                <input type="submit" value="start">
+            {{ form_end(start_form) }}
 {% endblock %}
 
 {% block javascripts %}
