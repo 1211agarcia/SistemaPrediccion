@@ -2,18 +2,18 @@ angular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null || val === '';
 }
 
-var newEjercicio = angular.module('AppModule', ['chieffancypants.loadingBar']);
+var startPractica = angular.module('AppModule', ['chieffancypants.loadingBar']);
 
-newEjercicio.config(function($interpolateProvider){
+startPractica.config(function($interpolateProvider){
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');
 });
 
-newEjercicio.config(function(cfpLoadingBarProvider) {
+startPractica.config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeBar = true;
     cfpLoadingBarProvider.latencyThreshold = 500;
 });
 
-newEjercicio.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadingBar) {
+startPractica.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadingBar) {
     $scope.posts = [];
     $scope.section = null;
     $scope.subreddit = null;
@@ -36,5 +36,5 @@ newEjercicio.controller('LoadCtrl', function ($scope, $http, $timeout, cfpLoadin
 });
 
 /*angular.element(document).ready(function() {
-      angular.bootstrap(document, ['newEjercicioModule']);
+      angular.bootstrap(document, ['startPracticaModule']);
 });*/

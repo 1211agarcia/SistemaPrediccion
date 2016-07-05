@@ -166,4 +166,21 @@ class Practica
     {
         return $this->estudiante;
     }
+
+    /**
+     * Get id
+     *
+     * @return float 
+     */
+    public function getCalificacion()
+    {
+        $calificacion = 0;
+        foreach ($this->data as $value) {
+            if ($value['seleccion'] != null && $value['ejercicio']->getRespuestas()[$value['seleccion']]->getCorrecta() ) {
+                $calificacion++;
+                
+            }
+        }
+        return $calificacion * 100/ count($this->data);
+    }
 }

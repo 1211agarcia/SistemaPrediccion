@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 
 class PracticaType extends AbstractType
 {
@@ -16,7 +18,11 @@ class PracticaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('seleccion', IntegerType::class, array('mapped' => null));
+            ->add('seleccion', IntegerType::class, array(
+                'mapped' => null,
+                'attr' =>array('ng-model' => 'indexSelected','ng-hide' => 'true')
+                    )
+                );
     }
     
     /**

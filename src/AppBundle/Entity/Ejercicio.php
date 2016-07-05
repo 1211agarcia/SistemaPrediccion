@@ -120,6 +120,15 @@ class Ejercicio
     {
         return $this->dificultad;
     }
+    /**
+     * Get dificultad tex
+     *
+     * @return string
+     */
+    public function getDificultadString()
+    {
+        return self::DIFICULTADES[$this->dificultad];
+    }
 
     /**
      * Set tema

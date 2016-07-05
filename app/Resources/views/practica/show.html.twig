@@ -2,28 +2,20 @@
 {% block body %}
     <section class="content-header">
         <h1>Practica&nbsp;<small class="label bg-blue">{{practica.id}}</small>
-            {% if practica.finalizada %}<span title="Finalizada" class="bg-green" style="float: right;">Finalizada</span>{% else %}<span title="Iniciada"class="bg-yellow" style="float: right;">Iniciada</span>{% endif %}
+            {% if practica.finalizada %}<span class="label label-warning pull-right">Finalizada</span>{% else %}<span class="label label-success pull-right">Iniciada</span>{% endif %}
         </h1>
     </section>
     <section class="content">
         <div class="box box-primary">
             <div class="box-body">
-                {% if practica.finalizada %}
-                <div class="form-group col-md-6">
-                    <label class="col-xs-12 control-label">Calificación</label> 
-                    <div class="col-xs-12">
-                        <h4  class="form-control-static">{{ practica.calificacion }}</h4>
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    <label class="col-xs-12 control-label">Duración</label> 
-                    <div class="col-xs-12">
-                        <p class="form-control-static">{{ practica.duracion }}</p>
-                    </div>
-                </div>
-            {% endif %}
+                <h4 class="col-md-4"><i class="fa fa-mortar-board"></i> Estudiante <a href="{{ path('estudiante_show', {'id': practica.estudiante.id }) }}">{{ practica.estudiante.usuario.username }}</a></h4>
+                <h4 class="col-md-4"><i class="fa fa-check"></i> Aciertos <small class="label label-default">{{ practica.calificacion }}%</small></h4>
+                <h4 class="col-md-4"><i class="fa fa-clock-o"></i> Duración <small class="label label-default"> {{ date(practica.inicio |date ).diff(date(practica.fin | date )).format('%i') }} minutos</small></h4>
+                <h4 class="col-md-4">Dificultad <small class="label label-default">{{ practica.data[0]['ejercicio'].dificultadString }}</small></h4>
+                <h4 class="col-md-5"><i class="fa fa-book"></i> Tema <a href="{{ path('tema_show', {'id': practica.data[0]['ejercicio'].tema.id }) }}">{{ practica.data[0]['ejercicio'].tema.nombre }}</a></h4>
+                <br><br><br><br><br>
                 {% for item in practica.data %}
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <div>
                             {{ item['ejercicio'].enunciado|raw }}
                         </div>
@@ -31,8 +23,12 @@
                             {% for opcion in item['ejercicio'].respuestas %}
                                 <li class="list-group-item col-md-6 col-xs-12">
                                     <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <input type="checkbox" id="[[ 'ejercicio_respuestas_'+$index+'_correcta' ]]" name="[['ejercicio[respuestas]['+$index+'][correcta]' ]]" value="1" ng-checked="isSelected([[$index]])" ng-click="selectAction([[$index]])" >
+                                        {% if opcion.correcta %}
+                                            <span title="Respuesta correcta" class="bg-green color-palette input-group-addon">
+                                        {% else %}
+                                            <span title="Respuesta incorrecta" class="bg-red color-palette input-group-addon">
+                                        {% endif %}
+                                            <i class="fa {% if not item['seleccion'] is empty and loop.index0 == item['seleccion'] %}fa-check-square-o{% else %}fa-square-o{% endif %}"></i>
                                         </span>
                                         <span class="form-control">{{ opcion.expresion|raw }}[[ respuesta.expresion ]]</span>
                                     </div>
@@ -41,6 +37,7 @@
                         </ul>
                     </div>
                 {% endfor %}
+                </div>
             </div>
             <div class="box-footer">
                 <a class="btn btn-default btn-flat" href="{{ path('practica_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;ir a lista</a>

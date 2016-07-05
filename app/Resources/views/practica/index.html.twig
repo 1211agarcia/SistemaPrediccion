@@ -22,8 +22,8 @@
                     {% for practica in practicas %}
                         <tr>
                             <td><a href="{{ path('practica_show', { 'id': practica.id }) }}">{{ practica.id }}</a></td>
-                            <td>{{ 'no disponible' }}</td>
-                            <td>{% if practica.finalizada %}<span title="Activo" class="bg-green">Finalizada</span>{% else %}<span title="Inactivo"class="bg-yellow">Iniciada</span>{% endif %}</td>
+                            <td>{{ practica.calificacion }}</td>
+                            <td>{% if practica.finalizada %}<span class="label label-warning pull-right">Finalizada</span>{% else %}<span class="label label-success pull-right">Iniciada</span>{% endif %}</td>
                             <td><a href="{{ path('estudiante_show', { 'id': practica.estudiante.id }) }}">{{ practica.estudiante.usuario.username}}</a></td>
                             <td><a class="btn btn-default btn-flat" href="{{ path('practica_show', { 'id': practica.id }) }}"><i class="fa fa-eye"></i>&nbsp;Ver</a></td>
                         </tr>

@@ -34,7 +34,7 @@
                     <div class="form-group col-md-6 col-xs-12" ng-init="{% for i in form.respuestas %}addRespuesta('{{ i.expresion.vars.value}}','{{ i.correcta.vars.checked}}');{% endfor %}">
                         {{ form_label(form.respuestas) }}
                         {{ form_errors(form.respuestas) }}
-                        <p>Mínimo 2</p>
+                        <p>Mínimo 4</p>
                         <fieldset data-ng-repeat="respuesta in respuestas">
                             <div class="input-group">
                                 <span class="input-group-addon">

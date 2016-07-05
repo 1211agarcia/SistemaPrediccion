@@ -28,9 +28,16 @@ class PracticaController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $practicas = $em->getRepository('AppBundle:Practica')->findAll();
-
+        if ($this->isGranted('ROLE_ESTUDIANTE')) {
+            $estudiante = new Estudiante();
+            //Se obtiene el Estudiante
+            $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
+            
+            $practicas = $em->getRepository('AppBundle:Practica')->findBy(array('estudiante' => $estudiante));
+        }
+        else{
+            $practicas = $em->getRepository('AppBundle:Practica')->findAll();
+        }
         return $this->render('practica/index.html.twig', array(
             'practicas' => $practicas,
         ));
@@ -92,7 +99,7 @@ class PracticaController extends Controller
             $ejercicio_aux->setRespuestas($opciones);
 
             $data[] = array('ejercicio' => $ejercicio_aux, 
-                            'respuesta' => null);
+                            'seleccion' => null);
         }
         //dump($data);
         //$out = array_values($data);
@@ -109,35 +116,9 @@ class PracticaController extends Controller
         dump($em->getRepository('AppBundle:Practica')->findAll());
 
         $form = $this->createForm('AppBundle\Form\PracticaType', $practica);
-        return $this->render('practica/start.html.twig', array(
-            'practica' => $practica,
-        ));
-    }
 
-    /**
-     * Creates a new Practica entity.
-     *
-     * @Route("/new", name="practica_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $practica = new Practica();
-        $form = $this->createForm('AppBundle\Form\PracticaType', $practica);
-        $form->handleRequest($request);
+        return $this->redirectToRoute('practica_start', array('id' => $practica->getId()));
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($practica);
-            $em->flush();
-
-            return $this->redirectToRoute('practica_show', array('id' => $practica->getId()));
-        }
-
-        return $this->render('practica/new.html.twig', array(
-            'practica' => $practica,
-            'form' => $form->createView(),
-        ));
     }
 
     /**
@@ -148,74 +129,52 @@ class PracticaController extends Controller
      */
     public function showAction(Practica $practica)
     {
-        $deleteForm = $this->createDeleteForm($practica);
-
         return $this->render('practica/show.html.twig', array(
             'practica' => $practica,
-            'delete_form' => $deleteForm->createView(),
+
         ));
     }
 
     /**
-     * Displays a form to edit an existing Practica entity.
+     * Start a Practica entity.
      *
-     * @Route("/{id}/edit", name="practica_edit")
+     * @Route("/{id}/start", name="practica_start")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Practica $practica)
+    public function startAction(Request $request, Practica $practica)
     {
-        $deleteForm = $this->createDeleteForm($practica);
-        $editForm = $this->createForm('AppBundle\Form\PracticaType', $practica);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($practica);
-            $em->flush();
-
-            return $this->redirectToRoute('practica_edit', array('id' => $practica->getId()));
-        }
-
-        return $this->render('practica/edit.html.twig', array(
-            'practica' => $practica,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a Practica entity.
-     *
-     * @Route("/{id}", name="practica_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Practica $practica)
-    {
-        $form = $this->createDeleteForm($practica);
+        $form = $this->createForm('AppBundle\Form\PracticaType', $practica,
+            array('action' => $this->generateUrl('practica_start', array('id' => $practica->getId()))));
+        $form->add('submit', 'submit');
         $form->handleRequest($request);
 
+        $i=0;
         if ($form->isSubmitted() && $form->isValid()) {
+            // Mientras no se encuentre el siguiente ejercicio a resolver
+            $encontrado = false;
+            while(!$encontrado && $i < count($practica->getData()) ) {
+                $encontrado = ($practica->getData()[$i]['seleccion'] == null);
+                $i++;
+            }
             $em = $this->getDoctrine()->getManager();
-            $em->remove($practica);
+            $data = array();
+            $data = $practica->getData();
+            $data[$i-1]['seleccion'] = $form['seleccion']->getData();
+            $practica->setData($data);
+            if (count($practica->getData()) == $i) {
+                $practica->setFin(new \DateTime());
+            }
             $em->flush();
+            dump($practica);
+            //Si finalizo tonces show practica
         }
-
-        return $this->redirectToRoute('practica_index');
-    }
-
-    /**
-     * Creates a form to delete a Practica entity.
-     *
-     * @param Practica $practica The Practica entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Practica $practica)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('practica_delete', array('id' => $practica->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        if ($practica->getFinalizada()) {
+            return $this->redirectToRoute('practica_show', array('id' => $practica->getId()));
+        }
+        return $this->render('practica/start.html.twig', array(
+            'practica' => $practica,
+            'actual' => $i,
+            'form' => $form->createView(),
+        ));
     }
 }
