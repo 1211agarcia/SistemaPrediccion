@@ -265,7 +265,7 @@
         </div><!-- /.nav-tabs-custom -->
         <div>
             <a class="btn btn-default btn-flat" href="{{ path('estudiante_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;ir a lista</a>
-            {% if estudiante.estado == 2 %}
+            {% if is_granted('ROLE_ESTUDIANTE') and estudiante.estado == 2 %}
             <a class="btn btn-warning btn-flat pull-right" href="{{ path('estudiante_edit', { 'id': estudiante.id }) }}"><i class="fa fa-edit"></i>&nbsp;Editar</a>
             {% endif %}
         </div>

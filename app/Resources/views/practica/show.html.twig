@@ -8,12 +8,13 @@
     <section class="content">
         <div class="box box-primary">
             <div class="box-body">
-                <h4 class="col-md-4"><i class="fa fa-mortar-board"></i> Estudiante <a href="{{ path('estudiante_show', {'id': practica.estudiante.id }) }}">{{ practica.estudiante.usuario.username }}</a></h4>
-                <h4 class="col-md-4"><i class="fa fa-check"></i> Aciertos <small class="label label-default">{{ practica.calificacion }}%</small></h4>
-                <h4 class="col-md-4"><i class="fa fa-clock-o"></i> Duración <small class="label label-default"> {{ date(practica.inicio |date ).diff(date(practica.fin | date )).format('%i') }} minutos</small></h4>
-                <h4 class="col-md-4">Dificultad <small class="label label-default">{{ practica.data[0]['ejercicio'].dificultadString }}</small></h4>
-                <h4 class="col-md-5"><i class="fa fa-book"></i> Tema <a href="{{ path('tema_show', {'id': practica.data[0]['ejercicio'].tema.id }) }}">{{ practica.data[0]['ejercicio'].tema.nombre }}</a></h4>
-                <br><br><br><br><br>
+            <div class="form-group col-xs-12">
+                <h4 class="col-md-4 col-sm-6"><i class="fa fa-mortar-board"></i> Estudiante <a href="{{ path('estudiante_show', {'id': practica.estudiante.id }) }}">{{ practica.estudiante.usuario.username }}</a></h4>
+                <h4 class="col-md-4 col-sm-6"><i class="fa fa-check"></i> Aciertos <small class="label label-default">{{ practica.calificacion }}%</small></h4>
+                <h4 class="col-md-4 col-sm-6"><i class="fa fa-clock-o"></i> Duración <small class="label label-default"> {{ date(practica.inicio |date ).diff(date(practica.fin | date )).format('%i') }} minutos</small></h4>
+                <h4 class="col-md-4 col-sm-6">Dificultad <small class="label label-default">{{ practica.data[0]['ejercicio'].dificultadString }}</small></h4>
+                <h4 class="col-md-5 col-sm-12"><i class="fa fa-book"></i> Tema <a href="{{ path('tema_show', {'id': practica.data[0]['ejercicio'].tema.id }) }}">{{ practica.data[0]['ejercicio'].tema.nombre }}</a></h4>
+            </div>
                 {% for item in practica.data %}
                     <div class="form-group col-xs-12">
                         <div>

@@ -33,11 +33,14 @@
                 </div>
             </div>
             <div class="box-footer" style="text-align: center;">
-                <input type="number" id="practica_seleccion" name="practica[seleccion]" required="required" ng-model="indexSelected" ng-hide="true">
-                <button class="btn btn-default" ng-disabled="isValid()" ng-click="evaluar()">
-                    Evaluar</button>
-                <button ng-disabled="isValid2()" id="practica_submit" class="btn btn-success" ng-click="siguiente()">Siguiente</button>
-                
+                {{ form_start(form) }}
+                    {{ form_widget(form.seleccion)}}
+                    <button ng-disabled="isValid()" type="submit" id="practica_submit" name="practica[submit]" class="btn btn-success ">Siguiente</button>
+                    {{ form_widget(form._token) }}
+                {{ form_end(form, {'render_rest': false}) }}
+                <button class="btn btn-secondary" style="margin-top: 26px;" ng-click="evaluar()">
+          <strong>Filtrar</strong>
+          </button>
             </div>
         </div>
     </section>
@@ -46,12 +49,18 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-          var response = "{{ practica_json }}";
+          var response = "{{ data }}";
           var div = document.createElement('div');
           div.innerHTML = response;
           response = div.firstChild.nodeValue;
           response = JSON.parse(response);
           console.log("response",response);
+          var ejercicios = "{{ ejercicios }}";
+          var div = document.createElement('div');
+          div.innerHTML = ejercicios;
+          ejercicios = div.firstChild.nodeValue;
+          ejercicios = JSON.parse(ejercicios);
+          console.log("ejercicios",ejercicios);
     </script>
 
     <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>

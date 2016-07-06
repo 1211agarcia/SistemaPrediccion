@@ -12,7 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class EjercicioRepository extends EntityRepository
 {
-	public function search($tema = null, $estado = true, $dificultad_min = 0, $dificultad_max = 5)
+    /**
+     * si @param tema esta en null, indica que puede ser cualquier tema.
+     */
+	public function search($tema = null, $dificultad_min = 0, $dificultad_max = 5)
 	{
         //printf("<pre>");print_r($data); printf("</pre>");
 	    // Create our query bundler
@@ -28,7 +31,7 @@ class EjercicioRepository extends EntityRepository
         
         $exprDificultad = $qb->expr()->between('e.dificultad', $dificultad_min, $dificultad_max);
        
-        $exprEstado = $qb->expr()->eq('e.estado', "'".($estado)."'");
+        $exprEstado = $qb->expr()->eq('e.estado', "'1'");
 
         //Se unen en AND las codiciones
         $condiciones = $qb->expr()->andX(

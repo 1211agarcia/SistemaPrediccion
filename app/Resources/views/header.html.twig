@@ -2,7 +2,7 @@
 <nav class="navbar navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand"><b>SE</b><sapn style="font-size:x-large;">M</sapn><b>PU</b></a>
+      <a href="{{ path('homepage') }}" class="navbar-brand"><b>SE</b><sapn style="font-size:x-large;">M</sapn><b>PU</b></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
         <i class="fa fa-bars"></i>
       </button>
@@ -25,7 +25,7 @@
             <li class="divider"></li>
             <li><a href="{{ path('ejercicio_index')}}"><i class="fa fa-circle-o"></i>Ejercicios</a></li>
             <li class="divider"></li>
-            <li><a href="{{ path('ejercicio_index')}}"><i class="fa fa-circle-o"></i>Expresiones Matematicas</a></li>
+            <li><a href="{{ path('practica_index')}}"><i class="fa fa-circle-o"></i>Practicas</a></li>
           </ul>
         </li>
         {% endif %}

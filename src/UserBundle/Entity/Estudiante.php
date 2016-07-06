@@ -198,11 +198,11 @@ class Estudiante
     private $estado;
 
     /**
-     * @var \AppBundle\Entity\Progreso
+     * @var \ArrayCollection
      *
-     * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Progreso", mappedBy="estudiante")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Curso", mappedBy="estudiante")
      */
-    private $progreso;
+    private $cursos;
     
     /**
      * @var \ArrayCollection
@@ -695,29 +695,6 @@ class Estudiante
     public function getUsuario()
     {
         return $this->usuario;
-    }
-
-    /**
-     * Set progreso
-     *
-     * @param \AppBundle\Entity\Progreso $progreso
-     * @return Estudiante
-     */
-    public function setProgreso(\AppBundle\Entity\Progreso $progreso = null)
-    {
-        $this->progreso = $progreso;
-
-        return $this;
-    }
-
-    /**
-     * Get progreso
-     *
-     * @return \AppBundle\Entity\Progreso 
-     */
-    public function getProgreso()
-    {
-        return $this->progreso;
     }
 
     /**
