@@ -3,40 +3,65 @@
 <div ng-controller="startPracticaController">
     <section class="content-header">
         <h1>Practica&nbsp;<small class="label bg-blue">{{practica.id}}</small>
-            {% if practica.finalizada %}<span class="label label-warning pull-right">Finalizada</span>{% else %}<span class="label label-warning pull-right">Ejercicio {{actual + 1}} de {{practica.data|length }}</span>{% endif %}
+            <span ng-if="finalizado" class="label label-warning pull-right">Finalizada</span>
+            <span ng-if="!finalizado" class="label label-warning pull-right">Ejercicio [[ ejercicio.id + 1 ]] de {{practica.data|length }}</span>
         </h1>
     </section>
     <section class="content">
         <div class="box box-primary">
             <div class="box-body">
-                <div class="form-group col-xs-12">
-                    <h4 class="col-md-4 col-sm-6"><i class="fa fa-check"></i> Aciertos <small class="label label-default">{{ practica.calificacion }}%</small></h4>
+                <div class="form-group col-xs-12" ng-hide="finalizado">
+                    <h4 class="col-md-4 col-sm-6"><i class="fa fa-check"></i> Aciertos <small class="label label-default">[[ aciertos ]]</small></h4>
                     <h4 class="col-md-4">Dificultad <small class="label label-default">{{ practica.data[0]['ejercicio'].dificultadString }}</small></h4>
                     <h4 class="col-md-4"><i class="fa fa-book"></i> Tema <a href="{{ path('tema_show', {'id': practica.data[0]['ejercicio'].tema.id }) }}">{{ practica.data[0]['ejercicio'].tema.nombre }}</a></h4>
                 </div>
-                <div class="form-group col-xs-12" ng-init="{% for i in practica.data[actual]['ejercicio'].respuestas %}addRespuesta('{{ i.expresion}}','null');{% endfor %}">
-                    <div>
-                        {{ practica.data[actual]['ejercicio'].enunciado|raw }}
+                <div class="form-group col-xs-12 check-element animate-hide" ng-hide="finalizado">
+                    <div ng-bind-html="ejercicio.enunciado">
                     </div>
                     <ul class="list-group">
-                        {% for opcion in practica.data[actual]['ejercicio'].respuestas %}
-                            <li class="list-group-item col-md-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <input type="checkbox" id="ejercicio_respuestas_{{loop.index0}}_correcta" value="1" ng-checked="isSelected({{loop.index0}})" ng-click="selectAction({{loop.index0}})" >
-                                    </span>
-                                    <div class="form-control">{{ opcion.expresion|raw }} {#[[ respuesta.expresion ]]#}</div>
-                                </div>
-                            </li>
-                        {% endfor %}
+                        <li class="list-group-item col-md-6 col-xs-12" data-ng-repeat="respuesta in ejercicio.respuestas">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input ng-disabled="evaluando" type="checkbox" id="ejercicio_respuestas_[[$index]]_correcta" value="1" ng-model="opciones[$index].checked" ng-click="updateSelection($index, opciones)" >
+                                </span>
+                                <div ng-bind-html="[[ ejercicio.respuestas[$index] ]]" class="form-control">[[ respuesta]] {#[[respuesta.expresion ]]#}</div>
+                            </div>
+                        </li>
                     </ul>
+                </div>
+                <div ng-if="correcto" class="col-xs-12 alert alert-success" class="animate-if">
+                    <h4><i class="icon fa fa-check"></i> Correcto!</h4>
+                </div>
+                <div ng-if="incorrecto" class="col-xs-12 alert alert-danger" class="animate-if">
+                    <h4><i class="icon fa fa-close"></i> Incorrecto!</h4>
+                </div>
+                <div ng-show="finalizado" class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>[[ aciertos ]]</h3>
+                            <p>Aciertos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="finalizado" class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <h3>[[ aciertos * 100 /4 ]]<sup style="font-size: 20px">%</sup></h3>
+                            <p>Puntuación</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="box-footer" style="text-align: center;">
-                <input type="number" id="practica_seleccion" name="practica[seleccion]" required="required" ng-model="indexSelected" ng-hide="true">
-                <button class="btn btn-default" ng-disabled="isValid()" ng-click="evaluar()">
-                    Evaluar</button>
-                <button ng-disabled="isValid2()" id="practica_submit" class="btn btn-success" ng-click="siguiente()">Siguiente</button>
+                <button ng-hide="finalizado || correcto || incorrecto" class="btn btn-success" ng-disabled="isValid()" ng-click="evaluar()">
+                    [[ titulo_boton ]]</button>
+                <button ng-show="!finalizado && (correcto || incorrecto)" id="practica_submit" class="btn btn-success" ng-click="siguiente()">[[ titulo_boton2 ]]</button>
                 
             </div>
         </div>
@@ -55,7 +80,9 @@
     </script>
 
     <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>
-    
+
+    <script src="{{ asset('bundles/app/angularjs/angular-sanitize.min.js')}}"></script>
+
     {% javascripts
         '@AppBundle/Resources/public/angularjs/startPractica/startPracticaModule.js'
         '@AppBundle/Resources/public/angularjs/startPractica/startPracticaController.js'%}

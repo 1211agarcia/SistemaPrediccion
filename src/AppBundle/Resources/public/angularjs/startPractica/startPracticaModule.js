@@ -2,7 +2,7 @@ angular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null || val === '';
 }
 
-var startPractica = angular.module('AppModule', ['chieffancypants.loadingBar']);
+var startPractica = angular.module('AppModule', ['chieffancypants.loadingBar', 'ngSanitize']);
 
 startPractica.config(function($interpolateProvider){
                 $interpolateProvider.startSymbol('[[').endSymbol(']]');

@@ -135,51 +135,32 @@ class PracticaController extends Controller
      */
     public function startAction(Request $request, Practica $practica)
     {
-        /*$form = $this->createForm('AppBundle\Form\PracticaType', $practica,
-            array('action' => $this->generateUrl('practica_start', array('id' => $practica->getId()))));
-        $form->add('submit', 'submit');
-        $form->handleRequest($request);
-
-        $i=0;
-        if ($form->isSubmitted() && $form->isValid() && !$practica->getFinalizada()) {
-            // Mientras no se encuentre el siguiente ejercicio a resolver
-            $encontrado = false;
-            while(!$encontrado && $i < count($practica->getData()) ) {
-                $encontrado = ($practica->getData()[$i]['seleccion'] == null);
-                $i++;
-            }
-            $em = $this->getDoctrine()->getManager();
-            $data = array();
-            $data = $practica->getData();
-            $data[$i-1]['seleccion'] = $form['seleccion']->getData();
-            $practica->setData($data);
-            if (count($practica->getData()) == $i) {
-                $practica->setFin(new \DateTime());
-            }
-            $em->flush();
-        }
         if ($practica->getFinalizada()) {
-            return $this->redirectToRoute('practica_show', array('id' => $practica->getId()));
-        }*/
-                $response = array();
-                $response['id'] = 0;
-                $response['id_practica'] = $practica->getId();
-                $response['enunciado'] = htmlentities ($practica->getData()[0]['ejercicio']->getEnunciado());
-                $response['enunciado'] = htmlentities ($response['enunciado']);
-                $response['respuestas'] = array(
-                    htmlentities ($practica->getData()[0]['ejercicio']->getRespuestas()[0]->getExpresion()),
-                    htmlentities ($practica->getData()[0]['ejercicio']->getRespuestas()[1]->getExpresion()),
-                    htmlentities ($practica->getData()[0]['ejercicio']->getRespuestas()[2]->getExpresion()),
-                    htmlentities ($practica->getData()[0]['ejercicio']->getRespuestas()[3]->getExpresion())
-                );
-                dump(($response));
-                dump(json_encode($response));
-                dump(json_encode($practica->getData()[0]['ejercicio']->getEnunciado()));
-                
-                
+            return $this->redirectToRoute('homepage');
+        }
+        $i=-1;
+        // Mientras no se encuentre el siguiente ejercicio a resolver
+        $encontrado = false;
+        while(!$encontrado && $i < count($practica->getData()) ) {
+            $i++;
+            $encontrado = ($practica->getData()[$i]['seleccion'] == null);
+        }
+        $caracter_especial = array("\\","\"","\'");
+        $caracter_auxiliar = array("__X__","&quot;","__S__");
+
+        $response = array();
+        $response['id'] = $i;
+        $response['id_practica'] = $practica->getId();
+        $response['enunciado'] = str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[0]['ejercicio']->getEnunciado()));
+        $response['respuestas'] = array(
+            str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[0]['ejercicio']->getRespuestas()[0]->getExpresion())),
+            str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[0]['ejercicio']->getRespuestas()[1]->getExpresion())),
+            str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[0]['ejercicio']->getRespuestas()[2]->getExpresion())),
+            str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[0]['ejercicio']->getRespuestas()[3]->getExpresion()))
+        );
+  
         return $this->render('practica/start.html.twig', array(
             'practica' => $practica,
-            'actual' => 0,
             'practica_json' =>  json_encode($response)
         ));
     }
@@ -195,31 +176,48 @@ class PracticaController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
-            
-            
+                        
             $evaluacion = json_decode($request->getContent(),true);
             
-            $practica = $em->getRepository('AppBundle:Practica')->find($evaluacion['practica_id']);
+            $practica = $em->getRepository('AppBundle:Practica')->find($evaluacion['id_practica']);
 
-            if ($evaluacion['seleccion'] >= 0 && $evaluacion['seleccion'] < 5) {
-                
-            }
-            while(!$encontrado && $i < count($practica->getData()) ) {
-                $encontrado = ($practica->getData()[$i]['seleccion'] == null);
-                $i++;
-            }
             $data = array();
             $data = $practica->getData();
-            $data[$i-1]['seleccion'] = $form['seleccion']->getData();
+            $i = $evaluacion['id'];
+            $data[$i]['seleccion'] = $evaluacion['seleccion'];
             $practica->setData($data);
-            if (count($practica->getData()) == $i) {
+            if (3 == $i) {//Si es la ultima
                 $practica->setFin(new \DateTime());
+                $response = array();
+                $response['id'] = $i;
+                $response['resultado'] = 3;//estado de finalizacion
+                $response['id_practica'] = $practica->getId();
             }
-            $em->flush();
+            else{
+                $caracter_especial = array("\\","\"","\'");
+                $caracter_auxiliar = array("__X__","&quot;","__S__");
 
+                $response = array();
+                $response['id'] = $i+1;
+                $response['resultado'] = $practica->getData()[$i]['ejercicio']->getRespuestas()[$evaluacion['seleccion']]->getCorrecta()? 1 : 2;//retorna si la respuesta selecionada es correcta o no.
+                $response['id_practica'] = $practica->getId();
+                $response['enunciado'] = str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getEnunciado()));
+                $response['respuestas'] = array(
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[0]->getExpresion())),
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[1]->getExpresion())),
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[2]->getExpresion())),
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[3]->getExpresion()))
+                );
+            }
+
+            $em->flush();
+            $datos = new JsonResponse($response, 200);
+        }else
+        {
+            $datos = new JsonResponse($response, 500);
         }
-                $datos = new JsonResponse($response, 200);
-            return $datos;
+        
+        return $datos;
         
     }
 }
