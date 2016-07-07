@@ -8,6 +8,7 @@
     <section class="content">
         <div class="box box-primary">
             <div class="row box-body">
+
                 <div class="col-xs-12 form-group">
                     <label class="col-xs-12 col-md-2 control-label">Temas Antecesores</label> 
                     <div class="col-xs-12 col-md-10">
@@ -42,8 +43,13 @@
                 </div>
             </div>
             <div class="box-footer">
+                <div class="col-xs-12" style="text-align: center;">
+                    <a href="{{ path('practica_generate', { 'tema': tema.id })}}" class="btn btn-app"><i style="color: green;"class="fa fa-play"></i> Practicar</a>
+                  </div>
+                {% if is_granted('ROLE_PROFESOR') %}
                 <a class="btn btn-default btn-flat" href="{{ path('tema_index') }}"><i class="fa fa-arrow-left"></i>&nbsp;ir a lista</a>
                 <a class="btn btn-warning btn-flat pull-right" href="{{ path('tema_edit', { 'id': tema.id }) }}"><i class="fa fa-edit"></i>&nbsp;Editar</a>
+                {% endif %}
             </div>
         </div>
     </section>

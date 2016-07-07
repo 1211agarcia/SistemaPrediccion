@@ -168,10 +168,13 @@
         </div>
     </section><!-- /.content -->
 
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
     <script src="{{ asset('bundles/app/plugins/jQuery/jQuery-2.2.0.min.js') }}" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="{{ asset('bundles/app/plugins/chartjs/Chart.min.js') }}" type="text/javascript"></script>
-
 <script>
   $(function () {
     /* ChartJS
@@ -265,14 +268,6 @@
 
   });
 </script>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-
-    <script src="{{ asset('bundles/app/plugins/jQuery/jQuery-2.2.0.min.js') }}" type="text/javascript"></script>
-    <!-- ChartJS 1.0.1 -->
-    <script src="{{ asset('bundles/app/plugins/chartjs/Chart.min.js') }}" type="text/javascript"></script>
-
     {% javascripts
         '@AppBundle/Resources/public/angularjs/loadModule.js'%}
         <script src="{{ asset_url }}"></script>
