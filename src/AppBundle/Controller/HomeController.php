@@ -27,8 +27,8 @@ class HomeController extends Controller
             $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
             // Se encuentran las practicas de este estudiante
             $practicas = $em->getRepository('AppBundle:Practica')->findBy(array('estudiante' => $estudiante));
-
             //Tema Actual
+            $temas = $em->getRepository('AppBundle:Tema')->findAll();
 
 
             //Progreso
@@ -39,12 +39,16 @@ class HomeController extends Controller
                 'estudiante_id' => $estudiante->getId(),
                 'estudiantes' => "Perfil",
                 'estudiantes_titulo' => "Mi perfil",
-                'temas' => "Tema",
-                'temas_titulo' => "Tema Actual",
                 'tema_id' => null,
                 'practicas' => count($practicas),
                 'practicas_titulo' => "Practicas Realizadas",
                 );
+
+            return $this->render('home/estudiante.html.twig', array(
+                'contenido' => $contenido,
+                'temas' => $temas,
+                'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            ));
         }
         // Si es profesor
         if($this->isGranted('ROLE_PROFESOR'))
