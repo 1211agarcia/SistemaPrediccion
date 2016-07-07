@@ -59,6 +59,16 @@ class PracticaController extends Controller
             //SI aca se debe preguntar si el estudiante tiene una practica comenzada
             //Entonces se 
             //
+            /*************************
+             * LOGICA DIFUSA         *
+             *************************
+             * AQUI VA LA CAJA NEGRA *
+             * DE LOGICA DIFUSA LA   *
+             * CUAL DEFINE LA        *
+             * DIFICULTAD DEL        *
+             * EJERCICIO             *
+             ************************/
+
             $em = $this->getDoctrine()->getManager();
             $limit = 4; //es el limite de ejrcicios que tendra la practica
             $dificultad_min = 0;
@@ -192,6 +202,16 @@ class PracticaController extends Controller
                 $response['id'] = $i;
                 $response['resultado'] = 3;//estado de finalizacion
                 $response['id_practica'] = $practica->getId();
+                
+                /*************************
+                 * LOGICA DIFUSA         *
+                 *************************
+                 * AQUI VA LA CAJA NEGRA *
+                 * DE LOGICA DIFUSA LA   *
+                 * CUAL ACTUALIZA EL     *
+                 * NIVEL DE PERTENENCIA  *
+                 * EN EL TEMA ACTUAL     *
+                 ************************/
             }
             else{
                 $caracter_especial = array("\\","\"","\'");
