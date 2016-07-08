@@ -36,6 +36,18 @@
                     <h4><i class="icon fa fa-close"></i> Incorrecto!</h4>
                 </div>
                 <div ng-show="finalizado" class="col-lg-3 col-xs-6">
+                    <div class="small-box bg-yellow">
+                        <div class="inner">
+                            <h3>Inicio</h3>
+                            <p>Aciertos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-home"></i>
+                        </div>
+                        <a href="{{ path('homepage') }}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div ng-show="finalizado" class="col-lg-3 col-xs-6">
                     <div class="small-box bg-green">
                         <div class="inner">
                             <h3>[[ aciertos ]]</h3>

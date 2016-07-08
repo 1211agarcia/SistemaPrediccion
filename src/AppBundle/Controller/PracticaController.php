@@ -185,10 +185,8 @@ class PracticaController extends Controller
     public function evaluarAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-                        
+            $em = $this->getDoctrine()->getManager();                      
             $evaluacion = json_decode($request->getContent(),true);
-            
             $practica = $em->getRepository('AppBundle:Practica')->find($evaluacion['id_practica']);
 
             $data = array();
@@ -196,13 +194,22 @@ class PracticaController extends Controller
             $i = $evaluacion['id'];
             $data[$i]['seleccion'] = $evaluacion['seleccion'];
             $practica->setData($data);
-            if (3 == $i) {//Si es la ultima
-                $practica->setFin(new \DateTime());
-                $response = array();
-                $response['id'] = $i;
-                $response['resultado'] = 3;//estado de finalizacion
-                $response['id_practica'] = $practica->getId();
-                
+            $response = array();
+            $response['id'] = $i+1;
+            $response['resultado'] = $practica->getData()[$i]['ejercicio']->getRespuestas()[$evaluacion['seleccion']]->getCorrecta()? 1 : 2;//retorna si la respuesta selecionada es correcta o no.
+            $response['id_practica'] = $practica->getId();
+            if (count($practica->getData()) > ( $i +1)) {//Si no es es el ultimo
+                $caracter_especial = array("\\","\"","\'");
+                $caracter_auxiliar = array("__X__","&quot;","__S__");
+                $response['enunciado'] = str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getEnunciado()));                    $response['respuestas'] = array(
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[0]->getExpresion())),
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[1]->getExpresion())),
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[2]->getExpresion())),
+                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[3]->getExpresion()))
+                );
+            }else
+            {// Se cierra la practica
+                $practica->setFin(new \DateTime());   
                 /*************************
                  * LOGICA DIFUSA         *
                  *************************
@@ -212,22 +219,6 @@ class PracticaController extends Controller
                  * NIVEL DE PERTENENCIA  *
                  * EN EL TEMA ACTUAL     *
                  ************************/
-            }
-            else{
-                $caracter_especial = array("\\","\"","\'");
-                $caracter_auxiliar = array("__X__","&quot;","__S__");
-
-                $response = array();
-                $response['id'] = $i+1;
-                $response['resultado'] = $practica->getData()[$i]['ejercicio']->getRespuestas()[$evaluacion['seleccion']]->getCorrecta()? 1 : 2;//retorna si la respuesta selecionada es correcta o no.
-                $response['id_practica'] = $practica->getId();
-                $response['enunciado'] = str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getEnunciado()));
-                $response['respuestas'] = array(
-                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[0]->getExpresion())),
-                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[1]->getExpresion())),
-                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[2]->getExpresion())),
-                    str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[$i+1]['ejercicio']->getRespuestas()[3]->getExpresion()))
-                );
             }
 
             $em->flush();
