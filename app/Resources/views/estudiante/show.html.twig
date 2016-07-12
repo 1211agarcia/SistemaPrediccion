@@ -8,8 +8,8 @@
     </section>
     <!-- Main content -->
     <section class="content">
-      <div class="box-body">
         {% if is_granted('ROLE_ESTUDIANTE') or is_granted('ROLE_PROFESOR') %}
+      <div class="box-body">
         <div class="col-xs-12">
           <!-- AREA CHART -->
           <div class="box box-primary">
@@ -23,12 +23,8 @@
             </div>
             <!-- /.box-body -->
           </div>
-          <!-- /.box -->
-
-         <!-- /.box -->
-
         </div>
-        </div>
+      </div>
       {% endif %}
                         <!-- /.box-body -->
         <div class="nav-tabs-custom">
@@ -196,8 +192,8 @@
         {% for item in estudiante.practicas %}
             "{{ item.fin|date('m-d H:i') }}",
         {% endfor %}
-      ],
-      datasets: [
+        ],
+        datasets: [
         {
           label: "Practicas",
           fillColor: "rgba(60,141,188,0.9)",
@@ -210,7 +206,7 @@
           {% for item in estudiante.practicas %}
             {{ item.calificacion }},
             {% endfor %}
-        ]
+          ]
         }
       ]
     };

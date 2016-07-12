@@ -12,6 +12,7 @@ newEjercicio.controller('newEjercicioController', function ($scope) {
     $scope.respuestas = [];
 
     $scope.invalidRespuestaFunc = function () {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         $scope.invalidRespuesta = (angular.isUndefinedOrNull($scope.respuestaExpresion));
     }
     $scope.$watch($scope.invalidRespuestaFunc);
@@ -22,6 +23,7 @@ newEjercicio.controller('newEjercicioController', function ($scope) {
         if(correcta){
             $scope.indexSelected = newItemNo - 1;
         }
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
     }
     $scope.addNewRespuesta = function(){
         $scope.respuestaExpresion = "";
@@ -54,10 +56,10 @@ newEjercicio.controller('newEjercicioController', function ($scope) {
         return $scope.indexSelected == item;
     }
     $scope.removeAction = function (item) {
-        if($scope.respuestas.length > 2){
+        if($scope.respuestas.length > 4){
             $scope.respuestas.splice(item, 1);
         }else{
-            alert("Debe tener al menos 2 respuestas.");
+            alert("Debe tener al menos 4 respuestas.");
         }
     }
    

@@ -25,7 +25,6 @@ class EjercicioType extends AbstractType
                     'label'=>'Dificultad',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control select2'),
-                    'empty_value' => 'Seleccionar',
                     'choices'  => Ejercicio::DIFICULTADES,
                     'required' => true,
                 )
@@ -35,7 +34,6 @@ class EjercicioType extends AbstractType
                     'label'=>'Estado',
                     'label_attr' => array('class' => 'control-label'),
                     'attr'=> array('class' => 'form-control select2'),
-                    'empty_value' => 'Activo para usar en practicas',
                     'choices'  => Ejercicio::ESTADOS,
                 )
             )

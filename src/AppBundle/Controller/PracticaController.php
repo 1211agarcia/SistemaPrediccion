@@ -120,7 +120,7 @@ class PracticaController extends Controller
 
             return $this->redirectToRoute('practica_start', array('id' => $practica->getId()));
         }
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('homepage');
     }
 
     /**

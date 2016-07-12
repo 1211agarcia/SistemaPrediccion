@@ -34,11 +34,19 @@ abline(h = 0, v = 0, lty = 2, col = 4)
 #Grafica de las componentes
 x11()
 par(mfrow=c(2,2))
+
 sal<-data[,14]
-clase<-rep(FALSE,length(sal))
-clase[sal<12]<-1 #Grupo Bronce
-clase[sal>=12&sal<16]<-2 #Grupo Plata
-clase[sal>=16]<-3 #Grupo Oro
+clase<-matrix(NA, ncol=2, nrow=length(sal))
+clase
+#creacion del primer grupo
+clase[sal<12,]<-matrix(rep(t(c(0,0)), sum(sal<12)), byrow=TRUE, ncol=2 )
+#Grupo Plata
+clase[sal>=12&sal<16,]<-matrix(rep(t(c(0,1)), sum(sal>=12&sal<16)), byrow=TRUE, ncol=2 )
+
+#Grupo Oro
+clase[sal>=16,]<-matrix(rep(t(c(1,1)), sum(sal>=16)), byrow=TRUE, ncol=2 )
+
+clase
 
 plot(com1$score[,1],com1$score[,2],pch=21,bg=c("red", "blue","green")[unclass(clase)])
 plot(com1$score[,1],com1$score[,3],pch=21,bg=c("red", "blue","green")[unclass(clase)])
@@ -65,7 +73,7 @@ library(AMORE)
 ## Creamos dos conjuntos de datos artificiales: ''P'' es el conjunto
 #de datos de entrada y ''target'' el de salida. con el 80% de los datos
 ######################
-target1<-matrix(c(clase[1:48]),ncol=1,byrow=TRUE)
+target1<-matrix(c(clase[1:48,]),ncol=2,byrow=TRUE)
 target1
 ##
 ## inicialmente con Comp1 Comp2 con el 80% de los datos
@@ -75,14 +83,14 @@ P1
 
 ## Creamos el objeto red neuronal feedforward
 ############################################
-net1 <- newff(n.neurons=c(2,3,1), learning.rate.global=1e-2, momentum.global=0.5,
+net1 <- newff(n.neurons=c(2,4,3,2), learning.rate.global=1e-2, momentum.global=0.5,
 error.criterium="LMS", Stao=NA, hidden.layer="sigmoid",
 output.layer="sigmoid", method="ADAPTgdwm")
 
 #############################
 ##Se entrena la red
 #######################
-result1 <- train(net1,P1 , target1, error.criterium="LMS", report=TRUE, show.step=10000, n.shows=5 )
+result1 <- train(net1,P1 , target1, error.criterium="LMS", report=TRUE, show.step=20000, n.shows=50 )
 
 
 ######################
@@ -90,6 +98,8 @@ result1 <- train(net1,P1 , target1, error.criterium="LMS", report=TRUE, show.ste
 ####
 s <- sim(result1$net, P1)
 s
+round(s)
+
 plot3d(P1,s, col=c("red", "blue","green")[unclass(clase[1:48])])
 
 x11()
@@ -103,10 +113,13 @@ plot(P1[,2],s,pch=21,bg=c("red", "blue","green")[unclass(clase[1:48])])
 # Validacion con el 20% restante
 ##############
 P_v <-matrix(c(com1$score[49:60,1],com1$score[49:60,2]),ncol=2,byrow=TRUE)
-target_v<-matrix(c(clase[49:60]),ncol=1,byrow=TRUE)
+target_v<-matrix(c(clase[49:60,]),ncol=2,byrow=TRUE)
 
 s <- sim(result1$net, P_v)
 s
+round(s)
+cbind(round(s),target_v)
+
 # se grafica
 plot3d(P_v,s, col=c("red", "blue","green")[unclass(clase[49:60])])
 

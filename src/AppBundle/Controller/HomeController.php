@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use UserBundle\Entity\Estudiante;
+use AppBundle\Entity\Curso;
 
 class HomeController extends Controller
 {
@@ -27,13 +28,20 @@ class HomeController extends Controller
             $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
             // Se encuentran las practicas de este estudiante
             $practicas = $em->getRepository('AppBundle:Practica')->findBy(array('estudiante' => $estudiante));
-            //Tema Actual
+            //Temas Actuales
             $temas = $em->getRepository('AppBundle:Tema')->findAll();
-
-
+            $curso = new Curso();
+            $curso->setTema($temas[0]);
+            $estudiante->addCurso($curso);
             //Progreso
 
+            $cursos = $estudiante->getCursos();
             //
+            dump($temas);
+            dump($curso);
+            dump($estudiante);
+            dump($cursos);
+
             $contenido = array(
                 'ejercicios' => 'ni idea',
                 'estudiante_id' => $estudiante->getId(),

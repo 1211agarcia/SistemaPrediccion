@@ -28,6 +28,8 @@ class Respuesta
      *
      * @Assert\NotNull(message="Debe ingresar Expresión")
      * @ORM\Column(name="expresion", type="string", length=255, nullable=false)
+     * @Assert\NotNull(message="Al parecer esta ingresado el expresion de la respuesta incorrecta")
+     * @Assert\NotBlank(message="Creo que olvido indicar el expresion de la respuesta")
      */
     private $expresion;
 

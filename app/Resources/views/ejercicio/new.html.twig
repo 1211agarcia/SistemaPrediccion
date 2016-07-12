@@ -1,5 +1,34 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form _self %}
+{% use 'form_div_layout.html.twig' with form_label %}
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) -%}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty %}
+            {% if label_format is not empty -%}
+                {% set label = label_format|replace({'%name%': name,'%id%': id,}) %}
+            {% else %}
+                {% set label = name|humanize %}
+            {% endif %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}><i class="fa fa-check-circle text-success" ng-show="isValid('{{ full_name }}')"></i>{{ label|trans({}, translation_domain) }}{% if required %}<span style="color:red" title="Este campo es requerido"> (*)</span>
+        {% endif %}
+        {% if 'history' in label_attr.class %}
+            <a data-toggle="modal" href="#{{historyUrl}}"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a>
+        {% endif %}
+        {% if 'help' in label_attr.class %}
+            <a data-toggle="modal" href="#{{helpUrl}}"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+        {% endif %} 
+        </label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
 {% block body %}
 <div ng-controller="newEjercicioController">
     <section class="content-header">
@@ -31,7 +60,7 @@
                         {{ form_errors(form.enunciado) }}
                         {{ form_widget(form.enunciado) }}
                     </div>
-                    <div class="form-group col-md-6 col-xs-12" ng-init="{% for i in form.respuestas %}addRespuesta('{{ i.expresion.vars.value}}','{{ i.correcta.vars.checked}}');{% endfor %}">
+                    <div class="form-group col-md-6 col-xs-12" ng-init="{% for i in form.respuestas %}addRespuesta(\"{{ i.expresion.vars.value|raw }}\",'{{ i.correcta.vars.checked}}');{% endfor %}">
                         {{ form_label(form.respuestas) }}
                         {{ form_errors(form.respuestas) }}
                         <p>Mínimo 4</p>
@@ -40,7 +69,8 @@
                                 <span class="input-group-addon">
                                     <input type="checkbox" id="[[ 'ejercicio_respuestas_'+$index+'_correcta' ]]" name="[['ejercicio[respuestas]['+$index+'][correcta]' ]]" value="1" ng-checked="isSelected([[$index]])" ng-click="selectAction([[$index]])" >
                                 </span>
-                                <span class="form-control">[[ respuesta.expresion ]]</span>
+                                <div ng-bind-html="[[ respuesta.expresion ]]" class="form-control"></div>
+
                                 <span class="input-group-btn">
                                     <a class="btn btn-default btn-flat" data-toggle="modal" data-target="#respuestaModal" ng-click="editAction([[$index]])"><i class="fa fa-edit text-yellow"></i></a>
                                 </span>
@@ -58,8 +88,8 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('ejercicio_show', { 'id': edition }) }}{% else %}{{ path('ejercicio_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
                     <button class="btn btn-primary btn-flat pull-right" type="submit" id="ejercicio_submit" name="ejercicio[submit]" ><i class='fa fa-save'></i>&nbsp;Guardar </button>
+                    <a class="btn btn-danger btn-flat pull-right" href="{% if edition is defined %}{{ path('ejercicio_show', { 'id': edition }) }}{% else %}{{ path('ejercicio_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
                 </div>
                 {{ form_row(form._token) }}
             {{ form_end(form, {'render_rest': false}) }}
@@ -98,25 +128,11 @@
     <script>
         $(function () {/*Initialize Select2 Elements*/$(".select2").select2();});
         var urlMath = "{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}";
-
-$("#ejercicio").validate({
-  ignore: 'input[type=hidden]',
-  rules:
-  {
-      ejercicio_tema: { required: true },
-      ejercicio_enunciado: { required: true }
-  },
-  errorPlacement: function (error, element) {
-      $(element).parent().addClass('has-error');
-  },
-  success: function (label, element) {
-      $(element).parent().removeClass('has-error');
-  },
-  submitHandler: function(form) {
-      alert("validation ok");
-  }
-});
     </script>
+    <script src="{{ asset('bundles/app/plugins/MathJax/MathJax.js?config=TeX-AMS_HTML') }}"></script>
+
+    <script src="{{ asset('bundles/app/angularjs/angular-sanitize.min.js')}}"></script>
+
     {% javascripts
         '@AppBundle/Resources/public/angularjs/newEjercicio/newEjercicioModule.js'
         '@AppBundle/Resources/public/angularjs/newEjercicio/newEjercicioController.js'%}

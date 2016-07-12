@@ -2,7 +2,7 @@ angular.isUndefinedOrNull = function(val) {
     return angular.isUndefined(val) || val === null || val === '';
 }
 
-var newEjercicio = angular.module('AppModule', ['chieffancypants.loadingBar']);
+var newEjercicio = angular.module('AppModule', ['chieffancypants.loadingBar','ngSanitize']);
 
 newEjercicio.directive('ckEditor', function() {
   console.log(urlMath);

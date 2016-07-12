@@ -37,6 +37,8 @@ class Ejercicio
      * @var int
      *
      * @ORM\Column(name="dificultad", type="integer")
+     * @Assert\NotNull(message="Al parecer esta ingresado la dificultad incorrecta")
+     * @Assert\NotBlank(message="Creo que olvido indicar la dificultad")
      */
     private $dificultad;
 
@@ -52,7 +54,7 @@ class Ejercicio
      *
      * @ORM\ManyToOne(targetEntity="Tema")
      * @ORM\JoinColumn(name="tema_id", referencedColumnName="id", unique=false)
-     * @Assert\NotNull(message="Debe seleccionar un tema valido")
+     * @Assert\NotNull(message="Debe seleccionar un tema incorrecto")
      * @Assert\NotBlank(message="Debe seleccionar un tema")
      */
     private $tema;
@@ -67,9 +69,9 @@ class Ejercicio
      *      )
      * @Assert\Valid
      * @Assert\Count(
-     *      min = "2",
+     *      min = "4",
      *      max = "50",
-     *      minMessage = "Debe tener al menos 2 respuesta",
+     *      minMessage = "Debe tener al menos {{ limit }} respuesta",
      *      maxMessage = "Sólo puede tener como maximo {{ limit }} respuestas"
      * )
      */
@@ -79,6 +81,8 @@ class Ejercicio
      * @var string
      *
      * @ORM\Column(name="enunciado", type="text")
+     * @Assert\NotNull(message="Al parecer esta ingresado el enunciado incorrecta")
+     * @Assert\NotBlank(message="Creo que olvido indicar el enunciado")
      */
     private $enunciado;
 

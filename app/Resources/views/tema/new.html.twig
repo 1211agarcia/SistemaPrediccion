@@ -1,4 +1,36 @@
 {% extends 'base.html.twig' %}
+{% form_theme form _self %}
+{% use 'form_div_layout.html.twig' with form_label %}
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) -%}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty %}
+            {% if label_format is not empty -%}
+                {% set label = label_format|replace({'%name%': name,'%id%': id,}) %}
+            {% else %}
+                {% set label = name|humanize %}
+            {% endif %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}><i class="fa fa-check-circle text-success" ng-show="isValid('{{ full_name }}')"></i>{{ label|trans({}, translation_domain) }}{% if required %}<span style="color:red" title="Este campo es requerido"> (*)</span>
+        {% endif %}
+        {% if 'history' in label_attr.class %}
+            <a data-toggle="modal" href="#{{historyUrl}}"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></a>
+        {% endif %}
+        {% if 'help' in label_attr.class %}
+            <a data-toggle="modal" href="#{{helpUrl}}"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+        {% endif %} 
+        </label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+
+
 {% block stylesheets %}
     {{ parent() }}
     <!-- Select2 -->
@@ -25,8 +57,8 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-danger btn-flat" href="{% if edition is defined %}{{ path('tema_show', { 'id': edition }) }}{% else %}{{ path('tema_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
-                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="tema_submit" name="tema[submit]"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+                    <button class="btn btn-primary btn-flat pull-right" type="submit" id="tema_submit" name="tema[submit]"><i class="fa fa-save"></i>&nbsp;Guardar</button><a class="btn btn-danger btn-flat pull-right" href="{% if edition is defined %}{{ path('tema_show', { 'id': edition }) }}{% else %}{{ path('tema_index') }}{% endif %}"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                    
                 </div>
                 {{ form_row(form._token) }}
             {{ form_end(form, {'render_rest': false}) }}

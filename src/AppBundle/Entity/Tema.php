@@ -29,6 +29,8 @@ class Tema
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=255, unique=true)
+     * @Assert\NotNull(message="Al parecer esta ingresado el nombre incorrecta")
+     * @Assert\NotBlank(message="Creo que olvido indicar el nombre")
      */
     private $nombre;
     
@@ -36,6 +38,8 @@ class Tema
      * @var string
      *
      * @ORM\Column(name="descripcion", type="text")
+     * @Assert\NotNull(message="Al parecer esta ingresado una descripción incorrecta")
+     * @Assert\NotBlank(message="Creo que olvido indicar la descripción")
      */
     private $descripcion;
 

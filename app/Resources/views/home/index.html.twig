@@ -41,72 +41,59 @@
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>{{ contenido['temas'] }}</h3>
-
-              <p>{{ contenido['temas_titulo'] }}</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-ios-book-outline"></i>
-            </div>
-            <a href="{{ path('tema_index')}}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ path('tema_index')}}" class="small-box-footer">
+              <div class="inner">
+                <h3>{{ contenido['temas'] }}</h3>
+                <p>{{ contenido['temas_titulo'] }}</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-ios-book-outline"></i>
+              </div>
+              Ir</a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
-            <div class="inner">
-              <h3>{{ contenido['ejercicios'] }}{#<sup style="font-size: 20px">%</sup>#}</h3>
-
-              <p>Ejercicios agregados</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-edit"></i>
-            </div>
-            <a href="{{ path('ejercicio_index')}}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ path('ejercicio_index')}}" class="small-box-footer">
+              <div class="inner">
+                <h3>{{ contenido['ejercicios'] }}{#<sup style="font-size: 20px">%</sup>#}</h3>
+                <p>Ejercicios agregados</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-edit"></i>
+              </div>
+            Ir</a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{ contenido['estudiantes'] }}</h3>
-
-              <p>{{ contenido['estudiantes_titulo'] }}</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-            <a href="{% if is_granted('ROLE_ESTUDIANTE') %}
-              {{ path('estudiante_show', { 'id': contenido['estudiante_id'] }) }}
-            {% else %}
-              {{ path('estudiante_index')}}
-            {% endif %}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="{{ path('estudiante_index')}}" class="small-box-footer">
+              <div class="inner">
+                <h3>{{ contenido['estudiantes'] }}</h3>
+                <p>{{ contenido['estudiantes_titulo'] }}</p>
+              </div>
+              <div class="icon"><i class="ion ion-person"></i></div>
+              Ir </a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-red">
+            <a href="{{ path('practica_index')}}" class="small-box-footer">
             <div class="inner">
               <h3>{{ contenido['practicas'] }}</h3>
-
               <p>{{ contenido['practicas_titulo'] }}</p>
             </div>
-            <div class="icon">
-              <i class="ion ion-ribbon-a"></i>
-            </div>
-            <a href="{{ path('practica_index')}}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+            <div class="icon"><i class="ion ion-ribbon-a"></i></div>
+            Ir</a>
           </div>
         </div>
         <!-- ./col -->
-        {% if is_granted('ROLE_ESTUDIANTE') %}
-          <div class="col-xs-12" style="text-align: center;">
-            <a href="{{ path('practica_generate')}}" class="btn btn-app"><i style="color: green;"class="fa fa-play"></i> Practicar</a>
-          </div>
-        {% endif %}
       </div>
     </section>
 

@@ -230,6 +230,7 @@ class Estudiante
         //parent::__construct();
         $this->verificado = false;//SIN_VERIFICAR;
         $this->practicas = new ArrayCollection();
+        $this->cursos = new ArrayCollection();
     }
 
     public function prediction_format_file()
@@ -751,5 +752,38 @@ class Estudiante
     public function getPracticas()
     {
         return $this->practicas;
+    }
+
+    /**
+     * Add cursos
+     *
+     * @param \AppBundle\Entity\Curso $cursos
+     * @return Estudiante
+     */
+    public function addCurso(\AppBundle\Entity\Curso $cursos)
+    {
+        $this->cursos[] = $cursos;
+
+        return $this;
+    }
+
+    /**
+     * Remove cursos
+     *
+     * @param \AppBundle\Entity\Curso $cursos
+     */
+    public function removeCurso(\AppBundle\Entity\Curso $cursos)
+    {
+        $this->cursos->removeElement($cursos);
+    }
+
+    /**
+     * Get cursos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCursos()
+    {
+        return $this->cursos;
     }
 }
