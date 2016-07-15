@@ -15,6 +15,7 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request)
     {
+
         if(!$this->getUser())
         {
             return $this->redirectToRoute('fos_user_security_login');
@@ -34,6 +35,12 @@ class HomeController extends Controller
             $curso->setTema($temas[0]);
             $estudiante->addCurso($curso);
             //Progreso
+
+            
+            $this->forward('app.jarvis:predictionAction', array('estudiante' => $estudiante));
+
+
+
 
             $cursos = $estudiante->getCursos();
             //

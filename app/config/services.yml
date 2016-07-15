@@ -15,7 +15,7 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
     app.jarvis:
-        class: AppBundle\Jarvis
+        class: AppBundle\Controller\JarvisController
 
 #    service_name:
 #        class: AppBundle\Directory\ClassName
