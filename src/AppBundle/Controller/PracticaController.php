@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Practica;
+use AppBundle\Entity\Tema;
 use AppBundle\Entity\Ejercicio;
 use UserBundle\Entity\Estudiante;
 use AppBundle\Form\PracticaType;
@@ -50,13 +51,19 @@ class PracticaController extends Controller
      * Generate a new Practica entity.
      *
      * @Route("/generate", name="practica_generate")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      */
-    public function generateAction()
+    public function generateAction(Tema $tema=null)
     {
         if($this->isGranted('ROLE_ESTUDIANTE'))
         {
+            $em = $this->getDoctrine()->getManager();
+            $estudiante = new Estudiante();
+            $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
             //SI aca se debe preguntar si el estudiante tiene una practica comenzada
+            if (count($estudiante->getPracticas())>0 && $estudiante->getPracticas()[count($estudiante->getPracticas())-1]->getFinalizada()) {
+                return $this->redirectToRoute('practica_start', array('id'=>$estudiante->getPracticas()[count($estudiante->getPracticas())-1]->getId()));
+            }
             //Entonces se 
             //
             /*************************
@@ -69,7 +76,7 @@ class PracticaController extends Controller
              * EJERCICIO             *
              ************************/
 
-            $em = $this->getDoctrine()->getManager();
+            
             $limit = 4; //es el limite de ejrcicios que tendra la practica
             $dificultad_min = 0;
             $dificultad_max = 5;
@@ -111,8 +118,6 @@ class PracticaController extends Controller
                                 'seleccion' => null);
             }
             $practica->setData($data);
-            $estudiante = new Estudiante();
-            $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
             $practica->setEstudiante($estudiante);
             //Se guarda la practica
             $em->persist($practica);

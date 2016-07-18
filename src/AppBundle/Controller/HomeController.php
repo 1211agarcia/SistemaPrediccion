@@ -37,7 +37,7 @@ class HomeController extends Controller
             //Progreso
 
             
-            $this->forward('app.jarvis:predictionAction', array('estudiante' => $estudiante));
+            //$this->forward('app.jarvis:predictionAction', array('estudiante' => $estudiante));
 
 
 
