@@ -126,7 +126,7 @@ class PracticaController extends Controller
     /**
      * Finds and displays a Practica entity.
      *
-     * @Route("/{id}", name="practica_show")
+     * @Route("/{id}", name="practica_show",options={"expose"=true})
      * @Method("GET")
      */
     public function showAction(Practica $practica)

@@ -1,5 +1,5 @@
 ##########################################################
-PCA con variables CONTINUAS
+# PCA con variables CONTINUAS
 #########################################################
 
 #se cargan los datos colocando como parametros que los decimales seran separados por un ","

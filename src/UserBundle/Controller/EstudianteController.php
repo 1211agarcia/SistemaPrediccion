@@ -138,11 +138,17 @@ class EstudianteController extends BaseController
     public function showAction(Estudiante $estudiante)
     {
         $verifyForm = $this->createVerificationForm($estudiante);
-        /*$verifyForm = $this->createForm('UserBundle\Form\EstudianteVerifyType', $estudiante,
-            array('action' => $this->generateUrl('estudiante_verification', array('id' => $estudiante->getId()))));
-        $verifyForm->add('submit', 'submit');*/
-
+        $practicas = array();
+        dump($estudiante->getPracticas()->toArray()[0]->getData()[0]['ejercicio']->getTema()->getNombre());
+        foreach ($estudiante->getPracticas()->toArray() as $key => $item) {
+            $practicas[$key]['id'] = $item->getId();
+            $practicas[$key]['fecha'] = $item->getInicio();
+            $practicas[$key]['calificacion'] = $item->getCalificacion();
+            $practicas[$key]['tema'] = $item->getData()[0]['ejercicio']->getTema()->getNombre();
+            $practicas[$key]['dificultad'] = $item->getData()[0]['ejercicio']->getDificultadString();
+        }
         return $this->render('estudiante/show.html.twig', array(
+            'practicas' => $practicas,
             'verify_form' => $verifyForm->createView(),
             'estudiante' => $estudiante,
             'CONST'=> array(

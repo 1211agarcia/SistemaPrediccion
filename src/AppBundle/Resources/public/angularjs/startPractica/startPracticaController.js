@@ -24,8 +24,12 @@ startPractica.controller('startPracticaController', function ($scope, $http, $wi
         id_practica: $scope.ejercicio.id_practica,
         seleccion: -1//indice que apunta a la respuesta seleccionada como correcta
     };console.log("evaluacion",$scope.evaluacion);
+    $scope.selectAction = function(position) {
+        $scope.opciones[position].checked = true;
+        $scope.updateSelection(position);
+    }
     $scope.updateSelection = function(position) {
-        $scope.evaluacion.seleccion = position;
+        $scope.evaluacion.seleccion = parseInt(position);
         angular.forEach($scope.opciones,
             function(subscription, index) {
                 if (position != index) 

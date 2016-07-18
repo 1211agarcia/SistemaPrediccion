@@ -19,10 +19,10 @@
                     <div ng-bind-html="ejercicio.enunciado">
                     </div>
                     <ul class="list-group">
-                        <li class="list-group-item col-md-6 col-xs-12" data-ng-repeat="respuesta in ejercicio.respuestas">
+                        <li ng-class="{ 'bg-yellow': opciones[$index].checked }" class="list-group-item col-md-6 col-xs-12" data-ng-repeat="respuesta in ejercicio.respuestas" style="cursor:pointer;" ng-click="selectAction([[$index]])">
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <input ng-disabled="evaluando" type="checkbox" id="ejercicio_respuestas_[[$index]]_correcta" value="1" ng-model="opciones[$index].checked" ng-click="updateSelection($index, opciones)" >
+                                    <input style="cursor:pointer;" ng-disabled="evaluando" type="checkbox" id="ejercicio_respuestas_[[$index]]_correcta" value="1" ng-model="opciones[$index].checked" ng-click="updateSelection($index)" >
                                 </span>
                                 <div ng-bind-html="[[ ejercicio.respuestas[$index] ]]" class="form-control">[[ respuesta]] {#[[respuesta.expresion ]]#}</div>
                             </div>
@@ -36,45 +36,29 @@
                     <h4><i class="icon fa fa-close"></i> Incorrecto!</h4>
                 </div>
                 <div ng-show="finalizado" class="col-lg-3 col-xs-6">
-                    <div class="small-box bg-yellow">
-                        <div class="inner">
-                            <h3>Inicio</h3>
-                            <p></p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-home"></i>
-                        </div>
-                        <a href="{{ path('homepage') }}" class="small-box-footer">Ir <i class="fa fa-arrow-circle-right"></i></a>
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="ion ion-checkmark"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Aciertos</span>
+                            <span class="info-box-number">[[ aciertos ]]</span>
+                        </div><!-- /.info-box-content -->
                     </div>
                 </div>
                 <div ng-show="finalizado" class="col-lg-3 col-xs-6">
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>[[ aciertos ]]</h3>
-                            <p>Aciertos</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                    </div>
-                </div>
-                <div ng-show="finalizado" class="col-lg-3 col-xs-6">
-                    <div class="small-box bg-blue">
-                        <div class="inner">
-                            <h3>[[ aciertos * 100 /4 ]]<sup style="font-size: 20px">%</sup></h3>
-                            <p>Puntuación</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
+                    <div class="info-box">
+                        <span class="info-box-icon bg-blue"><i class="ion ion-star"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Puntuación</span>
+                            <span class="info-box-number">[[ aciertos * 100 / 4 ]]%</span>
+                        </div><!-- /.info-box-content -->
                     </div>
                 </div>
             </div>
             <div class="box-footer" style="text-align: center;">
+                <a ng-if="!finalizado" class="btn btn-danger" href="{{ path('homepage') }}"><i class="fa fa-pause"></i>&nbsp;Continuar luego</a>
                 <button ng-hide="finalizado || correcto || incorrecto" class="btn btn-success" ng-disabled="isValid()" ng-click="evaluar()">
                     [[ titulo_boton ]]</button>
                 <button ng-show="!finalizado && (correcto || incorrecto)" id="practica_submit" class="btn btn-success" ng-click="siguiente()">[[ titulo_boton2 ]]</button>
-                
             </div>
         </div>
     </section>

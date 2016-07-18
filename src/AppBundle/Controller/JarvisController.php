@@ -50,6 +50,7 @@ class JarvisController extends Controller
         //file_put_contents("data.txt", shell_exec("Rscript inicio.R"));
         dump(json_encode($estudiante->prediction_format_file()));
         $vector = json_encode($estudiante->prediction_format_file());
+        dump(shell_exec("Rscript PCA_DATOS_CONTINUOS.r"));
         dump(shell_exec("Rscript prediccion.r $vector"));
 
         echo "inicio...";

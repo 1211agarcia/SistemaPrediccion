@@ -10,7 +10,7 @@
             <div class="box-body">
             <div class="form-group col-xs-12">
                 <h4 class="col-md-4 col-sm-6"><i class="fa fa-mortar-board"></i> Estudiante <a href="{{ path('estudiante_show', {'id': practica.estudiante.id }) }}">{{ practica.estudiante.usuario.username }}</a></h4>
-                <h4 class="col-md-4 col-sm-6"><i class="fa fa-check"></i> Aciertos <small class="label label-default">{{ practica.calificacion }}%</small></h4>
+                <h4 class="col-md-4 col-sm-6"><i class="fa fa-check"></i> Puntuación <small class="label label-default">{{ practica.calificacion }}%</small></h4>
                 <h4 class="col-md-4 col-sm-6"><i class="fa fa-clock-o"></i> Duración <small class="label label-default"> {{ date(practica.inicio |date ).diff(date(practica.fin | date )).format('%i') }} minutos</small></h4>
                 <h4 class="col-md-4 col-sm-6">Dificultad <small class="label label-default">{{ practica.data[0]['ejercicio'].dificultadString }}</small></h4>
                 <h4 class="col-md-5 col-sm-12"><i class="fa fa-book"></i> Tema <a href="{{ path('tema_show', {'id': practica.data[0]['ejercicio'].tema.id }) }}">{{ practica.data[0]['ejercicio'].tema.nombre }}</a></h4>
@@ -21,15 +21,12 @@
                             {{ item['ejercicio'].enunciado|raw }}
                         </div>
                         <ul class="list-group">
+                            
                             {% for opcion in item['ejercicio'].respuestas %}
-                                <li class="list-group-item col-md-6 col-xs-12">
+                                <li class="list-group-item col-md-6 col-xs-12" style="border-color:{% if opcion.correcta %}#00a65a;{% elseif not item['seleccion'] is empty and loop.index0 == item['seleccion'] %}red;{% endif %}margin-bottom:0px;">
                                     <div class="input-group">
-                                        {% if opcion.correcta %}
-                                            <span title="Respuesta correcta" class="bg-green color-palette input-group-addon">
-                                        {% else %}
-                                            <span title="Respuesta incorrecta" class="bg-red color-palette input-group-addon">
-                                        {% endif %}
-                                            <i class="fa {% if not item['seleccion'] is empty and loop.index0 == item['seleccion'] %}fa-check-square-o{% else %}fa-square-o{% endif %}"></i>
+                                        <span style="border-color:#fff;padding:0px;"title="Respuesta {% if opcion.correcta %}correcta{% else %}incorrecta{% endif %}" class="input-group-addon">
+                                            <i class="fa {% if not item['seleccion'] is empty and loop.index0 == item['seleccion'] %}fa-check-square-o{% else %}fa-square-o{% endif %} fa-3x"></i>
                                         </span>
                                         <span class="form-control">{{ opcion.expresion|raw }}[[ respuesta.expresion ]]</span>
                                     </div>
