@@ -61,8 +61,8 @@ class PracticaController extends Controller
             $estudiante = new Estudiante();
             $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
             //SI aca se debe preguntar si el estudiante tiene una practica comenzada
-            if (count($estudiante->getPracticas())>0 && $estudiante->getPracticas()[count($estudiante->getPracticas())-1]->getFinalizada()) {
-                return $this->redirectToRoute('practica_start', array('id'=>$estudiante->getPracticas()[count($estudiante->getPracticas())-1]->getId()));
+            if (count($estudiante->getPracticas()->toArray())>0 && !$estudiante->getPracticas()->toArray()[count($estudiante->getPracticas()->toArray())-1]->getFinalizada()) {
+                return $this->redirectToRoute('practica_start', array('id'=>$estudiante->getPracticas()->toArray()[count($estudiante->getPracticas()->toArray())-1]->getId()));
             }
             //Entonces se 
             //
@@ -158,7 +158,7 @@ class PracticaController extends Controller
         $encontrado = false;
         while(!$encontrado && $i < count($practica->getData()) ) {
             $i++;
-            $encontrado = ($practica->getData()[$i]['seleccion'] == null);
+            $encontrado = ($practica->getData()[$i]['seleccion'] === null);
         }
         $caracter_especial = array("\\","\"","\'");
         $caracter_auxiliar = array("__X__","&quot;","__S__");

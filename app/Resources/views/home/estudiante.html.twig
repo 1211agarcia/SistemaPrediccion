@@ -7,40 +7,65 @@
 
   <section class="content-header">
       <h1>
-        Dashboard
-        <small>Control panel</small>
+        Hola {{ estudiante.nombre }}
+        <small>Control panel</small> 
       </h1>
+      <h4>Bienvenido a este, Tu sistema de ejercitamineto personalizado, para la mejora de tus habilidades en las matematicas</h4>
   </section>
 
     <!-- Main content -->
+    
+    <section class="content col-lg-8 col-md-8">
+        <div class="box box-primary">
+            <div class="box-header"><h4>Arbol Tematico</h4></div>
+            <div class="box-body" style="overflow:auto;">
+                <svg id="svg-canvas" width="100%" height="600"></svg>
+            </div>
+        </div>
+    </section>
     <section class="content col-md-3">
-      <!-- Small boxes (Stat box) -->
       <div class="row">
+        <div class="col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-blue"><i class="ion ion-stats-bars"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Progreso total</span>
+              <span class="info-box-number">aqui va algo</span>
+            </div><!-- /.info-box-content -->
+          </div><!-- /.info-box -->
+        </div>
+        <div class="col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ribbon-a"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Practicas<br>Realizadas</span>
+              <span class="info-box-number">{{ estudiante.practicas|length }}</span>
+            </div><!-- /.info-box-content -->
+          </div><!-- /.info-box -->
+        </div>
+        <div class="col-xs-12">
+          <div class="box box-primary">
+          <div class="box-body">
+            <h4 class="text-center">Top 10 en Progreso</h4>
+            <ul class="list-group list-group-unbordered">
+              {% for item in estudiantes %}
+              <li class="list-group-item"><b>{{item.usuario.username}}</b> <a class="pull-right">1,322</a></li>
+              {% endfor %}
+            </ul>
+            <a href="{{ path('practica_generate') }}" class=" bg-red btn btn-block"><b><i class="ion ion-play"></i> Practicar</b></a>
+          </div></div>
+        </div>
         <!-- ./col -->
         <div class="col-xs-12">
           <!-- small box -->
           <div class="small-box bg-yellow">
-            <a href="{{ path('estudiante_show', { 'id': contenido['estudiante_id'] }) }}" class="small-box-footer">
+            <a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}" class="small-box-footer">
             <div class="inner">
-              <h3>{{ contenido['estudiantes'] }}</h3>
+              <h3>Perfil</h3>
               <p>Mi Perfil</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person"></i>
-            </div>
-              <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <div class="col-xs-12">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <a href="{{ path('practica_generate') }}" class="small-box-footer">
-            <div class="inner">
-              <h3>Practicar</h3>
-              <p>Realizar nueva</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-play"></i>
+              <i class="ion ion-university"></i>
             </div>
               <i class="fa fa-arrow-circle-right"></i></a>
           </div>
@@ -48,35 +73,6 @@
         <!-- ./col -->
       </div>
     </section>
-    <section class="content col-lg-8 col-md-8">
-      <div class="row">
-        
-      <div class="col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="ion ion-ribbon-a"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">Practicas Realizadas</span>
-            <span class="info-box-number">{{ contenido['practicas'] }}</span>
-          </div><!-- /.info-box-content -->
-        </div><!-- /.info-box -->
-      </div>
-      <div class="col-sm-6 col-xs-12">
-        <div class="info-box">
-          <span class="info-box-icon bg-blue"><i class="ion ion-stats-bars"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">Progreso total</span>
-            <span class="info-box-number">aqui va algo</span>
-          </div><!-- /.info-box-content -->
-        </div><!-- /.info-box -->
-      </div>
-      </div>
-      <div class="box box-primary">
-            <div class="box-body" style="overflow:auto;">
-                <svg id="svg-canvas" width="960" height="600"></svg>
-            </div>
-        </div>
-    </section>
-
     {% endblock %}
 {% block javascripts %}
     {{ parent() }}
@@ -92,7 +88,7 @@
         // Here we"re setting nodeclass, which is used by our custom drawNodes function
         // below.
         {% for tema in temas %}
-            g.setNode({{ tema.id }},  { labelType:"html", label: "<a href=\"{{ path('tema_show', { 'id': tema.id }) }}\">{{tema}}</a>", class: "type-TOP" });
+            g.setNode({{ tema.id }},  { labelType:"html", label: "<a href=\"{{ path('tema_show', { 'id': tema.id }) }}\" class=\"btn btn-primary\"><span>{{tema}}</span></a>", class: "type-TOP" });
         {% endfor %}
         
         g.nodes().forEach(function(v) {
@@ -118,6 +114,7 @@
         // Run the renderer. This is what draws the final graph.
         render(d3.select("svg g"), g);
 
+        svg.attr("width", 900);
         // Center the graph
         var xCenterOffset = (svg.attr("width") - g.graph().width) / 2;
         svgGroup.attr("transform", "translate(" + xCenterOffset + ", 20)");
