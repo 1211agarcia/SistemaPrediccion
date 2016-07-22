@@ -2,14 +2,14 @@
 
 
 #se cargan los datos colocando como parametros que los decimales seran separados por un ","
-data <- read.table("datos.txt",header=TRUE,dec=",")
+data <- read.table("nuevos_datos.txt",header=TRUE,dec=",")
 data
 #Nombre de columnas a ignorar para este experimento, calclulo de ignora pues es la salida deseada
 drops <- c("cant_mats","segunda_opc","Gestion_Plantel","Tipo_Plantel","Nivel_Socioeconomico","Estudio_Padres","primera_opc","opsu")
 #se descarta Cant_cats por tener correlacion poco significativa
 data <- data[ , !(names(data) %in% drops)]
 data
-y <- data[,6]
+y <- data[,7]
 y
 x <- data[,1:5]
 x

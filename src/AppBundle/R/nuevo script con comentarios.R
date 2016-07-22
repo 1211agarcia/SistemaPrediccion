@@ -1,5 +1,5 @@
 #se cargan los datos colocando como parametros que los decimales seran separados por un ","
-y<-read.table("datos.txt",header=TRUE,dec=",")
+y<-read.table("nuevos_datos.txt",header=TRUE,dec=",")
 y
 #Se realiza el Analisis de de Componentes Principales usando la matriz de Covarianza #
 com1<-princomp(y[,1:13],cor=F)
