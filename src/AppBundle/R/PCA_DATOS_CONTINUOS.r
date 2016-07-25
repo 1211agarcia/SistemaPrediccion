@@ -2,6 +2,11 @@
 # PCA con variables CONTINUAS
 #########################################################
 
+source("PCAfunction.r")
+graphics.off()
+library(rgl)
+
+
 #se cargan los datos colocando como parametros que los decimales seran separados por un ","
 data <- read.table("datos.txt",header=TRUE,dec=",")
 data
@@ -13,13 +18,12 @@ y
 
 
 #Se realiza el Analisis de de Componentes Principales usando la matriz de Covarianza #
-indice<-sample(1:nrow(y),48)
-#indice<-c(26 , 9 36 30  7 53 13  2 57 11 24 45 34 37 59 43 23 56 32 41 47 18 39 49 17 44  5 33 38 42 12 46 16 58 19 40  1 14 15 54 35  6 55 20  3  4 22 31)
+indice<-sample(1:nrow(y),85)
+#indice<-c(77,67,66,37,27,59,75,120,65,90,83,24,114,116,100,29,5,18,19,96,106,121,11,36,44,80,6,4,105,63,73,51,78,86,48,58,32,98,61,23,41,71,49,3,72,56,54,47,79,22,101,115,85,15,107,40,119,46,93,84,69,112,26,30,118,95,13,117,21,111,82,9487,60,1,7,12,45,25,9,91,81,8,62,16,20,88)
 ytrain<-y[indice,1:5]
 ytest<-y[-indice,]
 
 #Analisis de Correlacion de lso datos
-cor(ytrain)
 
 comp_1 <-princomp(ytrain,cor=F)
 #Seleccionar cuantas o cuales componentes

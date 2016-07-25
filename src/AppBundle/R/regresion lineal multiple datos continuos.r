@@ -2,33 +2,51 @@
 
 
 #se cargan los datos colocando como parametros que los decimales seran separados por un ","
-data <- read.table("datos.txt",header=TRUE,dec=",")
+data <- read.table("muestra_real.txt",header=TRUE)
 data
-#Nombre de columnas a ignorar para este experimento, calclulo de ignora pues es la salida deseada
-drops <- c("cant_mats","segunda_opc","Gestion_Plantel","Tipo_Plantel","Nivel_Socioeconomico","Estudio_Padres","primera_opc","opsu")
+#Nombre de columnas a ignorar para este experimento, calculo de ignora pues es la salida deseada
+drops <- c("cant_mat","opsu","gestion_plantel","tipo_plantel","nivel_socioeco","nivel_estudios_padres","genero","escuela")
 #se descarta Cant_cats por tener correlacion poco significativa
 data <- data[ , !(names(data) %in% drops)]
 data
-y <- data[,6]
-y
-x <- data[,1:5]
-x
-fit <- lm(y ~ x[,1] + x[,2] + x[,3] + x[,4] + x[,5])
+pairs(data)
 
-summary(fit)
+cor(data)
+
+matematica_1 <- data[,1]
+matematica_2 <- data[,2]
+matematica_3 <- data[,3]
+matematica_4 <- data[,4]
+promedio <- data[,5]
+calculo_1 <- data[,6]
+x11()
+par(mfrow=c(1,2))
+plot(calculo_1,matematica_1)
+plot(calculo_1,matematica_2)
+x11()
+par(mfrow=c(1,2))
+plot(calculo_1,matematica_3)
+plot(calculo_1,matematica_4)
+x11()
+par(mfrow=c(1,1))
+plot(calculo_1,promedio)
+
+mod1 <- lm(calculo_1 ~ x[,1] + x[,2] + x[,3] + x[,4] + x[,5])
+
+summary(mod1)
 
 # Other useful functions 
-coefficients(fit) # model coefficients
-confint(fit, level=0.95) # CIs for model parameters 
-fitted(fit) # predicted values
-residuals(fit) # residuals
-anova(fit) # anova table 
-vcov(fit) # covariance matrix for model parameters 
-influence(fit) # regression diagnostics
+coefficients(mod1) # model coefficients
+confint(mod1, level=0.95) # CIs for model parameters 
+fitted(mod1) # predicted values
+residuals(mod1) # residuals
+anova(mod1) # anova table 
+vcov(mod1) # covariance matrix for model parameters 
+influence(mod1) # regression diagnostics
 
 # diagnostic plots 
 layout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page 
-plot(fit)
+plot(mod1)
 
-ECM <- mean(residuals(fit)^2)
+ECM <- mean(residuals(mod1)^2)
 ECM
