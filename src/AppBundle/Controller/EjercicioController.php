@@ -49,9 +49,9 @@ class EjercicioController extends Controller
             array('action' => $this->generateUrl('ejercicio_new')));
         $form->add('submit', 'submit');
         $form->handleRequest($request);
-        dump($ejercicio);
-        dump($form->getErrors(true));
-        dump($form->getErrors());
+        //dump($ejercicio);
+        //dump($form->getErrors(true));
+        //dump($form->getErrors());
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($ejercicio);
@@ -63,6 +63,7 @@ class EjercicioController extends Controller
         return $this->render('ejercicio/new.html.twig', array(
             'ejercicio' => $ejercicio,
             'form' => $form->createView(),
+            'response' => $this->createRespuestasJSON($ejercicio),
         ));
     }
 
@@ -104,6 +105,7 @@ class EjercicioController extends Controller
         }
 
         return $this->render('ejercicio/new.html.twig', array(
+            'response' => $this->createRespuestasJSON($ejercicio),
             'ejercicio' => $ejercicio,
             'form' => $editForm->createView(),
             'edition'=>$ejercicio->getId()
@@ -144,5 +146,21 @@ class EjercicioController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+
+    private function createRespuestasJSON(Ejercicio $ejercicio)
+    {
+        $caracter_especial = array("\\","\"","\'");
+        $caracter_auxiliar = array("__X__","&quot;","__S__");
+
+        $respuestas_json = array();
+        foreach ($ejercicio->getRespuestas() as $key => $value) {
+            array_push($respuestas_json,
+                str_replace($caracter_especial,$caracter_auxiliar, $value->getExpresion()));
+        }
+        $respuestas_json = json_encode($respuestas_json);
+        dump($respuestas_json);
+        return $respuestas_json;
     }
 }

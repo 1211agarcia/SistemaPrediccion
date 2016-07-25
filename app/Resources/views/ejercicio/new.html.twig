@@ -60,7 +60,7 @@
                         {{ form_errors(form.enunciado) }}
                         {{ form_widget(form.enunciado) }}
                     </div>
-                    <div class="form-group col-md-6 col-xs-12" ng-init="{% for i in form.respuestas %}addRespuesta(\"{{ i.expresion.vars.value|raw }}\",'{{ i.correcta.vars.checked}}');{% endfor %}">
+                    <div class="form-group col-md-6 col-xs-12">
                         {{ form_label(form.respuestas) }}
                         {{ form_errors(form.respuestas) }}
                         <p>Mínimo 4</p>
@@ -69,7 +69,7 @@
                                 <span class="input-group-addon">
                                     <input type="checkbox" id="[[ 'ejercicio_respuestas_'+$index+'_correcta' ]]" name="[['ejercicio[respuestas]['+$index+'][correcta]' ]]" value="1" ng-checked="isSelected([[$index]])" ng-click="selectAction([[$index]])" >
                                 </span>
-                                <div ng-bind-html="[[ respuesta.expresion ]]" class="form-control"></div>
+                                <div ng-bind-html="[[ respuestas[$index] ]]" class="form-control"></div>
 
                                 <span class="input-group-btn">
                                     <a class="btn btn-default btn-flat" data-toggle="modal" data-target="#respuestaModal" ng-click="editAction([[$index]])"><i class="fa fa-edit text-yellow"></i></a>
@@ -122,6 +122,14 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script type="text/javascript">
+        var response = "{{ response }}";
+        var div = document.createElement('div');
+        div.innerHTML = response;
+        response = div.firstChild.nodeValue;
+        response = JSON.parse(response);
+        console.log("response",response);
+    </script>
     <script src="{{asset('bundles/app/plugins/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ asset('bundles/app/plugins/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('bundles/app/plugins/jQuery/jquery.validate.min.js') }}"></script>

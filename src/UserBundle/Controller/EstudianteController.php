@@ -139,7 +139,7 @@ class EstudianteController extends BaseController
     {
         $verifyForm = $this->createVerificationForm($estudiante);
         $practicas = array();
-        dump($estudiante->getPracticas()->toArray()[0]->getData()[0]['ejercicio']->getTema()->getNombre());
+        //dump($estudiante->getPracticas()->toArray()[0]->getData()[0]['ejercicio']->getTema()->getNombre());
         foreach ($estudiante->getPracticas()->toArray() as $key => $item) {
             $practicas[$key]['id'] = $item->getId();
             $practicas[$key]['fecha'] = $item->getInicio();

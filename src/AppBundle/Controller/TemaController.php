@@ -47,7 +47,7 @@ class TemaController extends Controller
             array('action' => $this->generateUrl('tema_new')));
         $form->add('submit', 'submit');
             
-dump($tema);
+//dump($tema);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

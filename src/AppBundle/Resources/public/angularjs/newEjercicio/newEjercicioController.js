@@ -9,8 +9,12 @@ newEjercicio.controller('newEjercicioController', function ($scope) {
     $scope.indexSelected = -1;
     //$scope.respuestaExpresion = "";
     //$scope.formData.tema_respuestas = [];
-    $scope.respuestas = [];
-
+    $scope.respuestas = response;
+    for (var i = 0; i < $scope.respuestas.length; i++) {
+        $scope.respuestas[i] = $scope.respuestas[i].replace(/__X__/g, "\\");
+        $scope.respuestas[i] = $scope.respuestas[i].replace(/&quot;/g, "\"");
+        $scope.respuestas[i] = $scope.respuestas[i].replace(/__S__/g, "\'");
+    };
     $scope.invalidRespuestaFunc = function () {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         $scope.invalidRespuesta = (angular.isUndefinedOrNull($scope.respuestaExpresion));

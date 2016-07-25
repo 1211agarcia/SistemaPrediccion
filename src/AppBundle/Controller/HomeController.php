@@ -27,7 +27,7 @@ class HomeController extends Controller
             $estudiante = new Estudiante();
             //Se obtiene el Estudiante
             $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
-            $estudiantes = array_slice($em->getRepository('UserBundle:Estudiante')->findAll(),0,10);
+            $estudiantes = array_slice($em->getRepository('UserBundle:Estudiante')->findAll(),0,5);
             // Se encuentran las practicas de este estudiante
             $practicas = $em->getRepository('AppBundle:Practica')->findBy(array('estudiante' => $estudiante));
             //Temas Actuales
@@ -45,10 +45,10 @@ class HomeController extends Controller
 
             $cursos = $estudiante->getCursos();
             //
-            dump($temas);
+            /*dump($temas);
             dump($curso);
             dump($estudiante);
-            dump($cursos);
+            dump($cursos);*/
 
             return $this->render('home/estudiante.html.twig', array(
                 'estudiante' => $estudiante,
