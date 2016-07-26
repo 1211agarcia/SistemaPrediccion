@@ -121,3 +121,5 @@ mat_1	mat_2	mat_3	mat_4	promedio	cant_mat	cal_1	gestion_plantel	tipo_plantel	niv
 19	17	18	19	19	40	8	publico	ciencias_basicas	estudio_universitario_completo_estudios_de_posgrado	medio	biologia	masculino	si
 14	14	16	16	17.35	36	12	privado	ciencias_basicas	estudio_universitario_completo_estudios_de_posgrado	medio	computacion	femenino	no
 17	18	19	18	18.6	44	8	publico	ciencias_basicas	estudio_universitario_completo_estudios_de_posgrado	medio	computacion	femenino	si
+14	15	18	18	17.37	17	3	privado	ciencias_basicas	escuela_secundaria_completa_estudio_superior_no_universitario_incompleta	medio	computacion	femenino	si
+16	18	16	18	17.75	20	4	publico	ciencias_basicas	estudio_superior_no_universitarios_completo_estudio_universitario_incompleto	medio	computacion	femenino	si
