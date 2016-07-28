@@ -102,3 +102,62 @@ Proporcion<-function(v,A)
 {
 	norma(v)/sum(norma(A))
 }
+
+#Combinacion muestra optima para pca
+#n = numero de iteraciones
+#y = muestra total 100%
+#k = el numero la muestra a seleccionar el aproximado al 30%
+#c = indica el varlo de la variable cor para el PCA
+PCAoptimo<-function(y, n, k, c)
+{
+	acum <- 0
+	indices_opti <- NULL
+
+	indice<-sample(1:nrow(y),k)
+	ytrain<-y[indice,1:5]
+
+	pr <- prcomp(ytrain, scale = TRUE,cor=c)
+
+	for(i in 1:n){
+		indice<-sample(1:nrow(y),k)
+		ytrain<-y[indice,1:5]
+
+		pr <- prcomp(ytrain, scale = TRUE,cor=c)
+		vars <- apply(pr$x, 2, var)  
+		props <- vars / sum(vars)
+
+		if(cumsum(props)[1] > acum)
+		{
+			acum <- cumsum(props)[1]
+			indices_opti <- indice
+			print(acum)
+		}
+	}
+
+	return(list(indices=indices_opti, acum=acum))
+}
+
+circunferencia<-function(centro=c(0,0),radio=1){
+
+if(radio<=0) stop("El radio de una circunferencia es estrictamente positivo")
+if(length(centro)!=2) stop("El centro de una circunferencia en el plano debe ser un vector de dimensión 2")
+
+xmin<-centro[1]-radio
+xmax<-centro[1]+radio
+ymin<-centro[2]-radio
+ymax<-centro[2]+radio
+
+
+x1<-seq(xmin,xmax,0.01)
+x2<-seq(xmax,xmin,-0.01)
+xx<-c(x1,x2)
+
+y1<-centro[2]+sqrt(radio^2-(x1-centro[1])^2)
+y2<-centro[2]-sqrt(radio^2-(x2-centro[1])^2)
+yy<-c(y1,y2)
+
+plot(xx,yy,type="l")
+
+}
+
+

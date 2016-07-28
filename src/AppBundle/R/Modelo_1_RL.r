@@ -28,8 +28,9 @@ plot(y,x[,4])
 x11()
 par(mfrow=c(1,1))
 plot(y,x[,5])
+#
 mod1 <- lm(y ~ x[,1] + x[,2] + x[,3] + x[,4] + x[,5])
-
+#Analsis de Modelo
 summary(mod1)
 
 # Other useful functions 
@@ -43,22 +44,26 @@ influence(mod1) # regression diagnostics
 
 resi = residuals(mod1)
 
-#para la prueba de normalidad
+#para la prueba de No normalidad
 shapiro.test(residuals(mod1))
-#para la prueba de homogenidad de los datos
+
+#para la prueba de Homogenidad de los datos
 #crear un factor 
 library(Rcmdr)
-fac=c(1,      1,      1,      1,      1,      1,      1,1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,      2,3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,      3,3,      3,      3,      3,      3,      3,      3,      3,      3,4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,      4,4,    4,4,      4,4,4,4,4,4,4)
+fac=NULL
+for(i in 1:6){
+fac=c(fac,rep(i,21))}
 fac
 levene.test(resi, fac)
-#Aletoridad de los datos
-secu=c(seq(1,124))
+#Prueba de Aletoridad de los datos
+secu=c(seq(1,126))
 
 x11()
 plot(secu,resi,col="red",type="l")
+
 # diagnostic plots 
 layout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page 
 plot(mod1)
 
-ECM <- mean(residuals(mod1)^2)
+ECM <- mean(resi^2)
 ECM
