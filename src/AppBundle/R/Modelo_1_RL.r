@@ -55,6 +55,7 @@ for(i in 1:6){
 fac=c(fac,rep(i,21))}
 fac
 levene.test(resi, fac)
+
 #Prueba de Aletoridad de los datos
 secu=c(seq(1,126))
 

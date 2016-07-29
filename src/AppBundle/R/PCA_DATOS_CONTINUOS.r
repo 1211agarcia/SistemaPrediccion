@@ -20,7 +20,7 @@ cor(y)
 
 #De la muestra total se busca la combinacion con mejor ajuste para el PCA
 #Me intera 1000000 de veces para combincaciones de 87 casos
-#aux <-PCAoptimo(y,1000000,87,F)
+aux <-PCAoptimo(y,10,87,F)
 #aux
 #names(aux)
 #Se realiza el Analisis de de Componentes Principales usando la matriz de Covarianza #
@@ -78,8 +78,7 @@ conglomerado_train<-conglomeradoT[indice]
 conglomerado_test<-conglomeradoT[-indice]
 
 
-clase<-matrix(NA, ncol=2, nrow=nrow(ytrain))
-clase
+
 
 ########################
 #Generación de clase
@@ -91,14 +90,16 @@ claseC<-as.numeric(names(sort(medias)))
 clase<-matrix(NA, ncol=2, nrow=nrow(ytrain))
 
 # ENTRANAMIENTO
+clase<-matrix(NA, ncol=2, nrow=nrow(ytrain))
+clase
 #Grupo Bajo
 clase[conglomerado_train==claseC[1],]<-matrix(rep(t(c(0,0)), sum(conglomerado_train==claseC[1])), byrow=TRUE, ncol=2 )
 #Grupo Medio
 clase[conglomerado_train==claseC[2],]<-matrix(rep(t(c(0,1)), sum(conglomerado_train==claseC[2])), byrow=TRUE, ncol=2 )
 #Grupo Alto
 clase[conglomerado_train==claseC[3],]<-matrix(rep(t(c(1,1)), sum(conglomerado_train==claseC[3])), byrow=TRUE, ncol=2 )
-
 clase
+
 # Visualizamos la data para el entrenamiento en paralelo la salida desada junto con la clase
 matrix(c(y[indice,6],clase[,1],clase[,2]), byrow=FALSE, ncol=3)
 
@@ -108,9 +109,8 @@ claseT<-matrix(NA, ncol=2, nrow=nrow(ytest))
 claseT[conglomerado_test==claseC[1],]<-matrix(rep(t(c(0,0)), sum(conglomerado_test==claseC[1])), byrow=TRUE, ncol=2 )
 claseT[conglomerado_test==claseC[2],]<-matrix(rep(t(c(0,1)), sum(conglomerado_test==claseC[2])), byrow=TRUE, ncol=2 )
 claseT[conglomerado_test==claseC[3],]<-matrix(rep(t(c(1,1)), sum(conglomerado_test==claseC[3])), byrow=TRUE, ncol=2 )
-
-
 claseT
+
 # Visualizamos la data para la validacio en paralelo la salida desada junto con la clase
 matrix(c(y[-indice,6],claseT[,1],claseT[,2]), byrow=FALSE, ncol=3)
 
@@ -138,13 +138,13 @@ P_v <-comT[,1:2]
 
 ## Creamos el objeto red neuronal feedforward
 ############################################
-net1 <- newff(n.neurons=c(2,2,2), learning.rate.global=1e-2, momentum.global=0.9,
+net1 <- newff(n.neurons=c(2,2,2), learning.rate.global=0.15, momentum.global=0.9,
 error.criterium="LMS", Stao=NA, hidden.layer="sigmoid",
 output.layer="sigmoid", method="ADAPTgdwm")
 #############################
 ##Se entrena la red
 #######################
-result1 <- train(net1,P , target, error.criterium="LMS", report=TRUE, show.step=1000, n.shows=39 )
+result1 <- train(net1,P , target, error.criterium="LMS", report=TRUE, show.step=1.03, n.shows=50 )
 ######################
 # se grafica la red entrenada con los datos de entrenamiento
 ####
