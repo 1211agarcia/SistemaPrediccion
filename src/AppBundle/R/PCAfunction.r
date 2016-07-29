@@ -130,7 +130,7 @@ PCAoptimo<-function(y, n, k, c)
 		{
 			acum <- cumsum(props)[1]
 			indices_opti <- indice
-			print(acum)
+			print(cumsum(props))
 		}
 	}
 

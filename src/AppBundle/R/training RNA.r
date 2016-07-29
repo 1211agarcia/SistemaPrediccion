@@ -1,6 +1,6 @@
 opt<-function(m,s,capas, P, P_v, clase, claseT){
 
-net1 <- newff(n.neurons=c(2,capas,2), learning.rate.global=0.1, momentum.global=m,
+net1 <- newff(n.neurons=c(2,capas,2), learning.rate.global=0.2, momentum.global=m,
 error.criterium="LMS", Stao=NA, hidden.layer="sigmoid",
 output.layer="sigmoid", method="ADAPTgdwm")
 result1 <- train(net1,P , target, error.criterium="LMS", report=TRUE, show.step=s, n.shows=5 )
