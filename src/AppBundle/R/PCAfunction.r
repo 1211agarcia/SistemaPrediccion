@@ -137,27 +137,95 @@ PCAoptimo<-function(y, n, k, c)
 	return(list(indices=indices_opti, acum=acum))
 }
 
-circunferencia<-function(centro=c(0,0),radio=1){
+myTrain<-function(m,s,capas, P, P_v, target, claseT, p_ecm){
 
-if(radio<=0) stop("El radio de una circunferencia es estrictamente positivo")
-if(length(centro)!=2) stop("El centro de una circunferencia en el plano debe ser un vector de dimensión 2")
+net1 <- newff(n.neurons=c(2,capas,2), learning.rate.global=p_ecm, momentum.global=m,
+error.criterium="LMS", Stao=NA, hidden.layer="sigmoid",
+output.layer="sigmoid", method="ADAPTgdwm")
+result1 <- train(net1,P , target, error.criterium="LMS", report=TRUE, show.step=s, n.shows=5 )
+s <- sim(result1$net, P)
+print("Entrenando")
+tasa_1<-rep(FALSE,nrow(s))
+tasa_1[round(s)[,1]== target[,1] & round(s)[,2]== target[,2]]<-TRUE
+tasa_1 <- sum(tasa_1==TRUE)*100/length(tasa_1)
 
-xmin<-centro[1]-radio
-xmax<-centro[1]+radio
-ymin<-centro[2]-radio
-ymax<-centro[2]+radio
+print(tasa_1)
+ECM_1 <- error.LMS(c(s,target,net1))
+print(ECM_1) 
 
+print("Validando")
+s <- sim(result1$net, P_v)
 
-x1<-seq(xmin,xmax,0.01)
-x2<-seq(xmax,xmin,-0.01)
-xx<-c(x1,x2)
+tasa_2<-rep(FALSE,nrow(s))
+tasa_2[round(s)[,1]== claseT[,1] & round(s)[,2]== claseT[,2]]<-TRUE
+tasa_2 <- sum(tasa_2==TRUE)*100/length(tasa_2)
 
-y1<-centro[2]+sqrt(radio^2-(x1-centro[1])^2)
-y2<-centro[2]-sqrt(radio^2-(x2-centro[1])^2)
-yy<-c(y1,y2)
+print(tasa_2)
 
-plot(xx,yy,type="l")
+ECM_2 <- error.LMS(c(s,claseT,net1))
+print(ECM_2) 
+
+#return(list(ecm_1=as.numeric(ECM_1), t_1=as.numeric(tasa_1), ecm_2=as.numeric(ECM_2), t_2=as.numeric(tasa_2)))
+return(c(as.numeric(ECM_1), as.numeric(tasa_1),as.numeric(ECM_2), as.numeric(tasa_2)))
+}
+
+validacion_cruzada<-function(y, iteraciones) {
+#########################################
+#    Calculo de grupos de salida
+#
+# Conglomerado Total se asigna una etiqueta a cada caso segun su nota de calculo 1
+sal <- y[,6]
+sal
+conglomeradoT<-rep(FALSE,length(sal))
+conglomeradoT[sal<=10]<-1 #Nivel Bajo
+conglomeradoT[sal>=11&sal<16]<-2 #Nivel Medio
+conglomeradoT[sal>=16]<-3 #Nivel Alto
+
+########################
+#Generación de clase
+########################
+medias<-c(mean(data[conglomeradoT==1,7]),mean(data[conglomeradoT==2,7]),mean(data[conglomeradoT==3,7]))
+medias
+names(medias)<-c(1,2,3)
+claseC<-as.numeric(names(sort(medias)))
+
+trains <- NULL
+trains
+for(i in 1:iteraciones){
+	print("------------------------------------------------")
+	print(i*100/iteraciones)
+	print("------------------------------------------------")
+	indice <- PCAoptimo(y,1,87,F)$indices
+	ytrain<-y[indice,1:5]
+	ytest<-y[-indice,1:5]
+	comp <-princomp(ytrain,cor=F)
+	cargas<-comp$loadings[,]
+	comT<-score(ytest,cargas)
+	conglomerado_train<-conglomeradoT[indice]
+	conglomerado_test<-conglomeradoT[-indice]
+
+	clase<-matrix(NA, ncol=2, nrow=nrow(ytrain))
+	clase[conglomerado_train==claseC[1],]<-matrix(rep(t(c(0,0)), sum(conglomerado_train==claseC[1])), byrow=TRUE, ncol=2 )
+	clase[conglomerado_train==claseC[2],]<-matrix(rep(t(c(0,1)), sum(conglomerado_train==claseC[2])), byrow=TRUE, ncol=2 )
+	clase[conglomerado_train==claseC[3],]<-matrix(rep(t(c(1,1)), sum(conglomerado_train==claseC[3])), byrow=TRUE, ncol=2 )
+	claseT<-matrix(NA, ncol=2, nrow=nrow(ytest))
+	claseT[conglomerado_test==claseC[1],]<-matrix(rep(t(c(0,0)), sum(conglomerado_test==claseC[1])), byrow=TRUE, ncol=2 )
+	claseT[conglomerado_test==claseC[2],]<-matrix(rep(t(c(0,1)), sum(conglomerado_test==claseC[2])), byrow=TRUE, ncol=2 )
+	claseT[conglomerado_test==claseC[3],]<-matrix(rep(t(c(1,1)), sum(conglomerado_test==claseC[3])), byrow=TRUE, ncol=2 )
+
+	target<-clase
+	P<-matrix(c(comp$score[,1],comp$score[,2]),ncol=2,byrow=TRUE)
+	P_v <-comT[,1:2]
+
+	trains <- matrix(rbind(trains, myTrain(0.7, 13, c(2,2), P, P_v, clase,claseT, 0.1)), byrow=FALSE, ncol=4 )
+}
+return (trains)
 
 }
 
-
+score<-function(y,carga)
+{
+yc<-y-matrix(rep(colMeans(y),nrow(y)),ncol=ncol(y),byrow=TRUE)
+salida<-as.matrix(yc)%*%carga
+return(salida)
+}

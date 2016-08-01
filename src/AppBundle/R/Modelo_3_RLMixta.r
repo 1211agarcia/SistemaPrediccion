@@ -1,19 +1,54 @@
-#Regresion lineal
-
+#Regresion Mixta
+#para generar las varibles dummy
+library(dummy)
+#regresion mixta
+library(nlme)
 
 #se cargan los datos colocando como parametros que los decimales seran separados por un ","
 data <- read.table("muestra_estudiantes.txt",header=TRUE)
 data
 #Nombre de columnas a ignorar para este experimento, calclulo de ignora pues es la salida deseada
-drops <- c("cant_mat","escuela","gestion_plantel","tipo_plantel","nivel_socioeco","nivel_estudios_padres","genero","opsu")
+drops <- c("cant_mat")
 #se descarta Cant_cats por tener correlacion poco significativa
 data <- data[ , !(names(data) %in% drops)]
 data
-pairs(data)
-cor(data)
+
+
+categories(x=data,p="all")
+
+#Contruimos las variables dummy o dicotomicas de las varibles categoricas
+A <- dummy(x=data)
+
 
 y <- data[,6]
 y
+x <- as.matrix(cbind(data[,1:5], (dummies_train)))
+x <- asdata[,1:5]
+x
+c(A[,1])
+[,2]
+mode(c(A[,1]))
+mode(c(A[,1]))
+p <- c(A[,1])
+p2 <- c(A[,2])
+? lme
+fm2 <- lme(y ~ p + p2, data = Orthodont, random = ~ 1)
+summary(fm2)
+distance
+age
+
+
+fm2 <- lme(lmList(y ~ x[,1]+x[,2]+x[,3]+x[,4]| Subject))
+ ncol(A)
+
+
+
+pairs(data)
+cor(data)
+
+
+
+
 x <- data[,1:5]
 x
 

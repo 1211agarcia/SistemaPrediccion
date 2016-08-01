@@ -138,7 +138,7 @@ P_v <-comT[,1:2]
 
 ## Creamos el objeto red neuronal feedforward
 ############################################
-net1 <- newff(n.neurons=c(2,2,2), learning.rate.global=0.15, momentum.global=0.9,
+net1 <- newff(n.neurons=c(2,2,2), learning.rate.global=0.1, momentum.global=0.9,
 error.criterium="LMS", Stao=NA, hidden.layer="sigmoid",
 output.layer="sigmoid", method="ADAPTgdwm")
 #############################
