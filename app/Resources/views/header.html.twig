@@ -2,7 +2,7 @@
 <nav class="navbar navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <a href="{{ path('homepage') }}" class="navbar-brand"><b>SE</b><sapn style="font-size:x-large;">M</sapn><b>PU</b></a>
+      <a href="{{ path('homepage') }}" class="navbar-brand"><b>SA</b><sapn style="font-size:x-large;">M</sapn><b>PU</b></a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
         <i class="fa fa-bars"></i>
       </button>
@@ -15,7 +15,7 @@
         <li><a href="{{ path('users')}}"><i class="fa fa-users"></i> Usuarios</a></li>
         {% endif %}
         {% if is_granted('ROLE_ESTUDIANTE') %}
-        <li><a href="{{ path('users')}}"><i class="ion ion-university"></i> Mi Perfil</a></li>
+        <li><a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}"><i class="ion ion-university"></i> Mi Perfil</a></li>
         <li><a href="{{ path('practica_generate')}}"><i class="ion ion-play"></i> Practicar</a></li>
         <li><p class="navbar-text navbar-right"><i class="ion ion-ribbon-a"></i> Practicas realizadas: {{ estudiante.practicas|length }}</p></li>
         <li><p class="navbar-text navbar-right"><i class="ion ion-stats-bars"></i> Progreso actual: </p></li>

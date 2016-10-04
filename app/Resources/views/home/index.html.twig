@@ -19,10 +19,8 @@
         </div>
     </div>
 {% endblock % #}
-{% extends 'base.html.twig' %}
-
+{% extends 'base.html.twig' %
 {% block body %}
-
   <section class="content-header">
       <h1>
         Dashboard
@@ -33,8 +31,7 @@
         <li class="active">Dashboard</li>
       </ol>
   </section>
-
-    <!-- Main content -->
+  <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
@@ -99,8 +96,7 @@
 
     {% endblock %}
 {% block javascripts %}
-    {{ parent() }}  
-    
+    {{ parent() }}
     {% javascripts
         '@AppBundle/Resources/public/angularjs/loadModule.js'%}
         <script src="{{ asset_url }}"></script>
