@@ -53,11 +53,16 @@
                         </div><!-- /.info-box-content -->
                     </div>
                 </div>
+                <div ng-show="finalizado" class="col-xs-12" style="text-align: center;">
+                    <a href="{{ path('practica_generate')}}" class="btn btn-app"><i style="color: green;"class="fa fa-play"></i> Intentarlo de nuevo</a>
+                </div>
+                <div ng-show="finalizado" class="col-xs-12" style="text-align: center;">
+                    <a href="{{ path('homepage')}}" class="btn btn-app"><i style="color: green;"class="fa fa-home"></i> Ir al Inicio</a>
+                </div>
             </div>
             <div class="box-footer" style="text-align: center;">
-                <a ng-if="!finalizado" class="btn btn-danger" href="{{ path('homepage') }}"><i class="fa fa-pause"></i>&nbsp;Continuar luego</a>
-                <button ng-hide="finalizado || correcto || incorrecto" class="btn btn-success" ng-disabled="isValid()" ng-click="evaluar()">
-                    [[ titulo_boton ]]</button>
+                <a ng-hide="finalizado || correcto || incorrecto" ng-if="!finalizado" class="btn btn-danger" href="{{ path('homepage') }}"><i class="fa fa-pause"></i>&nbsp;Pausar</a>
+                <button ng-hide="finalizado || correcto || incorrecto" class="btn btn-success" ng-disabled="isValid()" ng-click="evaluar()">[[ titulo_boton ]]</button>
                 <button ng-show="!finalizado && (correcto || incorrecto)" id="practica_submit" class="btn btn-success" ng-click="siguiente()">[[ titulo_boton2 ]]</button>
             </div>
         </div>

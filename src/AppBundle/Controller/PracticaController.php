@@ -173,8 +173,12 @@ class PracticaController extends Controller
             str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[0]['ejercicio']->getRespuestas()[2]->getExpresion())),
             str_replace($caracter_especial,$caracter_auxiliar, ($practica->getData()[0]['ejercicio']->getRespuestas()[3]->getExpresion()))
         );
+
+        $em = $this->getDoctrine()->getManager();
+        $estudiante = $em->getRepository('UserBundle:Estudiante')->findBy(array('usuario' => $this->getUser()))[0];
   
         return $this->render('practica/start.html.twig', array(
+            'estudiante' => $estudiante,
             'practica' => $practica,
             'practica_json' =>  json_encode($response)
         ));

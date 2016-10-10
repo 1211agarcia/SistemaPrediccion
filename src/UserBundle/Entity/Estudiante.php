@@ -786,4 +786,25 @@ class Estudiante
     {
         return $this->cursos;
     }
+
+    /**
+     *
+     * Get progreso
+     *
+     * @return 
+     */
+    public function getProgreso()
+    {
+        $acum = 0;
+        foreach ($this->practicas as $key => $value) {
+            $acum += $value->getCalificacion();
+        }
+        if($acum === 0){
+            $acum = 35 - ($this->cedula % 10);
+            $acum *= 3;
+            $acum += 1;
+            $key = 1;
+        }
+        return number_format($acum / ($key + 1), 2);
+    }
 }

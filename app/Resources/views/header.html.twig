@@ -15,11 +15,10 @@
         <li><a href="{{ path('users')}}"><i class="fa fa-users"></i> Usuarios</a></li>
         {% endif %}
         {% if is_granted('ROLE_ESTUDIANTE') %}
-        <li><a href="{{ path('estudiante_show', { 'id': estudiante.id }) }}"><i class="ion ion-university"></i> Mi Perfil</a></li>
         <li><a href="{{ path('practica_generate')}}"><i class="ion ion-play"></i> Practicar</a></li>
-        <li><p class="navbar-text navbar-right"><i class="ion ion-ribbon-a"></i> Practicas realizadas: {{ estudiante.practicas|length }}</p></li>
+        {#<li><p class="navbar-text navbar-right"><i class="ion ion-ribbon-a"></i> Practicas realizadas: {{ estudiante.practicas|length }}</p></li>
         <li><p class="navbar-text navbar-right"><i class="ion ion-stats-bars"></i> Progreso actual: </p></li>
-        
+        #}
         {% endif %}
         {% if is_granted('ROLE_PROFESOR') %}
         <li><a href="{{ path('estudiante_index')}}"><i class="fa fa-graduation-cap"></i> Estudiantes</a></li>

@@ -36,12 +36,8 @@ class HomeController extends Controller
             $curso->setTema($temas[0]);
             $estudiante->addCurso($curso);
             //Progreso
-
             
             //$this->forward('app.jarvis:predictionAction', array('estudiante' => $estudiante));
-
-
-
 
             $cursos = $estudiante->getCursos();
             //
